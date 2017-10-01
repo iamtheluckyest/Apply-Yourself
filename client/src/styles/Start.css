@@ -1,0 +1,16 @@
+[class ^= "homeButton"] {
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 10px;
+  }
+
+@media (min-width: 576px) { 
+  .homeButton-left {
+    float: right;
+  }
+
+  .homeButton-right {
+    float: left;
+  }
+}

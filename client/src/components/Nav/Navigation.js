@@ -1,27 +1,26 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
 
 export class Navigation extends Component {
   state = {
-      collapsed: true
-  };
-
-  toggleNavbar = () => {
-    this.setState({
-      collapsed: !this.state.collapsed
-    });
+    isOpen: false
   }
 
+  toggle = () => {
+    this.setState({
+      isOpen: !this.state.isOpen
+    });
+  }
   render() {
     return (
       <div>
-        <Navbar color="faded" light>
-          <NavbarToggler onClick={this.toggleNavbar} />
-          <Collapse className="navbar-toggleable-md" isOpen={!this.state.collapsed}>
-            <NavbarBrand href="/">Apply Yourself</NavbarBrand>
-            <Nav navbar>
+        <Navbar color="faded" light toggleable>
+          <NavbarToggler right onClick={this.toggle} />
+          <NavbarBrand href="/">Apply Yourself</NavbarBrand>
+          <Collapse isOpen={this.state.isOpen} navbar>
+            <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink href="/Dashboard/">Username</NavLink>
+                <NavLink href="/components/">Log in/Sign up</NavLink>
               </NavItem>
             </Nav>
           </Collapse>

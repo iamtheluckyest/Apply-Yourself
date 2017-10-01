@@ -1,0 +1,20 @@
+/* primary color navy blue: 001c39 */
+@import url('https://fonts.googleapis.com/css?family=Volkhov');
+
+body {
+  background: #FFF;
+}
+
+a {
+  color: #bf7f7f;
+}
+
+a:hover {
+  color: #800000;
+  text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Volkhov', serif; 
+  font-weight: 400;
+}

@@ -1,4 +1,5 @@
 export * from "./Dashboard"
 export * from "./Search"
 export * from "./Start"
+export * from "./LearnMore"
 export * from "./NoMatch"
