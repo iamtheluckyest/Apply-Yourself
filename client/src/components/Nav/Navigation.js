@@ -20,7 +20,7 @@ export class Navigation extends Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink href="/components/">Log in/Sign up</NavLink>
+                <NavLink href="/login/">Log in/Sign up</NavLink>
               </NavItem>
             </Nav>
           </Collapse>

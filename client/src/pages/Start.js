@@ -58,7 +58,7 @@ export class Start extends Component {
                                 </Link>
                             </Col>
                             <Col xs="12" sm="6">
-                                <Link to="/dashboard">
+                                <Link to="/login">
                                     <Button outline color="primary" className="homeButton-right">Sign up/Log in</Button>
                                 </Link>
                             </Col>
