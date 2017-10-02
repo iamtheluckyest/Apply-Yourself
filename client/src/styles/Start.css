@@ -5,6 +5,15 @@
     margin-top: 10px;
   }
 
+.titlepage-lead a small {
+  color: #bf7f7f;
+}
+
+.titlepage-lead a small:hover {
+  color: #FFF;
+  text-decoration: none;
+}
+
 @media (min-width: 576px) { 
   .homeButton-left {
     float: right;
@@ -14,3 +23,4 @@
     float: left;
   }
 }
+

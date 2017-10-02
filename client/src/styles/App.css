@@ -1,12 +1,12 @@
-/* primary color navy blue: 001c39 */
-@import url('https://fonts.googleapis.com/css?family=Volkhov');
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro|Volkhov');
 
 body {
   background: #FFF;
+  font-family: 'Source Sans Pro', sans-serif;  
 }
 
 a {
-  color: #bf7f7f;
+  color: #800000;
 }
 
 a:hover {
@@ -17,4 +17,8 @@ a:hover {
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Volkhov', serif; 
   font-weight: 400;
+}
+
+p {
+  font-family: 'Source Sans Pro', sans-serif;
 }
