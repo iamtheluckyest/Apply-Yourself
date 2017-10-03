@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {Component} from 'react';
 import  { Redirect } from 'react-router-dom'
-import SignUpForm from '../components/Form/SignUpForm.js';
 import axios from "axios";
+import {Container, Col, Row} from 'reactstrap';
+import {SignUpForm} from '../components/Form';
+import {Header} from "../components/Header";
 
-export class SignUpPage extends React.Component {
+
+export class SignUpPage extends Component {
 
     /**
      * Class constructor.
@@ -93,12 +96,21 @@ export class SignUpPage extends React.Component {
                 ? 
                     this.state.redirect
                 : 
-                    <SignUpForm
-                        onSubmit={this.processForm}
-                        onChange={this.changeUser}
-                        errors={this.state.errors}
-                        user={this.state.user}
-                    />
+                <Container>
+                    <Header>Sign Up</Header>
+                    <Row>
+                        <Col xs="hidden" sm="2"></Col>
+                        <Col xs="12" sm="8">
+                            <SignUpForm
+                                onSubmit={this.processForm}
+                                onChange={this.changeUser}
+                                errors={this.state.errors}
+                                user={this.state.user}
+                            />
+                        </Col>
+                        <Col xs="hidden" sm="2"></Col>
+                    </Row>
+                </Container>
         );
     }
 

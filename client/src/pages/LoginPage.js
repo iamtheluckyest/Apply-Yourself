@@ -1,14 +1,14 @@
-import React from "react";
-import  { Redirect } from 'react-router-dom'
-import LoginForm from "../components/Form/LoginForm.js";
-import Auth from "../Auth.js"
+import React, {Component} from "react";
+import  { Redirect } from 'react-router-dom';
+import {Container, Row, Col} from "reactstrap";
+import Auth from "../Auth.js";
 import axios from "axios";
+import {Header} from "../components/Header";
+import {LoginForm} from "../components/Form";
 
-export class LoginPage extends React.Component {
 
-    /**
-     * Class constructor.
-     */
+export class LoginPage extends Component {
+
     constructor(props, context) {
         super(props, context);
 
@@ -102,14 +102,23 @@ export class LoginPage extends React.Component {
             this.state.redirect
                 ?
                     this.state.redirect
-                :
-                    <LoginForm
-                        onSubmit={this.processForm}
-                        onChange={this.changeUser}
-                        errors={this.state.errors}
-                        successMessage = {this.state.successMessage}
-                        user={this.state.user}
-                    />
+                :   
+                    <Container>
+                        <Header>Log In</Header>
+                        <Row>
+                            <Col xs="hidden" sm="2"></Col>
+                            <Col xs="12" sm="8">
+                            <LoginForm
+                                onSubmit={this.processForm}
+                                onChange={this.changeUser}
+                                errors={this.state.errors}
+                                successMessage = {this.state.successMessage}
+                                user={this.state.user}
+                            />
+                            </Col>
+                            <Col xs="hidden" sm="2"></Col>
+                        </Row>
+                    </Container>
         );
     }
 
