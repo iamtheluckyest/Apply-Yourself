@@ -1,14 +1,27 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+//var customFields = require('mongoose-custom-fields');
 
-// define the User model schema
+const FieldSchema = new mongoose.Schema({
+    name : String,
+    value : {}
+});
+//FieldSchema.plugin(customFields);
+
+const CollegeSchema = new mongoose.Schema({
+    id : String,
+    generalInfo : [FieldSchema],
+    appRequirements : [FieldSchema]
+});
+
 const UserSchema = new mongoose.Schema({
     email: {
         type: String,
         index: { unique: true }
     },
     password: String,
-    name: String
+    name: String,
+    colleges : [CollegeSchema]
 });
 
 
