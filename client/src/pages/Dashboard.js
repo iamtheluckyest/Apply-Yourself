@@ -37,10 +37,14 @@ export class Dashboard extends Component {
         });
     }
 
-    render(){
+    render() {
         console.log("state is: ");
         console.log(this.state);
-        return <Dash user={this.state.user}/>
+        return (
+            this.state.user ?
+            <Dash user={this.state.user}/>   
+            : ""
+        )
     }
 }
 

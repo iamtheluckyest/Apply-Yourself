@@ -6,7 +6,12 @@ import {Header} from "../components/Header"
 export class Search extends Component {
     state = {
         schoolName : "",
-        location : ""
+        location : "",
+        minPopulation : "",
+        maxPopulation : "",
+        minTuition : "",
+        maxTuition : "",
+        minCompletion : ""
     }
 
     handleInput = event => {

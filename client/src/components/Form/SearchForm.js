@@ -60,11 +60,3 @@ export class SearchForm extends Component {
     );
   }
 }
-
-// Inputs to add:
-// - Location (state)
-// - Total student population
-// - In-state and out of state tuition
-// - Completion rate?
-// - Salary after attending (6 or 10 years)
-// - SAT average

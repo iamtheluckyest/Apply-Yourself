@@ -1,0 +1,15 @@
+{
+  "name": "custom-bootstrap",
+  "version": "1.0.0",
+  "description": "Customize bootstrap styles",
+  "main": "index.js",
+  "scripts": {
+    "build": "lessc index.less build/index.css"
+  },
+  "author": "Annalisa Alden",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "less": "^2.7.2"
+  }
+}
