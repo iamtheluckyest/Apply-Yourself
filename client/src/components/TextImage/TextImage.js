@@ -8,6 +8,8 @@ const styles = {
     }
 }
 
+// With prop imgRight set to "true", the image will float to the right of the text
+
 export const TextImage = props => 
     <Row>
         <Col xs="12" sm="4" className={props.imgRight ? "push-sm-8" : ""}>
