@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
-import { Card, CardBlock, CardFooter, Row, Col } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Card, CardBlock, CardFooter } from 'reactstrap';
 
 export const LoginForm = (props) => (
     <Card className="mb-5">
