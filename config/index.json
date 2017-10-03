@@ -1,0 +1,4 @@
+{
+    "dbUri": "mongodb://localhost/apply-yourself",
+    "jwtSecret": "ComeUpWithSomething"
+}
