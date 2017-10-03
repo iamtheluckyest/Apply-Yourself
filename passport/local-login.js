@@ -25,9 +25,9 @@ module.exports = new PassportLocalStrategy({
         }
 
         if (!user) {
-        const error = new Error('Incorrect email or password');
-        error.name = 'IncorrectCredentialsError';
-        return done(error);
+            const error = new Error('Incorrect email or password');
+            error.name = 'IncorrectCredentialsError';
+            return done(error);
         }
 
         // check if a hashed user's password is equal to a value saved in the database

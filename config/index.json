@@ -1,4 +1,4 @@
 {
-    "dbUri": "mongodb://localhost/user_auth_react",
+    "dbUri": "mongodb://localhost/apply-yourself",
     "jwtSecret": "ComeUpWithSomething"
 }

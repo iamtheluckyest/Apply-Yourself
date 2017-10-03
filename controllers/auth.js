@@ -93,7 +93,7 @@ router.post('/signup', (req, res, next) => {
                 // the 409 HTTP status code is for conflict error
                 return res.json({
                     success: false,
-                    message: 'Could not process the form',
+                    message: 'Could not process the form.',
                     errors: {
                         email: 'This email is already taken.'
                     }
@@ -102,7 +102,7 @@ router.post('/signup', (req, res, next) => {
 
             return res.json({
                 success: false,
-                message: 'Could not process the form. Unknown error occurred',
+                message: 'Could not process the form. Unknown error occurred.',
                 errors : {
 
                 }
@@ -111,7 +111,7 @@ router.post('/signup', (req, res, next) => {
 
         return res.json({
             success: true,
-            message: 'Sign up successful!'
+            message: 'Sign up successful!',
         });
     })(req, res, next);
 });
@@ -132,13 +132,19 @@ router.post('/login', (req, res, next) => {
             if (err.name === 'IncorrectCredentialsError') {
                 return res.json({
                     success: false,
-                    message: err.message
+                    message: err.message,
+                    errors : {
+
+                    }
                 });
             }
 
             return res.json({
                 success: false,
-                message: 'Could not process the form. Unknown error occurred.'
+                message: 'Could not process the form. Unknown error occurred.',
+                errors : {
+
+                }
             });
         }
         

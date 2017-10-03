@@ -1,5 +1,7 @@
-import React from 'react';
-import LoginForm from '../components/Form/LoginForm.js';
+import React from "react";
+import  { Redirect } from 'react-router-dom'
+import LoginForm from "../components/Form/LoginForm.js";
+import Auth from "../Auth.js"
 import axios from "axios";
 
 export class LoginPage extends React.Component {
@@ -21,6 +23,7 @@ export class LoginPage extends React.Component {
         // set the initial component state
         this.state = {
             errors: {},
+            redirect : undefined,
             successMessage,
             user: {
                 email: '',
@@ -42,10 +45,38 @@ export class LoginPage extends React.Component {
         // prevent default action. in this case, action is the form submission event
         event.preventDefault();
 
-        console.log('email:', this.state.user.email);
-        console.log('password:', this.state.user.password);
-
-        //TODO: call axios
+        let that = this;
+        
+        axios.post("/auth/login", {
+            "email" : that.state.user.email,
+            "password" : that.state.user.password
+        }).then(function(res){
+            console.log("Normal response");
+            console.log(res);
+            if(!res.data.success){
+                let mySummary = res.data.message;
+                if(res.data.errors){
+                    for(let key in res.data.errors){
+                        mySummary += (" " + res.data.errors[key])
+                    }
+                }
+                that.setState({
+                    "errors" : {
+                        summary : mySummary
+                    }
+                });
+            } else {
+                //token comes from the post login route from server
+                Auth.authenticateUser(res.data.token);//client side
+                that.setState({
+                    "errors" : {},//just in case
+                    "redirect" : <Redirect to='/'/>
+                });
+            }
+        }).catch(function(err){
+            console.log("Error submitting form");
+            console.log(err);
+        });
     }
 
     /**
@@ -68,13 +99,17 @@ export class LoginPage extends React.Component {
      */
     render() {
         return (
-            <LoginForm
-                onSubmit={this.processForm}
-                onChange={this.changeUser}
-                errors={this.state.errors}
-                successMessage = {this.state.successMessage}
-                user={this.state.user}
-            />
+            this.state.redirect
+                ?
+                    this.state.redirect
+                :
+                    <LoginForm
+                        onSubmit={this.processForm}
+                        onChange={this.changeUser}
+                        errors={this.state.errors}
+                        successMessage = {this.state.successMessage}
+                        user={this.state.user}
+                    />
         );
     }
 
