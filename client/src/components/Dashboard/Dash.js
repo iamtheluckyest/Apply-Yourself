@@ -1,6 +1,8 @@
 import React from 'react';
 
-export const Dash = (props) => 
+export const Dash = (props) => (
+    ""
+)
     
 
 
