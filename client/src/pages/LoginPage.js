@@ -70,7 +70,7 @@ export class LoginPage extends React.Component {
                 Auth.authenticateUser(res.data.token);//client side
                 that.setState({
                     "errors" : {},//just in case
-                    "redirect" : <Redirect to='/'/>
+                    "redirect" : <Redirect to='/dashboard'/>
                 });
             }
         }).catch(function(err){
