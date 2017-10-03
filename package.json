@@ -19,14 +19,20 @@
   },
   "dependencies": {
     "axios": "^0.16.2",
+    "bcrypt": "^1.0.3",
     "bootstrap": "4.0.0-alpha.6",
     "express": "^4.15.4",
+    "jsonwebtoken": "^8.0.1",
+    "mongoose": "^4.11.14",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
     "radium": "^0.19.4",
     "react": "^16.0.0",
     "react-addons-css-transition-group": "^15.6.2",
     "react-addons-transition-group": "^15.6.2",
     "react-dom": "^16.0.0",
     "react-router-dom": "^4.2.2",
-    "reactstrap": "^4.8.0"
+    "reactstrap": "^4.8.0",
+    "validator": "^9.0.0"
   }
 }
