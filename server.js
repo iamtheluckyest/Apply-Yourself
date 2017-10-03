@@ -19,7 +19,7 @@ if (process.env.NODE_ENV === "production") {
 app.use(passport.initialize());
 passport.use('local-signup', localSignupStrategy);
 passport.use('local-login', localLoginStrategy);
-app.use('/api', authCheckMiddleware);
+app.use('/user', authCheckMiddleware);
 
 //body parser middleware declared
 app.use(bodyParser.json());
@@ -28,7 +28,9 @@ app.use(bodyParser.text());
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
 const authRoutes = require("./controllers/auth.js");
+const userRoutes = require("./controllers/user.js");
 app.use("/auth", authRoutes);
+app.use("/user", userRoutes);
 // Send every request to the React app
 // Define any API routes before this runs
 app.get("*", function(req, res) {

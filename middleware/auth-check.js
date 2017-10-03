@@ -32,7 +32,7 @@ module.exports = (req, res, next) => {
             if (userErr || !user) {
                 return res.status(401).end();
             }
-
+            res.locals.user = user;//I do this in order to pass the user to the controller
             return next();
         });
     });
