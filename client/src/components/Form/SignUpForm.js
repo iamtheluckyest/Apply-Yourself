@@ -1,57 +1,56 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Card, CardBlock, CardFooter, Row, Col } from 'reactstrap';
 
-const SignUpForm = (props) => (
-    <div className="container panel panel-default">
-        <div className="panel-heading">
-            <h2>Sign Up</h2>
-        </div>
-        <div className="panel-boody">
+
+export const SignUpForm = (props) => (
+    <Card>
+        <CardBlock>
             {props.errors.summary && <p>{props.errors.summary}</p>}
-            <form action="/" onSubmit={props.onSubmit}>
+            <Form action="/" onSubmit={props.onSubmit}>
 
-                <div className="input-group col-xs-12 myInputGroup">
-                    <label>Name</label>
-                    <input
+                <FormGroup>
+                    <Label for="name" >Name</Label>
+                    <Input
                         className="form-control"
                         onChange={props.onChange}
                         type="text"
                         name="name"
+                        id="name"
                         value={props.user.name}
                     />
-                </div>
+                </FormGroup>
 
-                <div className="input-group col-xs-12 myInputGroup">
-                    <label>Email</label>
-                    <input
+                <FormGroup>
+                    <Label>Email</Label>
+                    <Input
                         className="form-control"
                         onChange={props.onChange}
                         type="text"
                         name="email"
                         value={props.user.email}
                     />
-                </div>
+                </FormGroup>
 
-                <div className="input-group col-xs-12 myInputGroup">
-                    <label>Password</label>
-                    <input
+                <FormGroup>
+                    <Label>Password</Label>
+                    <Input
                         className="form-control"
                         onChange={props.onChange}
                         type="password"
                         name="password"
                         value={props.user.password}
                     />
-                </div>
+                </FormGroup>
 
-                <button className="btn btn-primary col-xs-5 col-sm-2" type="submit">
-                    <span className="glyphicon glyphicon-trash" aria-hidden="true"></span> Create New Account
-                </button>
-            </form>
-        </div>
-        <div className="panel-footer">
+                <Button className="btn btn-primary" type="submit">
+                    Create New Account
+                </Button>
+            </Form>
+        </CardBlock>
+        <CardFooter className="panel-footer">
             Already have an account? <Link to={'/login'}>Log in</Link>
-        </div>
-    </div>
+        </CardFooter>
+    </Card>
 );
-
-export default SignUpForm;

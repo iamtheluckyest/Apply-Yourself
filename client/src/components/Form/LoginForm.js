@@ -1,47 +1,45 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Card, CardBlock, CardFooter, Row, Col } from 'reactstrap';
 
-const LoginForm = (props) => (
-    <div className="container panel panel-default">
-        <div className="panel-heading">
-            <h2>Login</h2>
-        </div>
-        <div className="panel-body">
+export const LoginForm = (props) => (
+    <Card className="mb-5">
+        <CardBlock>
             {props.successMessage && <p className="success-message">{props.successMessage}</p>}
             {props.errors.summary && <p>{props.errors.summary}</p>}
-            <form action="/" onSubmit={props.onSubmit}>
-                
-                <div className="input-group col-xs-12 myInputGroup">
-                    <label>Email</label>
-                    <input 
+            <Form action="/" onSubmit={props.onSubmit}>
+                <FormGroup >
+                    <Label for="email">Email</Label>
+                    <Input 
                         className="form-control"
                         onChange={props.onChange}
                         type="text"
                         name="email"
+                        id="email"
                         value={props.user.email}
                     />
-                </div>
+                </FormGroup>
 
-                <div className="input-group col-xs-12 myInputGroup">
-                    <label>Password</label>
-                    <input
+                <FormGroup>
+                    <Label for="password">Password</Label>
+                    <Input
                         className="form-control"
                         onChange={props.onChange}
                         type="password"
                         name="password"
+                        id="password"
                         value={props.user.password}
                     />
-                </div>
+                </FormGroup>
 
-                <button className="btn btn-primary col-xs-5 col-sm-2" type="submit">
-                    <span className="glyphicon glyphicon-trash" aria-hidden="true"></span> Login
-                </button>
-            </form>
-        </div>
-        <div className="panel-footer">
+                <Button className="btn btn-primary" type="submit">
+                    Login
+                </Button>
+            </Form>
+        </CardBlock>
+        <CardFooter>
             Don't have an account? <Link to={'/signup'}>Sign Up</Link>
-        </div>
-    </div>
+        </CardFooter>
+    </Card>
 );
-
-export default LoginForm;
