@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
-import { Card, CardHeader, CardBlock } from 'reactstrap';
+import { Card, CardBlock } from 'reactstrap';
 
 export class SearchForm extends Component {
   render() {

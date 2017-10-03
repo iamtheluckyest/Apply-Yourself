@@ -14,6 +14,7 @@ export const TextImage = props =>
             <img style={styles.image} src={props.source} alt={props.alt}/>
         </Col>
         <Col xs="12" sm="8" className={props.imgRight ? "pull-sm-4" : ""}>
+            <h2>{props.sectionTitle}</h2>
             <p>{props.children}</p>
         </Col>
     </Row>

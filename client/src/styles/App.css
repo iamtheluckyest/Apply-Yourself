@@ -10,13 +10,28 @@ a {
 }
 
 a:hover {
-  color: #800000;
+  color: #400000;
+  text-decoration: none;
+}
+
+a i {
+  color: #001c39;
+}
+
+a i:hover {
+  color: #000e1c;
   text-decoration: none;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Volkhov', serif; 
   font-weight: 400;
+  color: #001c39;
+}
+
+h2 {
+  font-size: 1.7em;
+  margin: 00px 0px 20px 0px;
 }
 
 p {

@@ -1,12 +1,15 @@
-import React from 'react';
-
+import React from "react";
+import {Row, Col} from "reactstrap"
 const styles = {
-    margin: "30px auto 50px auto",
+    margin: "40px auto 60px auto",
     fontSize : "3em",
-    color: "#001c39",
     textAlign: "center"
 }
 
 export const Header = props => 
-    <h1 style={styles}>{props.children}</h1>
+    <Row>
+        <Col xs="12">
+            <h1 style={styles}>{props.children}</h1>
+        </Col>
+    </Row>
 ;

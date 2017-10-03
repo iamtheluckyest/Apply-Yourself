@@ -5,7 +5,7 @@ import {TextImage} from "../components/TextImage";
 
 const styles = {
     hr : {
-        margin: "30px 0px"
+        margin: "35px 0px"
     }
 }
 
@@ -18,7 +18,10 @@ export const LearnMore = props =>
     </Row>
     <Row>
         <Col xs="12">
-            <TextImage source="http://via.placeholder.com/350x250" alt="placeholder">
+            <TextImage 
+                source="http://via.placeholder.com/350x250" 
+                alt="placeholder"
+                sectionTitle="Sign up for an account">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam non diam dui. Ut sed tortor mattis, gravida lorem ut, posuere leo. Vestibulum commodo quis orci ut mattis. Maecenas eu neque sagittis, iaculis sem in, tempus odio. Quisque congue interdum elit, eu pharetra nisl luctus eu. Donec suscipit velit sapien, eu efficitur urna scelerisque nec. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel luctus quam. Nulla elementum vitae nisl sit amet maximus. Vivamus semper, ipsum ut tincidunt vehicula, justo dolor aliquet massa, at pellentesque turpis odio consectetur turpis. Nam elit mi, condimentum ut fermentum mollis, tempor ut dolor. Suspendisse in nulla posuere, elementum sem sit amet, vulputate tellus. Duis purus felis, fermentum vel faucibus eu, iaculis at metus. Nulla volutpat quam et interdum semper.
             </TextImage>
         </Col>
@@ -26,7 +29,11 @@ export const LearnMore = props =>
     <hr style={styles.hr} />
     <Row>
         <Col xs="12">
-            <TextImage imgRight="true" source="http://via.placeholder.com/250x250" alt="placeholder">
+            <TextImage 
+                imgRight="true" 
+                source="http://via.placeholder.com/250x250" 
+                alt="placeholder"
+                sectionTitle="Add colleges to your dashboard">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam non diam dui. Ut sed tortor mattis, gravida lorem ut, posuere leo. Vestibulum commodo quis orci ut mattis. Maecenas eu neque sagittis, iaculis sem in, tempus odio. Quisque congue interdum elit, eu pharetra nisl luctus eu. Donec suscipit velit sapien, eu efficitur urna scelerisque nec. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel luctus quam. Nulla elementum vitae nisl sit amet maximus. Vivamus semper, ipsum ut tincidunt vehicula, justo dolor aliquet massa, at pellentesque turpis odio consectetur turpis. Nam elit mi, condimentum ut fermentum mollis, tempor ut dolor. Suspendisse in nulla posuere, elementum sem sit amet, vulputate tellus. Duis purus felis, fermentum vel faucibus eu, iaculis at metus. Nulla volutpat quam et interdum semper.
             </TextImage>
         </Col>
@@ -34,7 +41,10 @@ export const LearnMore = props =>
     <hr style={styles.hr} />
     <Row>
         <Col xs="12">
-            <TextImage  source="http://via.placeholder.com/250x250" alt="placeholder">
+            <TextImage  
+                source="http://via.placeholder.com/250x250" 
+                alt="placeholder"
+                sectionTitle="Add college details">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam non diam dui. Ut sed tortor mattis, gravida lorem ut, posuere leo. Vestibulum commodo quis orci ut mattis. Maecenas eu neque sagittis, iaculis sem in, tempus odio. Quisque congue interdum elit, eu pharetra nisl luctus eu. Donec suscipit velit sapien, eu efficitur urna scelerisque nec. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel luctus quam. Nulla elementum vitae nisl sit amet maximus. Vivamus semper, ipsum ut tincidunt vehicula, justo dolor aliquet massa, at pellentesque turpis odio consectetur turpis. Nam elit mi, condimentum ut fermentum mollis, tempor ut dolor. Suspendisse in nulla posuere, elementum sem sit amet, vulputate tellus. Duis purus felis, fermentum vel faucibus eu, iaculis at metus. Nulla volutpat quam et interdum semper.
             </TextImage>
         </Col>

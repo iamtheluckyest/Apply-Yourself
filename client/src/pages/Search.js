@@ -23,11 +23,7 @@ export class Search extends Component {
     render() {
         return (
             <Container>
-                <Row>
-                    <Col xs="12">
-                        <Header>Search for a College</Header>
-                    </Col>
-                </Row>
+                <Header>Search for a College</Header>
                 <Row>
                     <Col xs="hidden" sm="2">
                     </Col>

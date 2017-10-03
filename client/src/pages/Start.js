@@ -11,11 +11,12 @@ const styles= {
     },
     heroText : {
         textAlign: "center",
-        color: "white"
+        color: "#FFF"
     },
     h1 : {
         fontSize : "3.5em",
-        marginBottom: "15px"
+        marginBottom: "15px",
+        color:"#FFF"
     },
     p : {
         fontSize : "2em"        
