@@ -10,7 +10,7 @@ const FieldSchema = new mongoose.Schema({
 
 const CollegeSchema = new mongoose.Schema({
     apiId : Number,
-    generalInfo : [FieldSchema],
+    Notes : [FieldSchema],
     appRequirements : [FieldSchema]
 });
 
@@ -21,7 +21,12 @@ const UserSchema = new mongoose.Schema({
     },
     password: String,
     name: String,
-    colleges : [CollegeSchema]
+    colleges : [CollegeSchema],
+    notes : [{
+        name : String,
+        note : String
+    }],
+    appRequirements : [FieldSchema]
 });
 
 

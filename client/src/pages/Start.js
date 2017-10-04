@@ -55,12 +55,12 @@ export class Start extends Component {
                         <Row>
                             <Col xs="12" sm="6">
                                 <Link to="/search">
-                                    <Button outline color="primary" className="homeButton-left">Search Colleges</Button>
+                                    <Button color="primary" className="homeButton-left">Search Colleges</Button>
                                 </Link>
                             </Col>
                             <Col xs="12" sm="6">
                                 <Link to="/login">
-                                    <Button outline color="primary" className="homeButton-right">Sign up/Log in</Button>
+                                    <Button color="primary" className="homeButton-right">Sign up/Log in</Button>
                                 </Link>
                             </Col>
                         </Row>

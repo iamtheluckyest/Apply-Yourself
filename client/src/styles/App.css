@@ -11,7 +11,7 @@ a {
 
 a:hover {
   color: #400000;
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 a i {
@@ -20,7 +20,6 @@ a i {
 
 a i:hover {
   color: #000e1c;
-  text-decoration: none;
   cursor: pointer;
 }
 
