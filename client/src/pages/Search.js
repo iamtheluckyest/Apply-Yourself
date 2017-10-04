@@ -5,14 +5,25 @@ import {Header} from "../components/Header"
 
 export class Search extends Component {
     state = {
+        // API call names: schoolName, schoolId, schoolLocation, underGraduatePopulation, graduatePopulation, inStateTuition, outStateTuition, completionRate2, completionRate4, salary6, salary10, averageSAT
         schoolName : "",
+        // schoolId : "",
         location : "",
+        // schoolLocation : "",
         minPopulation : "",
+        // underGraduatePopulation : "",
+        // graduatePopulation : "",
         maxPopulation : "",
         minTuition : "",
+        // inStateTuition : "",
+        // outStateTuition : "",
         maxTuition : "",
         minCompletion : ""
-        // API call names: schoolName, schoolId, schoolLocation, underGraduatePopulation, graduatePopulation, inStateTuition, outStateTuition, completionRate2, completionRate4, salary6, salary10, averageSAT
+        // completionRate2 : "",
+        // completionRate2 : "",
+        // salary6 : ",,
+        // salary10 : ",,
+        // averageSAT : ""     
     }
 
     handleInput = event => {
