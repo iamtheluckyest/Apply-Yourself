@@ -12,6 +12,7 @@ export class Search extends Component {
         minTuition : "",
         maxTuition : "",
         minCompletion : ""
+        // API call names: schoolName, schoolId, schoolLocation, underGraduatePopulation, graduatePopulation, inStateTuition, outStateTuition, completionRate2, completionRate4, salary6, salary10, averageSAT
     }
 
     handleInput = event => {
@@ -24,6 +25,61 @@ export class Search extends Component {
     handleSubmit = event => {
         event.preventDefault();
         console.log(this.state.schoolName)        
+    }
+
+    handleSubmit = event => {
+        event.preventDefault();
+        console.log(this.state.schoolId)        
+    }
+
+    handleSubmit = event => {
+        event.preventDefault();
+        console.log(this.state.schoolLocation)        
+    }
+
+    handleSubmit = event => {
+        event.preventDefault();
+        console.log(this.state.underGraduatePopulation)        
+    }
+
+    handleSubmit = event => {
+        event.preventDefault();
+        console.log(this.state.garduatePopulation)        
+    }
+
+    handleSubmit = event => {
+        event.preventDefault();
+        console.log(this.state.inStateTuition)        
+    }
+
+    handleSubmit = event => {
+        event.preventDefault();
+        console.log(this.state.outStateTuition)        
+    }
+
+    handleSubmit = event => {
+        event.preventDefault();
+        console.log(this.state.completionRate2)        
+    }
+
+    handleSubmit = event => {
+        event.preventDefault();
+        console.log(this.state.completionRate4)        
+    }
+
+    handleSubmit = event => {
+        event.preventDefault();
+        console.log(this.state.salary6)        
+    }
+
+    handleSubmit = event => {
+        event.preventDefault();
+        console.log(this.state.salary10)        
+    }
+
+    handleSubmit = event => {
+        event.preventDefault();
+        console.log(this.state.averageSAT)        
     }
 
     render() {
