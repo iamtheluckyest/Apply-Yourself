@@ -1,0 +1,5 @@
+// import custom vars from _variables.scss from this folder
+@import 'variables';
+
+// import bootstrap, which will now use our custom vars
+@import 'node_modules/bootstrap/scss/bootstrap';
