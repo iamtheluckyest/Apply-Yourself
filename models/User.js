@@ -9,7 +9,7 @@ const FieldSchema = new mongoose.Schema({
 //FieldSchema.plugin(customFields);
 
 const CollegeSchema = new mongoose.Schema({
-    id : String,
+    apiId : Number,
     generalInfo : [FieldSchema],
     appRequirements : [FieldSchema]
 });
