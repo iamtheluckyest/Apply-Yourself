@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
-import { Card, CardBlock, Row, Col } from 'reactstrap';
+import { Card, CardBody, Row, Col } from 'reactstrap';
 
 export class SearchForm extends Component {
   render() {
     return (
       <Card className="mb-5">
-        <CardBlock>
+        <CardBody>
           <Form>
             <FormGroup>
               <FormText>
@@ -53,9 +53,9 @@ export class SearchForm extends Component {
               <Label for="minTuition">Minimum Completion Rate (%)</Label>
               <Input onChange={this.props.handleInput} type="number" name="minCompletion" id="minCompletion" min="0" placeholder="30" />
             </FormGroup>               
-            <Button onClick={this.props.handleSubmit}>Submit</Button>
+            <Button className="btn-outline-orange" onClick={this.props.handleSubmit}>Submit</Button>
           </Form>
-        </CardBlock>
+        </CardBody>
     </Card>
     );
   }

@@ -5988,4 +5988,23 @@ a.text-dark:focus, a.text-dark:hover {
 .invisible {
   visibility: hidden !important; }
 
+.btn-outline-orange {
+  color: orange;
+  background-color: transparent;
+  background-image: none;
+  border-color: orange; }
+  .btn-outline-orange:hover {
+    color: #fff;
+    background-color: orange;
+    border-color: orange; }
+  .btn-outline-orange:focus, .btn-outline-orange.focus {
+    box-shadow: 0 0 0 3px rgba(255, 165, 0, 0.5); }
+  .btn-outline-orange.disabled, .btn-outline-orange:disabled {
+    color: orange;
+    background-color: transparent; }
+  .btn-outline-orange:active, .btn-outline-orange.active, .show > .btn-outline-orange.dropdown-toggle {
+    color: #fff;
+    background-color: orange;
+    border-color: orange; }
+
 /*# sourceMappingURL=index.css.map */
