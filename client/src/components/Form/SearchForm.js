@@ -53,7 +53,7 @@ export class SearchForm extends Component {
               <Label for="minTuition">Minimum Completion Rate (%)</Label>
               <Input onChange={this.props.handleInput} type="number" name="minCompletion" id="minCompletion" min="0" placeholder="30" />
             </FormGroup>               
-            <Button className="btn-outline-orange" onClick={this.props.handleSubmit}>Submit</Button>
+            <Button onClick={this.props.handleSubmit}>Submit</Button>
           </Form>
         </CardBody>
     </Card>

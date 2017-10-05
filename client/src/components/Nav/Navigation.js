@@ -14,7 +14,7 @@ export class Navigation extends Component {
   render() {
     return (
       <div>
-        <Navbar color="faded" light toggleable>
+        <Navbar color="light" toggleable>
           <NavbarToggler right onClick={this.toggle} />
           <NavbarBrand href="/">Apply Yourself</NavbarBrand>
           <Collapse isOpen={this.state.isOpen} navbar>
