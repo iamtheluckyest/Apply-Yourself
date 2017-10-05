@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import './styles/App.css';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import {Dashboard, LearnMore, LoginPage, School, Search, SearchResults, SignUpPage, Start, NoMatch} from "./pages"
 import { Navigation } from "./components/Nav"
+import Auth from "./Auth.js"
 
 class App extends Component {
   state = {
@@ -25,6 +26,10 @@ class App extends Component {
             <Route exact path="/dashboard" component={Dashboard} />
             <Route exact path="/learnMore" component={LearnMore}/>
             <Route exact path="/login" component={LoginPage} />
+            <Route exact path="/logout" render={() => {
+              Auth.deauthenticateUser();
+              return <Redirect to="/"/>
+            }}/>
             <Route exact path="/school" render={(props) => (
               <School {...props} schoolName="Northwestern University"/>
             )}/>

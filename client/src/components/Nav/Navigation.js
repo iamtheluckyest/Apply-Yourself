@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+import Auth from "../../Auth.js";
 
 export class Navigation extends Component {
   state = {
@@ -19,9 +20,16 @@ export class Navigation extends Component {
           <NavbarBrand href="/">Apply Yourself</NavbarBrand>
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink href="/login/">Log in/Sign up</NavLink>
-              </NavItem>
+              {Auth.isUserAuthenticated
+                ?
+                  <NavItem>
+                    <NavLink href="/logout/">Log out</NavLink>
+                  </NavItem>
+                :
+                  <NavItem>
+                    <NavLink href="/login/">Log in/Sign up</NavLink>
+                  </NavItem>
+              }
             </Nav>
           </Collapse>
         </Navbar>
