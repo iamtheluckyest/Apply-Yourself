@@ -1,17 +1,20 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-//var customFields = require('mongoose-custom-fields');
 
-const FieldSchema = new mongoose.Schema({
+const requirementSchema = new mongoose.Schema({
     name : String,
     value : {}
 });
-//FieldSchema.plugin(customFields);
+
+const noteSchema = new mongoose.Schema({
+    name : String,
+    value : String,
+})
 
 const CollegeSchema = new mongoose.Schema({
     apiId : Number,
-    generalInfo : [FieldSchema],
-    appRequirements : [FieldSchema]
+    notes : [noteSchema],
+    appRequirements : [requirementSchema]
 });
 
 const UserSchema = new mongoose.Schema({
@@ -21,7 +24,13 @@ const UserSchema = new mongoose.Schema({
     },
     password: String,
     name: String,
-    colleges : [CollegeSchema]
+    colleges : [CollegeSchema],
+    defaultNoteFields : [{
+        type : String
+    }],
+    defaultAppRequirements : [{
+        type : String
+    }]
 });
 
 
