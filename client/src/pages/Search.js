@@ -2,28 +2,17 @@ import React, {Component}  from "react";
 import {Container, Row, Col} from "reactstrap"
 import {SearchForm} from "../components/Form"
 import {Header} from "../components/Header"
+import API from "../utils/API"
 
 export class Search extends Component {
     state = {
-        // API call names: schoolName, schoolId, schoolLocation, underGraduatePopulation, graduatePopulation, inStateTuition, outStateTuition, completionRate2, completionRate4, salary6, salary10, averageSAT
         schoolName : "",
-        // schoolId : "",
         location : "",
-        // schoolLocation : "",
         minPopulation : "",
-        // underGraduatePopulation : "",
-        // graduatePopulation : "",
         maxPopulation : "",
         minTuition : "",
-        // inStateTuition : "",
-        // outStateTuition : "",
         maxTuition : "",
         minCompletion : ""
-        // completionRate2 : "",
-        // completionRate2 : "",
-        // salary6 : ",,
-        // salary10 : ",,
-        // averageSAT : ""     
     }
 
     handleInput = event => {
@@ -35,64 +24,34 @@ export class Search extends Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        console.log(this.state.schoolName)        
-    }
+        let authKey = "S9HBrRONDcEoZvlEQkn5ucv5bmWnMoRT5sjaWIJ8";
+        let queryURLBase = "https://api.data.gov/ed/collegescorecard/v1/schools.json?api_key=" + authKey + "&_fields=id,school.name,school.state,2015.cost.tuition.in_state,2015.cost.tuition.out_of_state";
+        let queryURL;
 
-    handleSubmit = event => {
-        event.preventDefault();
-        console.log(this.state.schoolId)        
-    }
+        if (this.state.location){
+            queryURL = queryURLBase + "&school.state=" + this.state.location;
+        }
 
-    handleSubmit = event => {
-        event.preventDefault();
-        console.log(this.state.schoolLocation)        
-    }
+        if (this.state.schoolName){
+            queryURL = (queryURL || queryURLBase) + "&school.name=" + this.state.schoolName;
+        }
+            // if (this.state.startYear) {
+            //     queryURL = queryURL + "&begin_date=" + this.state.startYear + "0101";
+            // }
+        
+            // if (this.state.endYear) {
+            //     queryURL = queryURL + "&end_date=" + this.state.endYear + "0101";
+            // }
 
-    handleSubmit = event => {
-        event.preventDefault();
-        console.log(this.state.underGraduatePopulation)        
-    }
+        // TODO check with Jeff, is this async?
+        if (queryURL) {
+            API.getSchools(queryURL)
+                .then(res => {
+                    console.log(res)  
+                }).catch(err => console.log(err))
 
-    handleSubmit = event => {
-        event.preventDefault();
-        console.log(this.state.garduatePopulation)        
+        }
     }
-
-    handleSubmit = event => {
-        event.preventDefault();
-        console.log(this.state.inStateTuition)        
-    }
-
-    handleSubmit = event => {
-        event.preventDefault();
-        console.log(this.state.outStateTuition)        
-    }
-
-    handleSubmit = event => {
-        event.preventDefault();
-        console.log(this.state.completionRate2)        
-    }
-
-    handleSubmit = event => {
-        event.preventDefault();
-        console.log(this.state.completionRate4)        
-    }
-
-    handleSubmit = event => {
-        event.preventDefault();
-        console.log(this.state.salary6)        
-    }
-
-    handleSubmit = event => {
-        event.preventDefault();
-        console.log(this.state.salary10)        
-    }
-
-    handleSubmit = event => {
-        event.preventDefault();
-        console.log(this.state.averageSAT)        
-    }
-
     render() {
         return (
             <Container>
