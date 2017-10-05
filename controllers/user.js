@@ -1,7 +1,37 @@
 const express = require('express');
 const router = new express.Router();
 const User = require("../models/User.js");
+const moment = require("moment");
 
+/**
+ * 
+ * @param {*} value 
+ * returns null if not valid. otherwise returns the value in either a number, date, or string format
+ */
+const validateReqValue = function(value){
+    if(typeof value === "string"){
+        let val = parseFloat(value);
+        if(isNaN(val)){
+            val = moment(value);
+            if(!val.isValid()){
+                val = value; // i don't know what this is, but it's a string
+            } else {
+                val = val.toDate();
+            }
+        }
+        return val;
+    } else {
+        return null;
+    }
+}
+
+/**
+ * 
+ * @param {*} user 
+ * @param {*} collegeApiId 
+ * 
+ * returns an object with the index of the college found in the array and the college itself
+ */
 const getCollege = function(user, collegeApiId){
     let myObj = {
         index : -1,
@@ -18,6 +48,14 @@ const getCollege = function(user, collegeApiId){
     return myObj;
 }
 
+/**
+ * 
+ * @param {*} myKey 
+ * @param {*} myVal 
+ * @param {*} myArr 
+ * 
+ * returns index of key value pair in an array
+ */
 const findValForKey = function(myKey, myVal, myArr){
     let i = 0;
     for(i; i < myArr.length; i++){
@@ -28,15 +66,36 @@ const findValForKey = function(myKey, myVal, myArr){
     return -1;
 }
 
-//for updating and creating
-const setRequirement = function(user, collegeObj, myFieldName, myFieldValue){
+/**
+ * 
+ * @param {*} user 
+ * @param {*} reqIndex 
+ * @param {*} collegeObj 
+ * @param {*} myFieldName 
+ * @param {*} myFieldValue 
+ * 
+ * returns a promise. Promise resolves to a user object
+ */
+const setRequirement = function(user, reqIndex, collegeObj, myFieldName, myFieldValue){
     const promise = new Promise(function(resolve, reject){
+        if(validateReqValue(myFieldValue) === null){
+            console.log("Application requirement in wrong format");
+            return reject(new Error("Application requirement in wrong format"));
+        }
         let college = collegeObj.college;
         let i = collegeObj.index;
-        college.appRequirements.set(reqIndex, {
+        const reqObj = {
             name : myFieldName,
             value : myFieldValue
-        });
+        }
+        //updating
+        if(reqIndex !== -1){
+            college.appRequirements.set(reqIndex, reqObj);
+        }
+        //vs adding 
+        else {
+            college.appRequirements.push(reqObj);
+        }
         user.colleges.set(i, college);
         user.save(err => {
             if(err){
@@ -51,6 +110,7 @@ const setRequirement = function(user, collegeObj, myFieldName, myFieldValue){
     return promise;
 }
 
+//get back the user
 router.get('/', (req, res) => {
     console.log("hit the get user route. User is:");
     const user = res.locals.user;
@@ -58,6 +118,13 @@ router.get('/', (req, res) => {
     return res.json(user);
 });
 
+//add a new college
+/*
+    Expects body to be:
+    {
+        collegeApiId : id of college from api (number)
+    }
+*/
 router.post("/college", (req, res) => {
     console.log("Hit the post route to add a new college. User is:");
     let user = res.locals.user;
@@ -77,7 +144,7 @@ router.post("/college", (req, res) => {
             appRequirements : user.defaultAppRequirements.map(element => {
                 return ({
                     name: element,
-                    value : {}
+                    value : ""
                 });
             }),
         });
@@ -97,6 +164,13 @@ router.post("/college", (req, res) => {
     }
 });
 
+//delete a college
+/*
+    Expects body to be:
+    {
+        collegeApiId : id of college from api (number)
+    }
+*/
 router.delete("/college", (req, res) => {
     console.log("Hit route to delete a college. User is: ");
     let user = res.locals.user;
@@ -113,6 +187,15 @@ router.delete("/college", (req, res) => {
     });
 });
 
+//add a new application requirement field
+/*
+    Expects body to be:
+    {
+        collegeApiId : id of college from api (number)
+        fieldName : name of new field
+        fieldValue : value of new field (hopefully this is just a string, number, or maybe a date obj. no complex data types)
+    }
+*/
 router.post("/requirement", (req, res) => {
     console.log("Hit the post route to make a new requirement field. User is:");
     let user = res.locals.user;
@@ -123,7 +206,7 @@ router.post("/requirement", (req, res) => {
         console.log("college found:");
         console.log(collegeObj);
         if(findValForKey("name", req.body.fieldName, college.appRequirements) === -1){
-            setRequirement(user, collegeObj, req.body.fieldName, req.body.fieldValue).then(function(data){
+            setRequirement(user, -1, collegeObj, req.body.fieldName, req.body.fieldValue).then(function(data){
                 res.json(data);
             }).catch(function(err){
                 res.json(oldUser);
@@ -138,6 +221,15 @@ router.post("/requirement", (req, res) => {
     }
 });
 
+//update an application requirement field
+/*
+    Expects body to be:
+    {
+        collegeApiId : id of college from api (number)
+        fieldName : name of new field
+        fieldValue : value of new field (hopefully this is just a string, number, or maybe a date obj. no complex data types)
+    }
+*/
 router.put("/requirement", (req, res) => {
     console.log("Hit the post route to edit a requirement field. User is:");
     let user = res.locals.user;
@@ -149,7 +241,7 @@ router.put("/requirement", (req, res) => {
         console.log(collegeObj);
         let reqIndex = findValForKey("name", req.body.fieldName, college.appRequirements);
         if(reqIndex !== -1){
-            setRequirement(user, collegeObj, req.body.fieldName, req.body.fieldValue).then(function(data){
+            setRequirement(user, reqIndex, collegeObj, req.body.fieldName, req.body.fieldValue).then(function(data){
                 res.json(data);
             }).catch(function(err){
                 res.json(oldUser);
