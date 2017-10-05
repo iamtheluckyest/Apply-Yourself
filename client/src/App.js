@@ -7,7 +7,8 @@ import Auth from "./Auth.js"
 
 class App extends Component {
   state = {
-    showNav : true
+    showNav : true,
+    searchResults : ""
   }  
 
   showHideNav = showOrHide => {
@@ -33,7 +34,9 @@ class App extends Component {
             <Route exact path="/school" render={(props) => (
               <School {...props} schoolName="Northwestern University"/>
             )}/>
-            <Route exact path="/search" component={Search}/>
+            <Route exact path="/search" render={(props) => (
+              <Search {...props} results={this.state.searchResults} />
+            )} />
             <Route exact path="/searchResults" component={SearchResults}/>
             <Route exact path="/signup" component={SignUpPage}/>
             <Route component={NoMatch}/>

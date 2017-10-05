@@ -35,6 +35,14 @@ export class Search extends Component {
         if (this.state.schoolName){
             queryURL = (queryURL || queryURLBase) + "&school.name=" + this.state.schoolName;
         }
+
+        if (this.state.minTuition && this.state.maxTuition) {
+            queryURL = (queryURL || queryURLBase) + "&2015.cost.tuition.in_state__range=" + this.state.minTuition + ".." + this.state.maxTuition;
+        } else if (this.state.minTuition) {
+            queryURL = (queryURL || queryURLBase) + "&2015.cost.tuition.in_state__range=" + this.state.minTuition + "..";
+        } else if (this.state.maxTuition) {
+            queryURL = (queryURL || queryURLBase) + "&2015.cost.tuition.in_state__range=0.." + this.state.maxTuition;
+        };
             // if (this.state.startYear) {
             //     queryURL = queryURL + "&begin_date=" + this.state.startYear + "0101";
             // }
@@ -42,8 +50,7 @@ export class Search extends Component {
             // if (this.state.endYear) {
             //     queryURL = queryURL + "&end_date=" + this.state.endYear + "0101";
             // }
-
-        // TODO check with Jeff, is this async?
+        console.log(queryURL)
         if (queryURL) {
             API.getSchools(queryURL)
                 .then(res => {
