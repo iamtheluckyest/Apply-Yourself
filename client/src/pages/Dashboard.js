@@ -43,7 +43,8 @@ export class Dashboard extends Component {
         return (
             this.state.user ?
             <Dash user={this.state.user}/>   
-            : ""
+            : 
+            <div></div>
         )
     }
 }

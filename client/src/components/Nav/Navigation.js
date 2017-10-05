@@ -20,7 +20,7 @@ export class Navigation extends Component {
           <NavbarBrand href="/">Apply Yourself</NavbarBrand>
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
-              {Auth.isUserAuthenticated
+              {Auth.isUserAuthenticated()
                 ?
                   <NavItem>
                     <NavLink href="/logout/">Log out</NavLink>
