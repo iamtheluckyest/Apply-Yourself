@@ -80,7 +80,7 @@ const setRequirement = function(user, reqIndex, collegeObj, myFieldName, myField
     const promise = new Promise(function(resolve, reject){
         if(validateReqValue(myFieldValue) === null){
             console.log("Application requirement in wrong format");
-            return reject(new Error("Application requirement in wrong format"));
+            return reject(new Error("Application requirement value is in the wrong format"));
         }
         let college = collegeObj.college;
         let i = collegeObj.index;
@@ -97,13 +97,13 @@ const setRequirement = function(user, reqIndex, collegeObj, myFieldName, myField
             college.appRequirements.push(reqObj);
         }
         user.colleges.set(i, college);
-        user.save(err => {
+        user.save((err, updatedUser) => {
             if(err){
                 console.log(err);
                 reject(err);
             } else {
                 console.log("successful requirement field saved");
-                resolve(user);
+                resolve(updatedUser);
             }
         });
     });
@@ -113,9 +113,55 @@ const setRequirement = function(user, reqIndex, collegeObj, myFieldName, myField
 //get back the user
 router.get('/', (req, res) => {
     console.log("hit the get user route. User is:");
-    const user = res.locals.user;
+    let user = res.locals.user;
     console.log(user);
     return res.json(user);
+});
+
+//post new default requirements. Use this to create and update requirements
+/*
+    Expects body to be:
+    {
+        appRequirements : [String] - an array of strings
+    }
+*/
+router.post("/default_requirements", (req, res) => {
+    console.log("hit the route to post default requirements. User is:");
+    let user = res.locals.user;
+    console.log(user);
+    user.defaultAppRequirements = req.body.appRequirements;
+    user.save(function(err, updatedUser){
+        if(err){
+            console.log(err);
+            res.json({error : true, message : "Error setting default application requirements."});
+        } else {
+            console.log("successfully posted default application requirements");
+            res.json(updatedUser);
+        }
+    });
+});
+
+//post new default notes. Use this to create and update default notes.
+/*
+    Expects body to be:
+    {
+        noteFields : [String] - an array of strings
+    }
+*/
+router.post("/default_notes", (req, res) => {
+    console.log("hit the route to post default requirements. User is:");
+    let user = res.locals.user;
+    console.log(user);
+    user.defaultNoteFields = req.body.noteFields;
+    user.save(function(err, updatedUser){
+        if(err){
+            console.log(err);
+            res.json({error : true, message : "Error setting default notes"});
+        } else {
+            console.log("successfully posted default notes");
+            res.json(updatedUser);
+        }
+    });
 });
 
 //add a new college
@@ -128,7 +174,6 @@ router.get('/', (req, res) => {
 router.post("/college", (req, res) => {
     console.log("Hit the post route to add a new college. User is:");
     let user = res.locals.user;
-    const oldUser = res.locals.user;
     console.log(user);
     let collegeObj = getCollege(user, req.body.collegeApiId);
     if(!collegeObj.college){
@@ -149,18 +194,17 @@ router.post("/college", (req, res) => {
             }),
         });
         //save the user
-        user.save(err => {
+        user.save((err, updatedUser) => {
             if(err){
                 console.log(err);
-                res.json(oldUser);
+                res.json({error : true, message: "Error adding new college. Please try again later."});
             } else {
                 console.log("successfully added a college.");
-                res.json(user);
+                res.json(updatedUser);
             }
         })
     } else {
-        console.log("user already has a college with that api ID");
-        res.json(oldUser);
+        res.json({error : true, message: "You have already added this college."});
     }
 });
 
@@ -168,21 +212,26 @@ router.post("/college", (req, res) => {
 /*
     Expects body to be:
     {
-        collegeApiId : id of college from api (number)
+        collegeId : id of college from our database (string)
     }
 */
 router.delete("/college", (req, res) => {
     console.log("Hit route to delete a college. User is: ");
     let user = res.locals.user;
-    const oldUser = res.locals.user;
     console.log(user);
-    user.colleges.pull({"apiId" : req.body.collegeApiId});
-    user.save(function(err){
-        if(err){
-            console.log(err);
-            res.json(oldUser);
+    user.colleges.id(req.body.collegeId).remove(function(deleteErr){
+        if(deleteErr){
+            console.log(deleteErr);
+            res.json({error : true, message : "Error deleting college."})
         } else {
-            res.json(user)
+            user.save(function(err, updatedUser){
+                if(err){
+                    console.log(err);
+                    res.json({error : true, message : "Error saving user after deletion."})
+                } else {
+                    res.json(updatedUser);
+                }
+            });
         }
     });
 });
@@ -199,7 +248,6 @@ router.delete("/college", (req, res) => {
 router.post("/requirement", (req, res) => {
     console.log("Hit the post route to make a new requirement field. User is:");
     let user = res.locals.user;
-    const oldUser = res.locals.user;
     console.log(user);
     let collegeObj = getCollege(user, req.body.collegeApiId);
     if(collegeObj.college) {
@@ -209,15 +257,15 @@ router.post("/requirement", (req, res) => {
             setRequirement(user, -1, collegeObj, req.body.fieldName, req.body.fieldValue).then(function(data){
                 res.json(data);
             }).catch(function(err){
-                res.json(oldUser);
+                res.json({error : true, message: err.message});
             });
         } else {
             console.log("app requirement already exists");
-            res.json(oldUser);
+            res.json({error : true, message: "Error adding a new application requirement. That application requirement already exists."});
         }
     } else {
         console.log("college not found for api id");
-        res.json(oldUser);
+        res.json({error : true, message: "Error adding a new application requirement."});
     }
 });
 
@@ -231,9 +279,8 @@ router.post("/requirement", (req, res) => {
     }
 */
 router.put("/requirement", (req, res) => {
-    console.log("Hit the post route to edit a requirement field. User is:");
+    console.log("Hit the put route to edit a requirement field. User is:");
     let user = res.locals.user;
-    const oldUser = res.locals.user;
     console.log(user);
     let collegeObj = getCollege(user, req.body.collegeApiId);
     if(collegeObj.college) {
@@ -244,15 +291,49 @@ router.put("/requirement", (req, res) => {
             setRequirement(user, reqIndex, collegeObj, req.body.fieldName, req.body.fieldValue).then(function(data){
                 res.json(data);
             }).catch(function(err){
-                res.json(oldUser);
+                res.json({error : true, message: err.message});
             });
         } else {
             console.log("app requirement doesn't exist");
-            res.json(oldUser);
+            res.json({error : true, message: "Error updating application requirement. That application requirement doesn't exist."});
         }
     } else {
         console.log("college not found for api id");
-        res.json(oldUser);
+        res.json({error : true, message: "Error updating application requirement."});
+    }
+});
+
+//delete an application requirement
+/*
+    Expects body to be:
+    {
+        collegeApiId : id of college from api (number)
+        fieldId : id of application requirement
+    }
+*/
+router.delete("/requirement", (req, res) => {
+    console.log("Hit the delete route to delete an application requirement");
+    let user = res.locals.user;
+    console.log("user");
+    let collegeObj = getCollege(user, req.body.collegeApiId);
+    if(collegeObj.college){
+        console.log("college found:");
+        console.log(collegeObj);
+        collegeObj.college.appRequirements.id(req.body.fieldId).remove(function(err){
+            if(err){
+                console.log(err);
+                res.json({error : true, message: "Error deleting an application requirement"});
+            } else {
+                user.save(function(saveErr, updatedUser){
+                    if(saveErr){
+                        console.log(saveErr);
+                        res.json({error : true, message : "Error saving your profile after deleting application requirement"})
+                    } else {
+                        res.json(updatedUser);
+                    }
+                });
+            }
+        });
     }
 });
 
