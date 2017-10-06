@@ -11,6 +11,10 @@ class App extends Component {
     searchResults : ""
   }  
 
+  componentDidMount() {
+    // this.setState({searchResults :  });
+  }
+
   showHideNav = showOrHide => {
     this.setState({showNav: showOrHide})
   }

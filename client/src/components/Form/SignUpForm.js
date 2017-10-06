@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import { Card, CardBlock, CardFooter} from 'reactstrap';
+import { Card, CardBody, CardFooter} from 'reactstrap';
 
 
 export const SignUpForm = (props) => (
     <Card className="mb-5">
-        <CardBlock>
+        <CardBody>
             {props.errors.summary && <p>{props.errors.summary}</p>}
             <Form action="/" onSubmit={props.onSubmit}>
 
@@ -48,7 +48,7 @@ export const SignUpForm = (props) => (
                     Create New Account
                 </Button>
             </Form>
-        </CardBlock>
+        </CardBody>
         <CardFooter className="panel-footer">
             Already have an account? <Link to={'/login'}>Log in</Link>
         </CardFooter>
