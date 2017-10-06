@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {Link} from "react-router-dom";
-import {Container, Col, Row, Label} from 'reactstrap';
+import {Container, Col, Row } from 'reactstrap';
 import { Nav, NavItem, NavLink } from 'reactstrap';
 import {Card, CardBlock} from 'reactstrap';
 import {Header} from "../components/Header";
