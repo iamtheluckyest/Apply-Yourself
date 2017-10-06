@@ -2,6 +2,7 @@ const express = require('express');
 const router = new express.Router();
 const User = require("../models/User.js");
 const moment = require("moment");
+var mongoose = require('mongoose');
 
 /**
  * 
@@ -10,16 +11,19 @@ const moment = require("moment");
  */
 const validateReqValue = function(value){
     if(typeof value === "string"){
-        let val = parseFloat(value);
-        if(isNaN(val)){
-            val = moment(value);
-            if(!val.isValid()){
-                val = value; // i don't know what this is, but it's a string
+        let val = value;
+        const regEx = /^(([0-9]*\.[0-9]+)|([0-9]+))$/
+        if(regEx.test(value)){
+            value = parseFloat(value);
+        } else {
+            value = moment(value);
+            if(value.isValid()){
+                value = value.toDate();
             } else {
-                val = val.toDate();
+                value = val;
             }
         }
-        return val;
+        return value;
     } else {
         return null;
     }
@@ -76,9 +80,10 @@ const findValForKey = function(myKey, myVal, myArr){
  * 
  * returns a promise. Promise resolves to a user object
  */
-const setRequirement = function(user, reqIndex, collegeObj, myFieldName, myFieldValue){
+const setRequirement = function(user, id, collegeObj, myFieldName, myFieldValue){
     const promise = new Promise(function(resolve, reject){
-        if(validateReqValue(myFieldValue) === null){
+        let convVal = validateReqValue(myFieldValue);
+        if( convVal === null){
             console.log("Application requirement in wrong format");
             return reject(new Error("Application requirement value is in the wrong format"));
         }
@@ -86,11 +91,11 @@ const setRequirement = function(user, reqIndex, collegeObj, myFieldName, myField
         let i = collegeObj.index;
         const reqObj = {
             name : myFieldName,
-            value : myFieldValue
+            value : convVal
         }
         //updating
-        if(reqIndex !== -1){
-            college.appRequirements.set(reqIndex, reqObj);
+        if(id){
+            collegeObj.college.appRequirements.id(id).set(reqObj)
         }
         //vs adding 
         else {
@@ -253,7 +258,7 @@ router.post("/requirement", (req, res) => {
     if(collegeObj.college) {
         console.log("college found:");
         console.log(collegeObj);
-        setRequirement(user, -1, collegeObj, req.body.fieldName, req.body.fieldValue).then(function(data){
+        setRequirement(user, null, collegeObj, req.body.fieldName, req.body.fieldValue).then(function(data){
             res.json(data);
         }).catch(function(err){
             res.json({error : true, message: err.message});
@@ -282,18 +287,11 @@ router.put("/requirement", (req, res) => {
     if(collegeObj.college) {
         console.log("college found:");
         console.log(collegeObj);
-        let reqIndex = findValForKey("_id", req.body.fieldId, collegeObj.college.appRequirements);
-        if(reqIndex !== -1){
-            let sameIndex = findValForKey("")
-            setRequirement(user, reqIndex, collegeObj, req.body.fieldName, req.body.fieldValue).then(function(data){
-                res.json(data);
-            }).catch(function(err){
-                res.json({error : true, message: err.message});
-            });
-        } else {
-            console.log("app requirement doesn't exist");
-            res.json({error : true, message: "Error updating application requirement. That application requirement doesn't exist."});
-        }
+        setRequirement(user, req.body.fieldId, collegeObj, req.body.fieldName, req.body.fieldValue).then(function(data){
+            res.json(data);
+        }).catch(function(err){
+            res.json({error : true, message: err.message});
+        });
     } else {
         console.log("college not found for api id");
         res.json({error : true, message: "Error updating application requirement."});
