@@ -253,7 +253,7 @@ router.post("/requirement", (req, res) => {
     if(collegeObj.college) {
         console.log("college found:");
         console.log(collegeObj);
-        if(findValForKey("name", req.body.fieldName, college.appRequirements) === -1){
+        if(findValForKey("_id", req.body.fieldName, collegeObj.college.appRequirements) === -1){
             setRequirement(user, -1, collegeObj, req.body.fieldName, req.body.fieldValue).then(function(data){
                 res.json(data);
             }).catch(function(err){
@@ -274,8 +274,9 @@ router.post("/requirement", (req, res) => {
     Expects body to be:
     {
         collegeApiId : id of college from api (number)
-        fieldName : name of new field
-        fieldValue : value of new field (hopefully this is just a string, number, or maybe a date obj. no complex data types)
+        fieldId : id of field to update
+        fieldName : name of updated field
+        fieldValue : value of updated field (hopefully this is just a string, number, or maybe a date obj. no complex data types)
     }
 */
 router.put("/requirement", (req, res) => {
@@ -286,8 +287,9 @@ router.put("/requirement", (req, res) => {
     if(collegeObj.college) {
         console.log("college found:");
         console.log(collegeObj);
-        let reqIndex = findValForKey("name", req.body.fieldName, college.appRequirements);
+        let reqIndex = findValForKey("_id", req.body.fieldId, collegeObj.college.appRequirements);
         if(reqIndex !== -1){
+            let sameIndex = findValForKey("")
             setRequirement(user, reqIndex, collegeObj, req.body.fieldName, req.body.fieldValue).then(function(data){
                 res.json(data);
             }).catch(function(err){
