@@ -31,6 +31,7 @@ export const SearchResults = props =>
                             return (
                                 <SearchResult 
                                 key={school["school.id"]}
+                                id={school["school.id"]}
                                 collegeName={school["school.name"]} 
                                 state={school["school.state"]}
                                 inStateTuition={school["2015.cost.tuition.in_state"]}

@@ -180,36 +180,41 @@ router.post("/college", (req, res) => {
     console.log("Hit the post route to add a new college. User is:");
     let user = res.locals.user;
     console.log(user);
-    let collegeObj = getCollege(user, req.body.collegeApiId);
-    if(!collegeObj.college){
-        //add a new college. set names of note and app requirement fields to the names specified in the default arrays on user.
-        user.colleges.push({
-            "apiId" : req.body.collegeApiId,
-            notes : user.defaultNoteFields.map(element => {
-                return ({ 
-                    name: element,
-                    value : "",
-                });
-            }),
-            appRequirements : user.defaultAppRequirements.map(element => {
-                return ({
-                    name: element,
-                    value : ""
-                });
-            }),
-        });
-        //save the user
-        user.save((err, updatedUser) => {
-            if(err){
-                console.log(err);
-                res.json({error : true, message: "Error adding new college. Please try again later."});
-            } else {
-                console.log("successfully added a college.");
-                res.json(updatedUser);
-            }
-        })
+    req.body.collegeApiId = parseInt(req.body.collegeApiId);
+    if (req.body.collegeApiId){
+        let collegeObj = getCollege(user, req.body.collegeApiId);
+        if(!collegeObj.college){
+            //add a new college. set names of note and app requirement fields to the names specified in the default arrays on user.
+            user.colleges.push({
+                "apiId" : req.body.collegeApiId,
+                notes : user.defaultNoteFields.map(element => {
+                    return ({ 
+                        name: element,
+                        value : "",
+                    });
+                }),
+                appRequirements : user.defaultAppRequirements.map(element => {
+                    return ({
+                        name: element,
+                        value : ""
+                    });
+                }),
+            });
+            //save the user
+            user.save((err, updatedUser) => {
+                if(err){
+                    console.log(err);
+                    res.json({error : true, message: "Error adding new college. Please try again later."});
+                } else {
+                    console.log("Successfully added a college.");
+                    res.json(updatedUser);
+                }
+            })
+        } else {
+            res.json({error : true, message: "You have already added this college."});
+        }
     } else {
-        res.json({error : true, message: "You have already added this college."});
+        res.json({error: true, message: "Id is not a number." })
     }
 });
 
