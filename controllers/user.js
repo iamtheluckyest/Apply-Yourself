@@ -253,16 +253,11 @@ router.post("/requirement", (req, res) => {
     if(collegeObj.college) {
         console.log("college found:");
         console.log(collegeObj);
-        if(findValForKey("_id", req.body.fieldName, collegeObj.college.appRequirements) === -1){
-            setRequirement(user, -1, collegeObj, req.body.fieldName, req.body.fieldValue).then(function(data){
-                res.json(data);
-            }).catch(function(err){
-                res.json({error : true, message: err.message});
-            });
-        } else {
-            console.log("app requirement already exists");
-            res.json({error : true, message: "Error adding a new application requirement. That application requirement already exists."});
-        }
+        setRequirement(user, -1, collegeObj, req.body.fieldName, req.body.fieldValue).then(function(data){
+            res.json(data);
+        }).catch(function(err){
+            res.json({error : true, message: err.message});
+        });
     } else {
         console.log("college not found for api id");
         res.json({error : true, message: "Error adding a new application requirement."});
