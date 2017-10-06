@@ -1,6 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom"
-import {Card, CardTitle, CardBlock} from "reactstrap";
+import {Card, CardTitle, CardBody} from "reactstrap";
 
 const styles= {
     icon: {
@@ -14,17 +14,19 @@ const styles= {
 }
 
 export const SearchResult = props => 
-    <Card className="mb-3">
-        <CardBlock>
+    <Card className="mb-3" key={props.key}>
+        <CardBody>
             <CardTitle style={styles.cardTitle}>{props.collegeName}</CardTitle>
             <h3 style={styles.icon}><Link to="/"><i className="fa fa-plus-square" aria-hidden="true"></i></Link></h3>
             <p>
-                <a href={props.url} target="_blank">{props.url}</a>
+                <a href={"http://" + props.url} target="_blank">{props.url}</a>
                 <br />
-                Location: {props.location} 
+                State: {props.state} 
                 <br />
-                Average Tuition: {props.avgTuition}
+                In-state Tuition: {props.inStateTuition}
+                <br />
+                Out-of-state Tuition: {props.outOfStateTuition}
             </p>
-        </CardBlock>
+        </CardBody>
     </Card>
 ;

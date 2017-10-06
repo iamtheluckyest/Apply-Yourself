@@ -15,9 +15,9 @@ export class Navigation extends Component {
   render() {
     return (
       <div>
-        <Navbar color="primary dark" toggleable>
-          <NavbarToggler right onClick={this.toggle} />
+        <Navbar color="primary dark" expand="md">
           <NavbarBrand href="/">Apply Yourself</NavbarBrand>
+          <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               {Auth.isUserAuthenticated()
