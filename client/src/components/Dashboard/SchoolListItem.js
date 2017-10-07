@@ -1,6 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom"
-import {Card, CardTitle, CardBlock} from "reactstrap";
+import {Card, CardTitle, CardBody} from "reactstrap";
 
 const styles= {
     icon: {
@@ -15,7 +15,7 @@ const styles= {
 
 export const SchoolListItem = props => 
     <Card className="mb-3">
-        <CardBlock>
+        <CardBody>
             <CardTitle style={styles.cardTitle}>{props.collegeName}</CardTitle>
             <h3 style={styles.icon}><Link to="/"><i className="fa fa-plus-square" aria-hidden="true"></i></Link></h3>
             <p>
@@ -28,6 +28,6 @@ export const SchoolListItem = props =>
             <p>
                 Admissions Deadline: {props.deadline}
             </p>
-        </CardBlock>
+        </CardBody>
     </Card>
 ;
