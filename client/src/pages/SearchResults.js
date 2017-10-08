@@ -18,9 +18,9 @@ export const SearchResults = props =>
                         <p style={{textAlign: "center"}}>Sorry, we didn't find any results matching that search</p>
                     :
                         props.results.map(school => {
-                            for (let Key in school) {
-                                if (!school[Key]) {
-                                    school[Key] = "Data not found"
+                            for (let key in school) {
+                                if (!school[key]) {
+                                    school[key] = "Data not found"
                                 };
                             }
                             return (
