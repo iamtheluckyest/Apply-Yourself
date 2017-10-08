@@ -26,6 +26,7 @@ const styles= {
 export class Start extends Component {
     
     componentDidMount() {
+        document.title = "Apply Yourself"
         document.body.style.background = "linear-gradient(rgba(0, 28, 57, 0.45), rgba(0, 28, 57, 0.45)), url('./images/yale-university-gate.jpeg') center center no-repeat fixed";
         document.body.style.backgroundSize = "cover";
         this.props.showHideNav(false)

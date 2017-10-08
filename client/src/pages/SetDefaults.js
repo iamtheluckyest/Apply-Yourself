@@ -19,7 +19,11 @@ export class SetDefaults extends Component {
         selectedAppPrefs : [],
         active: []
     }
-  
+    
+    componentDidMount(){
+        document.title = "Default Preferences"
+    }
+
     addToSamplePrefs = (sampleArray, newCriterion) => {
         let arr = this.state[sampleArray]
         arr.push(newCriterion)

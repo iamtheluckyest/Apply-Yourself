@@ -18,6 +18,7 @@ export class Dashboard extends Component {
      * This method will be executed after initial rendering.
      */
     componentDidMount() {
+        document.title = "Dashboard"
         let that = this;
         axios({
             url : '/user',

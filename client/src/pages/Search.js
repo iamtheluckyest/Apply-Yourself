@@ -18,6 +18,7 @@ export class Search extends Component {
     }
 
     componentDidMount() {
+        document.title = "Search"
         this.setState({redirect:false})
     }
 
