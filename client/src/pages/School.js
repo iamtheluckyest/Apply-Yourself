@@ -29,6 +29,7 @@ export class School extends Component {
     }
 
     componentDidMount() {
+        document.title = "School"
         this.setState({
             active: [true, false, false]
         })

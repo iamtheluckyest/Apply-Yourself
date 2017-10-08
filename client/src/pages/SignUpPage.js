@@ -29,6 +29,10 @@ export class SignUpPage extends Component {
         this.changeUser = this.changeUser.bind(this);
     }
 
+    componentDidMount() {
+        document.title = "Sign Up";
+    }
+
     /**
      * Change the user object.
      *

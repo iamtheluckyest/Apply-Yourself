@@ -36,6 +36,10 @@ export class LoginPage extends Component {
         this.changeUser = this.changeUser.bind(this);
     }
 
+    componentDidMount(){
+        document.title = "Log in"
+    }
+
     /**
      * Process the form.
      *
