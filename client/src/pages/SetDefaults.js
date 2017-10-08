@@ -152,7 +152,8 @@ export class SetDefaults extends Component {
                         <h3>Application preferences</h3>
                         <p>
                             Are there application fields that you want to make sure you remember for every college?
-                            <br />
+                        </p>
+                        <p>
                             <em>Choose the application information that matters to you.</em>
                         </p>
                         {this.state.sampleAppPrefs.map((pref, index) => {

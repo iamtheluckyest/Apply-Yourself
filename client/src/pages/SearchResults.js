@@ -23,10 +23,12 @@ export const SearchResults = props =>
                                     school[key] = "Data not found"
                                 };
                             }
+                            console.log(school)
+                            console.log(school.id)
                             return (
                                 <SearchResult 
-                                key={school["school.id"]}
-                                id={school["school.id"]}
+                                key={school.id}
+                                id={school.id}
                                 collegeName={school["school.name"]} 
                                 state={school["school.state"]}
                                 inStateTuition={school["2015.cost.tuition.in_state"]}
