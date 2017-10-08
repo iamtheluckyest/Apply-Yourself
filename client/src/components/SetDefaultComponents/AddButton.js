@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Button, Form, FormGroup, Input, Label} from "reactstrap"
+import {Button, Form, FormGroup, Input} from "reactstrap"
 
 export class AddButton extends Component {
     state = {

@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {Button, Container, Col, Row} from 'reactstrap';
 import {Header} from "../components/Header";
 import {AddButton, PrefButton} from "../components/SetDefaultComponents";
+import API from "../utils/API";
+import Auth from "../Auth";
 
 const styles = {
     preferenceRow : {
@@ -35,23 +37,58 @@ export class SetDefaults extends Component {
         // and add choice to selected prefs array
         if (!this.state.active[index]) {
             activeArr[index] = true;
-            selectedArr.push(this.state["sample" + PrefsArr][index]);
+            if (PrefsArr === "CollegePrefs") {
+                selectedArr.push(this.state["sample" + PrefsArr][index]);
+            // Need to correct for the index which was changed to allow for different keys/ids
+            } else {
+                selectedArr.push(this.state["sample" + PrefsArr][index - this.state.sampleCollegePrefs.length]);
+            }
         } 
         // If choice has already been selected, toggle button to inactive 
         // and remove choice from selected prefs array
         else {
             activeArr[index] = false;
+            let foundIndex;
+            if (PrefsArr === "CollegePrefs") {
+                foundIndex = selectedArr.indexOf(this.state["sample" + PrefsArr][index]);
+            // Need to correct for the index which was changed to allow for different keys/ids
+            } else {
+                foundIndex = selectedArr.indexOf(this.state["sample" + PrefsArr][index - this.state.sampleCollegePrefs.length]);
+            }            
+            selectedArr.splice(foundIndex, 1)
         }
 
         // Update state.
         this.setState({
             active: activeArr,
             ["selected" + PrefsArr]: selectedArr
-        }, () => console.log(this.state.active))
+        }, () => console.log(this.state))
     }
 
     handleSubmit = event => {
-        
+        API.setDefaultCollegeReqs({
+            method: "post",
+            url: "/user/default_notes",
+            headers: {
+                'Authorization' : `bearer ${Auth.getToken()}`
+            },
+            data: {
+                noteFields: this.state.selectedCollegePrefs
+            }
+        }).then( res => console.log(res))
+        .catch(err=> console.log(err))
+
+        API.setDefaultAppPrefs({
+            method: "post",
+            url: "/user/default_requirements",
+            headers: {
+                'Authorization' : `bearer ${Auth.getToken()}`
+            },
+            data: {
+                appRequirements: this.state.selectedAppPrefs
+            }    
+        }).then( res => console.log(res))
+        .catch(err=> console.log(err))
     }
 
     render () {

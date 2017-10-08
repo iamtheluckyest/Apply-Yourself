@@ -5,7 +5,12 @@ export default {
         return axios.get(query);
     },
     addSchool: function(queryObj) {
-        console.log("adding school")
+        return axios(queryObj)
+    },
+    setDefaultCollegeReqs: function(queryObj) {
+        return axios(queryObj)
+    },
+    setDefaultAppPrefs: function(queryObj) {
         return axios(queryObj)
     }
 }
