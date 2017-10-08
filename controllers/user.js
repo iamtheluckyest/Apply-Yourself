@@ -136,7 +136,7 @@ router.post("/default_requirements", (req, res) => {
     }
 */
 router.post("/default_notes", (req, res) => {
-    console.log("hit the route to post default requirements. User is:");
+    console.log("hit the route to post default notes. User is:");
     let user = res.locals.user;
     console.log(user);
     user.defaultNoteFields = req.body.noteFields;
@@ -155,48 +155,43 @@ router.post("/default_notes", (req, res) => {
 /*
     Expects body to be:
     {
-        collegeApiId : id of college from api (number)
+        collegeApiId : id of college from api (string)
     }
 */
 router.post("/college", (req, res) => {
     console.log("Hit the post route to add a new college. User is:");
     let user = res.locals.user;
     console.log(user);
-    req.body.collegeApiId = parseInt(req.body.collegeApiId);
-    if (req.body.collegeApiId){
-        let collegeObj = getCollege(user, req.body.collegeApiId);
-        if(!collegeObj.college){
-            //add a new college. set names of note and app requirement fields to the names specified in the default arrays on user.
-            user.colleges.push({
-                "apiId" : req.body.collegeApiId,
-                notes : user.defaultNoteFields.map(element => {
-                    return ({ 
-                        name: element,
-                        value : "",
-                    });
-                }),
-                appRequirements : user.defaultAppRequirements.map(element => {
-                    return ({
-                        name: element,
-                        value : ""
-                    });
-                }),
-            });
-            //save the user
-            user.save((err, updatedUser) => {
-                if(err){
-                    console.log(err);
-                    res.json({error : true, message: "Error adding new college. Please try again later."});
-                } else {
-                    console.log("Successfully added a college.");
-                    res.json(updatedUser);
-                }
-            })
-        } else {
-            res.json({error : true, message: "You have already added this college."});
-        }
+    let collegeObj = getCollege(user, req.body.collegeApiId);
+    if(!collegeObj.college){
+        //add a new college. set names of note and app requirement fields to the names specified in the default arrays on user.
+        user.colleges.push({
+            "apiId" : req.body.collegeApiId,
+            notes : user.defaultNoteFields.map(element => {
+                return ({ 
+                    name: element,
+                    value : "",
+                });
+            }),
+            appRequirements : user.defaultAppRequirements.map(element => {
+                return ({
+                    name: element,
+                    value : ""
+                });
+            }),
+        });
+        //save the user
+        user.save((err, updatedUser) => {
+            if(err){
+                console.log(err);
+                res.json({error : true, message: "Error adding new college. Please try again later."});
+            } else {
+                console.log("Successfully added a college.");
+                res.json(updatedUser);
+            }
+        })
     } else {
-        res.json({error: true, message: "Id is not a number." })
+        res.json({error : true, message: "You have already added this college."});
     }
 });
 
@@ -232,7 +227,7 @@ router.delete("/college", (req, res) => {
 /*
     Expects body to be:
     {
-        collegeApiId : id of college from api (number)
+        collegeApiId : id of college from api (string)
         fieldName : name of new field
         fieldValue : value of new field (hopefully this is just a string, number, or maybe a date obj. no complex data types)
     }
@@ -260,7 +255,7 @@ router.post("/requirement", (req, res) => {
 /*
     Expects body to be:
     {
-        collegeApiId : id of college from api (number)
+        collegeApiId : id of college from api (string)
         fieldId : id of field to update
         fieldName : name of updated field
         fieldValue : value of updated field (hopefully this is just a string, number, or maybe a date obj. no complex data types)
@@ -289,7 +284,7 @@ router.put("/requirement", (req, res) => {
 /*
     Expects body to be:
     {
-        collegeApiId : id of college from api (number)
+        collegeApiId : id of college from api (string)
         fieldId : id of application requirement
     }
 */

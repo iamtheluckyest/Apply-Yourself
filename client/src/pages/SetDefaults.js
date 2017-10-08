@@ -75,20 +75,35 @@ export class SetDefaults extends Component {
             data: {
                 noteFields: this.state.selectedCollegePrefs
             }
-        }).then( res => console.log(res))
-        .catch(err=> console.log(err))
-
-        API.setDefaultAppPrefs({
-            method: "post",
-            url: "/user/default_requirements",
-            headers: {
-                'Authorization' : `bearer ${Auth.getToken()}`
-            },
-            data: {
-                appRequirements: this.state.selectedAppPrefs
-            }    
-        }).then( res => console.log(res))
-        .catch(err=> console.log(err))
+        }).then( res => {
+            console.log(res)
+            if(!res.data.error){
+                API.setDefaultAppPrefs({
+                    method: "post",
+                    url: "/user/default_requirements",
+                    headers: {
+                        'Authorization' : `bearer ${Auth.getToken()}`
+                    },
+                    data: {
+                        appRequirements: this.state.selectedAppPrefs
+                    }    
+                }).then( res2 => {
+                    console.log(res2)
+                    if(!res2.data.error){
+                        console.log("successfully saved preferences");
+                        console.log(res2);
+                    } else {
+                        alert("Could not save your preferences. " + res2.data.message);
+                    }
+                }).catch(err2=> {
+                    console.log(err2)
+                });
+            } else {
+                alert("Could not save your preferences. " + res.data.message);
+            }
+        }).catch(err=> {
+            console.log(err)
+        })
     }
 
     render () {

@@ -19,7 +19,7 @@ export const SearchResult = props =>
         <CardBody>
             <CardTitle style={styles.cardTitle}>{props.collegeName}</CardTitle>
             <h3 style={styles.icon} 
-                onClick={ () => 
+                onClick={ () => { 
                     API.addSchool({
                         method: "post",
                         url: "/user/college",
@@ -32,7 +32,7 @@ export const SearchResult = props =>
                         
                     }).then( res => console.log(res))
                     .catch(err=> console.log(err))
-                }
+                }}
             ><a><i className="fa fa-plus-square" aria-hidden="true"></i></a></h3>
             <p>
                 <a href={"http://" + props.url} target="_blank">{props.url}</a>

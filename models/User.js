@@ -12,7 +12,7 @@ const noteSchema = new mongoose.Schema({
 })
 
 const CollegeSchema = new mongoose.Schema({
-    apiId : Number,
+    apiId : String,
     notes : [noteSchema],
     appRequirements : [requirementSchema]
 });
