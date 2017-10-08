@@ -16,17 +16,11 @@ const styles= {
 export const SchoolListItem = props => 
     <Card className="mb-3">
         <CardBody>
-            <CardTitle style={styles.cardTitle}>{props.collegeName}</CardTitle>
+            {console.log(props.school)}
+            <CardTitle style={styles.cardTitle}>{props.school.school.name}</CardTitle>
             <h3 style={styles.icon}><Link to="/"><i className="fa fa-plus-square" aria-hidden="true"></i></Link></h3>
             <p>
-                <a href={props.url} target="_blank">{props.url}</a>
-                <br />
-                Location: {props.location} 
-                <br />
-                Average Tuition: {props.avgTuition}
-            </p>
-            <p>
-                Admissions Deadline: {props.deadline}
+                {props.id}
             </p>
         </CardBody>
     </Card>

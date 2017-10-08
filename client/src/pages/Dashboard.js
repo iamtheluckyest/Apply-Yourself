@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import {Container} from "reactstrap"
 import {Dash} from "../components/Dashboard";
 import Auth from "../Auth.js";
 import axios from "axios";
@@ -41,10 +42,15 @@ export class Dashboard extends Component {
         console.log("state is: ");
         console.log(this.state);
         return (
-            this.state.user ?
-            <Dash user={this.state.user}/>   
-            : 
-            <div></div>
+            <Container>
+                {
+                    this.state.user 
+                    ?
+                    <Dash user={this.state.user}/>   
+                    : 
+                    <p style={{textAlign: "center", marginTop: "30px"}}>Sorry, you must be logged in to access this content.</p>
+                }
+            </Container>
         )
     }
 }

@@ -1,8 +1,8 @@
 import React from "react";
 
 export const NoMatch = props =>
-    <div>
-        Sorry, no page exists with that path name.
-    </div>
+    <p style={{textAlign: "center", marginTop: "30px"}}>
+        Sorry, you must be logged in to access this content.
+    </p>
 ;
 
