@@ -54,24 +54,6 @@ const getCollege = function(user, collegeApiId){
 
 /**
  * 
- * @param {*} myKey 
- * @param {*} myVal 
- * @param {*} myArr 
- * 
- * returns index of key value pair in an array
- */
-const findValForKey = function(myKey, myVal, myArr){
-    let i = 0;
-    for(i; i < myArr.length; i++){
-        if(myArr[i][myKey] === myVal){
-            return i;
-        }
-    }
-    return -1;
-}
-
-/**
- * 
  * @param {*} user 
  * @param {*} reqIndex 
  * @param {*} collegeObj 
@@ -312,9 +294,9 @@ router.put("/requirement", (req, res) => {
     }
 */
 router.delete("/requirement", (req, res) => {
-    console.log("Hit the delete route to delete an application requirement");
+    console.log("Hit the delete route to delete an application requirement. User is:");
     let user = res.locals.user;
-    console.log("user");
+    console.log(user);
     let collegeObj = getCollege(user, req.body.collegeApiId);
     if(collegeObj.college){
         console.log("college found:");
@@ -335,6 +317,91 @@ router.delete("/requirement", (req, res) => {
             }
         });
     }
+});
+
+//post a new note for a college
+/*
+    Expects body to be:
+    {
+        collegeId : string (id of college in our database)
+        fieldName : string (name of field)
+        fieldValue : string (value of field)
+    }
+*/
+router.post("/note", (req, res) => {
+    console.log("Hit the route to post a new note. User is:");
+    let user = res.locals.user;
+    console.log(user);
+    user.colleges.id(req.body.collegeId).notes.push({
+        "name" : req.body.fieldName,
+        "value" : req.body.fieldValue,
+    });
+    user.save((err, updatedUser) => {
+        if(err){
+            console.log(err);
+            res.json({error : true, message : "Error adding new note. Please try again later"});
+        } else {
+            res.json(updatedUser);
+        }
+    })
+    
+});
+
+//update a note
+/*
+    Expects body to be:
+    {
+        collegeId : id of college in our database (string)
+        fieldId : id of field to update
+        fieldName : name of updated field
+        fieldValue : value of updated field (hopefully this is just a string, number, or maybe a date obj. no complex data types)
+    }
+*/
+router.put("/note", (req, res) => {
+    console.log("Hit the route to put (edit) a note. User is:");
+    let user = res.locals.user;
+    console.log(user);
+    user.colleges.id(req.body.collegeId).notes.id(req.body.fieldId).set({
+        name : req.body.fieldName,
+        value : req.body.fieldValue
+    });
+    user.save((err, updatedUser) => {
+        if(err){
+            console.log(err);
+            res.json({error : true, message : "Error updating note. Please try again later"});
+        } else {
+            res.json(updatedUser);
+        }
+    });
+});
+
+//route to delete a note
+/*
+    Expects body to be
+    {
+        collegeId : string (id of college in our database)
+        fieldId : string (id of value you want to delete)
+    }
+*/
+router.delete("/note", (req, res) => {
+    console.log("Hit the route to delete a note. User is:");
+    let user = res.locals.user;
+    console.log(user);
+    user.colleges.id(req.body.collegeId).notes.id(req.body.fieldId).remove(function(err){
+        if(err){
+            console.log(err);
+            res.json({error : true, message : "Error removing note. Please try again later"});
+        } else {
+            user.save(function(errSave, updatedUser){
+                if(errSave){
+                    console.log(errSave);
+                    res.json({error : true, message : "Error saving profile after deleting note"})
+                } else {
+                    res.json(updatedUser);
+                }
+            })
+        }
+    });
 });
 
 module.exports = router;
