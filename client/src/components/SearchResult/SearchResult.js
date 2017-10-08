@@ -15,7 +15,7 @@ const styles= {
 }
 
 export const SearchResult = props => 
-    <Card className="mb-3" key={props.key}>
+    <Card className="mb-3">
         <CardBody>
             <CardTitle style={styles.cardTitle}>{props.collegeName}</CardTitle>
             <h3 style={styles.icon} 

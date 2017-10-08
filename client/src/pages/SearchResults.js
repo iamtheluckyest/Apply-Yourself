@@ -18,23 +18,21 @@ export const SearchResults = props =>
                         <p style={{textAlign: "center"}}>Sorry, we didn't find any results matching that search</p>
                     :
                         props.results.map(school => {
-                            for (let key in school) {
-                                if (!school[key]) {
-                                    school[key] = "Data not found"
+                            for (let Key in school) {
+                                if (!school[Key]) {
+                                    school[Key] = "Data not found"
                                 };
                             }
-                            console.log(school)
-                            console.log(school.id)
                             return (
                                 <SearchResult 
-                                key={school.id}
-                                id={school.id}
-                                collegeName={school["school.name"]} 
-                                state={school["school.state"]}
-                                inStateTuition={school["2015.cost.tuition.in_state"]}
-                                outOfStateTuition={school["2015.cost.tuition.out_of_state"]}
-                                url={school["school.school_url"]}
-                            />
+                                    key={school.id}
+                                    id={school.id}
+                                    collegeName={school["school.name"]} 
+                                    state={school["school.state"]}
+                                    inStateTuition={school["2015.cost.tuition.in_state"]}
+                                    outOfStateTuition={school["2015.cost.tuition.out_of_state"]}
+                                    url={school["school.school_url"]}
+                                />
                             )
                         }
                     )                    
