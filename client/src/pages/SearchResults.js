@@ -3,11 +3,6 @@ import {Container, Row, Col} from "reactstrap";
 import {SearchResult} from "../components/SearchResult";
 import {Header} from "../components/Header";
 
-
-const results = {
-
-}
-
 export const SearchResults = props => 
 
     <Container>

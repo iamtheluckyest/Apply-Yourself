@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from "react-router-dom";
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
 import Auth from "../../Auth.js";
 
@@ -16,7 +17,7 @@ export class Navigation extends Component {
     return (
       <div>
         <Navbar color="primary dark" expand="md">
-          <NavbarBrand href="/">Apply Yourself</NavbarBrand>
+          <Link to="/"><NavbarBrand>Apply Yourself</NavbarBrand></Link>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>

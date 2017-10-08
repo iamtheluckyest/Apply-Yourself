@@ -33,7 +33,7 @@ export const SearchResult = props =>
                     }).then( res => console.log(res))
                     .catch(err=> console.log(err))
                 }
-            ><a href="#"><i className="fa fa-plus-square" aria-hidden="true"></i></a></h3>
+            ><a><i className="fa fa-plus-square" aria-hidden="true"></i></a></h3>
             <p>
                 <a href={"http://" + props.url} target="_blank">{props.url}</a>
                 <br />
