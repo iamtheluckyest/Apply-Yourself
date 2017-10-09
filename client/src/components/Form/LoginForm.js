@@ -6,7 +6,6 @@ import { Card, CardBody, CardFooter } from 'reactstrap';
 export const LoginForm = (props) => (
     <Card className="mb-5">
         <CardBody>
-            {props.successMessage && <p className="success-message">{props.successMessage}</p>}
             {props.errors.summary && <p>{props.errors.summary}</p>}
             <Form action="/" onSubmit={props.onSubmit}>
                 <FormGroup >

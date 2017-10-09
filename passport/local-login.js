@@ -12,6 +12,8 @@ module.exports = new PassportLocalStrategy({
     session: false,
     passReqToCallback: true
 }, (req, email, password, done) => {
+    console.log("setting user data in login");
+    console.log(email + " " + password);
     const userData = {
         email: email.trim(),
         password: password.trim()
@@ -43,13 +45,13 @@ module.exports = new PassportLocalStrategy({
                 return done(error);
             }
 
-            const payload = {
+            let payload = {
                 sub: user._id
             };
 
             // create a token string
-            const token = jwt.sign(payload, config.jwtSecret);
-            const data = {
+            let token = jwt.sign(payload, config.jwtSecret);
+            let data = {
                 name: user.name
             };
 
