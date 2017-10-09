@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './styles/App.css';
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
-import {Dashboard, LearnMore, LoginPage, School, Search, SearchResults, SetDefaults, SignUpPage, Start, NoMatch} from "./pages"
+import {Dashboard, LearnMore, LoginPage, School, Search, SearchResults, SetDefaults, SignUpPage, Start, ChangeDefaults, NoMatch} from "./pages"
 import { Navigation } from "./components/Nav"
 import Auth from "./Auth.js"
 
@@ -45,6 +45,7 @@ class App extends Component {
               <SearchResults {...props} results={this.state.searchResults} />
             )}/>
             <Route exact path="/setDefaults" component={SetDefaults} />
+            <Route exact path="/changeDefaults" component={ChangeDefaults} />
             <Route exact path="/signup" component={SignUpPage}/>
             <Route component={NoMatch}/>
           </Switch>
