@@ -14,16 +14,16 @@ export const SearchResult = props =>
         <CardBody>
             <Link to={"/school/" + props.id} ><CardTitle style={styles.cardTitle}>{props.collegeName}</CardTitle></Link>
             <span className="iconHolder"
-                onClick={ () => { 
+                onClick={ () => {
                     API.addSchool(props.id)
-                    .then( res => console.log(res))
-                    .catch(err=> console.log(err))
+                    .then( res => console.log(res) )
+                    .catch( err=> console.log(err) )
                 }}
             ><i className="fa fa-plus-square" aria-hidden="true"></i></span>
             <p>
                 <a href={"http://" + props.url} target="_blank">{props.url}</a>
                 <br />
-                State: {props.state} 
+                {props.city}, {props.state}
                 <br />
                 In-state Tuition: {props.inStateTuition}
                 <br />

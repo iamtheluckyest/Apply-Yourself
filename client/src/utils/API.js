@@ -52,9 +52,17 @@ export default {
     },
     getUser: function() {
         return axios({
-            url : '/user',
             method : "get",
-            headers: authHeader,
+            url : '/user',
+            headers: authHeader
+        })
+    },
+    updateNote: function(queryObj) {
+        return axios({
+            method: "put",
+            url: "/user/note",
+            data: queryObj,
+            headers: authHeader
         })
     }
 }

@@ -19,18 +19,18 @@ export class SearchForm extends Component {
             </FormGroup>
             <FormGroup>
               <Label for="location">State</Label>
-              <Input onChange={this.props.handleInput} type="text" name="location" id="location" placeholder="Illinois" />
+              <Input onChange={this.props.handleInput} type="text" name="location" id="location" placeholder="IL" />
             </FormGroup>
             <Row>
               <Col xs="12" sm="6">
                 <FormGroup>
-                  <Label for="minPopulation">Min. Student Population</Label>
+                  <Label for="minPopulation">Min. Undergrad Student Population</Label>
                   <Input onChange={this.props.handleInput} type="number" name="minPopulation" id="minPopulation" min="0" placeholder="6,000" />
                 </FormGroup>
               </Col>
               <Col xs="12" sm="6">   
                 <FormGroup>
-                  <Label for="maxPopulation">Max. Student Population</Label>
+                  <Label for="maxPopulation">Max. Undergrad Student Population</Label>
                   <Input onChange={this.props.handleInput} type="number" name="maxPopulation" id="maxPopulation" placeholder="50,000" />
                 </FormGroup>  
               </Col>
@@ -38,21 +38,17 @@ export class SearchForm extends Component {
             <Row>
               <Col xs="12" sm="6">
                 <FormGroup>
-                  <Label for="minTuition">Min. Average Tuition ($)</Label>
+                  <Label for="minTuition">Min. Out-of-State Tuition ($)</Label>
                   <Input onChange={this.props.handleInput} type="number" name="minTuition" id="minTuition" min="0" placeholder="6,000" />
                 </FormGroup>
               </Col>
               <Col xs="12" sm="6">   
                 <FormGroup>
-                  <Label for="minTuition">Max. Average Tuition ($)</Label>
+                  <Label for="minTuition">Max. Out-of-State Tuition ($)</Label>
                   <Input onChange={this.props.handleInput} type="number" name="maxTuition" id="maxTuition" placeholder="50,000" />
                 </FormGroup>  
               </Col>
             </Row> 
-            <FormGroup>
-              <Label for="minTuition">Minimum Completion Rate (%)</Label>
-              <Input onChange={this.props.handleInput} type="number" name="minCompletion" id="minCompletion" min="0" placeholder="30" />
-            </FormGroup>               
             <Button onClick={this.props.handleSubmit}>Submit</Button>
           </Form>
         </CardBody>

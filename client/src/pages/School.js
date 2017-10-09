@@ -3,6 +3,7 @@ import {Container, Col, Row } from 'reactstrap';
 import { Nav, NavItem, NavLink } from 'reactstrap';
 import {Card, CardBody} from 'reactstrap';
 import {Header} from "../components/Header";
+import {Field} from "../components/School"
 import API from "../utils/API"
 
 const styles= {
@@ -12,13 +13,6 @@ const styles= {
         right: "-20px"
     }
 }
-
-/* Future functionality 
-    On component mount:
-*       - Call API to populate general fields
-*       - If user is signed in, check db to see if school is in user's db
-*           - If so, display user-generated info
-*/
 
 export class School extends Component {
     state = {
@@ -79,12 +73,12 @@ export class School extends Component {
                 if (schoolFound) {
                     that.setState({
                         schoolFound : true,
-                        userSchoolData : schoolFound
+                        schoolUserData : schoolFound
                     })
                 } else {
                     that.setState({
                         schoolFound : false,
-                        userSchoolData : schoolFound
+                        schoolUserData : schoolFound
                     })
                 }
             });
@@ -96,27 +90,96 @@ export class School extends Component {
         });
     }
 
+    /**
+     * Functions associated with updating Field component
+     */
+
+    handleInput = event => {
+        let {name, value} = event.target;
+        this.setState({
+            [name] : value
+        })
+    }
+
+    handleSubmit = (field, event) => {
+        event.preventDefault();
+        if (this.state[field._id]) {
+            API.updateNote({
+                collegeId : this.state.schoolUserData._id,
+                fieldId : field._id,
+                fieldName : field.name,
+                fieldValue : field.value
+            })
+            .then(res => console.log(res))
+            .catch(err => console.log(err))
+        }
+    }
+
+    /**
+     * Functions that decode College Scorecard Data
+     */
+
+    determineLocale = () => {
+        let locale;
+        switch (this.state.schoolApiData.school.locale) {
+            case 11 || 12 || 13 : locale = "City"; break;
+            case 21 || 22 || 23 : locale = "Suburb"; break;
+            case 31 || 32 || 33 : locale = "Town"; break;
+            case 41 || 42 || 43 : locale = "Rural"; break;
+            default: locale = null;
+        }
+        return locale
+    }
+
+    determineSize = () => {
+        let size;
+        switch(this.state.schoolApiData.school.carnegie_size_setting){
+            case 1 : size = "two-year, very small"; break;
+            case 2 : size = "two-year, small"; break;
+            case 3 : size = "two-year, medium"; break;
+            case 4 : size = "two-year, large"; break;
+            case 5 : size = "two-year, very large"; break;
+            case 6 : size = "four-year, very small, primarily nonresidential"; break;
+            case 7 : size = "four-year, very small, primarily residential"; break;
+            case 8 : size = "four-year, very small, highly residential"; break;
+            case 9 : size = "four-year, small, primarily nonresidential"; break;
+            case 10 : size = "four-year, small, primarily residential"; break;
+            case 11	: size = "four-year, small, highly residential"; break;
+            case 12	: size = "four-year, medium, primarily nonresidential"; break;
+            case 13	: size = "four-year, medium, primarily residential"; break;
+            case 14	: size = "four-year, medium, highly residential"; break;
+            case 15	: size = "four-year, large, primarily nonresidential"; break;
+            case 16	: size = "four-year, large, primarily residential"; break;
+            case 17	: size = "four-year, large, highly residential"; break;
+            case 18	: size = "exclusively graduate/professional"; break;
+            default : size = "";
+        }
+        return size;
+    }
+
     render() {
+        let {schoolApiData, schoolUserData, activeTab} = this.state;
+        
         return (
-            this.state.schoolApiData.school 
+            schoolApiData.school 
             ? 
             <Container>
-                <Header>{this.state.schoolApiData.school.name}</Header>
+                <Header>{schoolApiData.school.name}</Header>
                 <Row>
                     <Col xs="12">
                         <Nav tabs>
                             <NavItem>
-                                <NavLink href="#" onClick={() => this.changeActiveTab(0)} active={this.state.activeTab[0]}>General Information</NavLink>
+                                <NavLink href="#" onClick={() => this.changeActiveTab(0)} active={activeTab[0]}>General Information</NavLink>
                             </NavItem>
                             {this.state.schoolFound ? 
                             <NavItem>
-                                <NavLink href="#" onClick={() => this.changeActiveTab(1)} active={this.state.activeTab[1]}>My Notes</NavLink>
+                                <NavLink href="#" onClick={() => this.changeActiveTab(1)} active={activeTab[1]}>My Notes</NavLink>
                             </NavItem>
                             : ""
                             }
                             {this.state.schoolFound ? 
                             <NavItem>
-                                <NavLink href="#" onClick={() => this.changeActiveTab(2)} active={this.state.activeTab[2]}>Admissions Requirements</NavLink>
+                                <NavLink href="#" onClick={() => this.changeActiveTab(2)} active={activeTab[2]}>Admissions Requirements</NavLink>
                             </NavItem>
                             : ""
                             }
@@ -127,28 +190,53 @@ export class School extends Component {
                             {this.state.schoolFound 
                                 ? 
                                 <div>
-                                    <span className="iconHolder" style={styles.icon} onClick={ ()=> this.deleteSchool(this.state.userSchoolData._id) }><i className="fa fa-times" aria-hidden="true"></i></span>
+                                    <span className="iconHolder" style={styles.icon} onClick={ ()=> this.deleteSchool(schoolUserData._id) }><i className="fa fa-times" aria-hidden="true" title="Remove school from dashboard"></i></span>
                                 </div>
                                 :
                                 <div>
-                                    <span className="iconHolder" style={styles.icon} onClick={ ()=> this.addSchool(this.state.schoolApiData.id) } ><i className="fa fa-plus-square" aria-hidden="true"  title="Add school to dashboard"></i></span>
+                                    <span className="iconHolder" style={styles.icon} onClick={ ()=> this.addSchool(schoolApiData.id) } ><i className="fa fa-plus-square" aria-hidden="true"  title="Add school to dashboard"></i></span>
                                 </div>
                             }
-                            {this.state.activeTab[0] ?
+                            {activeTab[0] ?
                             <CardBody>
-                            General info: <br />Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam non diam dui. Ut sed tortor mattis, gravida lorem ut, posuere leo. Vestibulum commodo quis orci ut mattis. Maecenas eu neque sagittis, iaculis sem in, tempus odio. Quisque congue interdum elit, eu pharetra nisl luctus eu. Donec suscipit velit sapien, eu efficitur urna scelerisque nec. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel luctus quam. Nulla elementum vitae nisl sit amet maximus. Vivamus semper, ipsum ut tincidunt vehicula, justo dolor aliquet massa, at pellentesque turpis odio consectetur turpis. Nam elit mi, condimentum ut fermentum mollis, tempor ut dolor. Suspendisse in nulla posuere, elementum sem sit amet, vulputate tellus. Duis purus felis, fermentum vel faucibus eu, iaculis at metus. Nulla volutpat quam et interdum semper.
+                                <h4>Overview</h4>
+                                <a href={"http://" + schoolApiData.school.school_url} target="_blank">{schoolApiData.school.school_url}</a>
+                                <p>{schoolApiData.school.name} is&nbsp;
+                                    {(schoolApiData.school.carnegie_size_setting 
+                                    && schoolApiData.school.carnegie_size_setting > 0 
+                                    && schoolApiData.school.carnegie_size_setting < 19)
+                                    ?
+                                    <span>a {this.determineSize()} school </span>
+                                    : 
+                                    "" }
+                                    located in {schoolApiData.school.city}, {schoolApiData.school.state}.
+                                </p>
+                                <h4>Statistics</h4>
+                                <p>
+                                    {this.determineLocale() ? <span>Locale: {this.determineLocale()} </span> : ""}
+                                </p>
                             </CardBody>
                             : ""
                             }
-                            {this.state.activeTab[1] ?
+                            {activeTab[1] ?
                             <CardBody>
-                            My Notes: <br />Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam non diam dui. Ut sed tortor mattis, gravida lorem ut, posuere leo. Vestibulum commodo quis orci ut mattis. Maecenas eu neque sagittis, iaculis sem in, tempus odio. Quisque congue interdum elit, eu pharetra nisl luctus eu. Donec suscipit velit sapien, eu efficitur urna scelerisque nec. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel luctus quam. Nulla elementum vitae nisl sit amet maximus. Vivamus semper, ipsum ut tincidunt vehicula, justo dolor aliquet massa, at pellentesque turpis odio consectetur turpis. Nam elit mi, condimentum ut fermentum mollis, tempor ut dolor. Suspendisse in nulla posuere, elementum sem sit amet, vulputate tellus. Duis purus felis, fermentum vel faucibus eu, iaculis at metus. Nulla volutpat quam et interdum semper.
+                                <h4>My Notes</h4>
+                                <p>
+                                    {schoolUserData.notes.map( (note, index) =>
+                                        <Field key={note._id} field={note} handleInput={this.handleInput} handleSubmit={this.handleSubmit} />
+                                    )}
+                                </p>
                             </CardBody>
                             : ""
                             }
-                            {this.state.activeTab[2] ?
+                            {activeTab[2] ?
                             <CardBody>
-                            Admission Requirements: <br />Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam non diam dui. Ut sed tortor mattis, gravida lorem ut, posuere leo. Vestibulum commodo quis orci ut mattis. Maecenas eu neque sagittis, iaculis sem in, tempus odio. Quisque congue interdum elit, eu pharetra nisl luctus eu. Donec suscipit velit sapien, eu efficitur urna scelerisque nec. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel luctus quam. Nulla elementum vitae nisl sit amet maximus. Vivamus semper, ipsum ut tincidunt vehicula, justo dolor aliquet massa, at pellentesque turpis odio consectetur turpis. Nam elit mi, condimentum ut fermentum mollis, tempor ut dolor. Suspendisse in nulla posuere, elementum sem sit amet, vulputate tellus. Duis purus felis, fermentum vel faucibus eu, iaculis at metus. Nulla volutpat quam et interdum semper.
+                                <h4>Application Requirements</h4>
+                                <p>
+                                    {schoolUserData.appRequirements.map( (appReq, index) =>
+                                        <Field key={appReq._id} field={appReq} handleInput={this.handleInput} handleSubmit={this.handleSubmit} />
+                                    )}
+                                </p>
                             </CardBody>
                             : ""
                             }

@@ -32,7 +32,7 @@ export class Search extends Component {
     handleSubmit = event => {
         event.preventDefault();
         let authKey = "S9HBrRONDcEoZvlEQkn5ucv5bmWnMoRT5sjaWIJ8";
-        let queryURLBase = "https://api.data.gov/ed/collegescorecard/v1/schools.json?api_key=" + authKey + "&_fields=id,school.name,school.school_url,school.state,2015.cost.tuition.in_state,2015.cost.tuition.out_of_state";
+        let queryURLBase = "https://api.data.gov/ed/collegescorecard/v1/schools.json?api_key=" + authKey + "&_fields=id,school.name,school.school_url,school.state,school.city,2015.cost.tuition.in_state,2015.cost.tuition.out_of_state";
         let queryURL;
 
         if (this.state.location){
@@ -44,14 +44,15 @@ export class Search extends Component {
         }
 
         if (this.state.minTuition && this.state.maxTuition) {
-            queryURL = (queryURL || queryURLBase) + "&2015.cost.tuition.in_state__range=" + this.state.minTuition + ".." + this.state.maxTuition;
+            queryURL = (queryURL || queryURLBase) + "&2015.cost.tuition.out_of_state__range=" + this.state.minTuition + ".." + this.state.maxTuition;
         } else if (this.state.minTuition) {
-            queryURL = (queryURL || queryURLBase) + "&2015.cost.tuition.in_state__range=" + this.state.minTuition + "..";
+            queryURL = (queryURL || queryURLBase) + "&2015.cost.tuition.out_of_state__range=" + this.state.minTuition + "..";
         } else if (this.state.maxTuition) {
-            queryURL = (queryURL || queryURLBase) + "&2015.cost.tuition.in_state__range=0.." + this.state.maxTuition;
+            queryURL = (queryURL || queryURLBase) + "&2015.cost.tuition.out_of_state__range=0.." + this.state.maxTuition;
         };
 
-        console.log(queryURL)
+        
+
         if (queryURL) {
             API.getSchools(queryURL)
                 .then(res => {
