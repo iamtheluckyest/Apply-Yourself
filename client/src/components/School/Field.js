@@ -6,7 +6,7 @@ const styles = {
         position: "static"
     },
     input : {
-        width: "150px",
+        width: "250px",
         padding: "2px 8px",
         margin: "4px",
         display: "inline"
@@ -35,25 +35,35 @@ export class Field extends Component {
 
     render() {
         return (
-            <span>
-                {this.props.field.name}: {
-                    this.state.edit
-                    ?
-                    <span>
+            this.state.edit
+                ?
+                <tr>
+                    <th width="250px">
+                    {this.props.field.name} 
+                    </th>
+                
+                    <td>
                         <Input style={styles.input} placeholder="Add data" onChange={this.props.handleInput} name={this.props.field._id}/> 
+                    </td>
+                    <td>
                         <i onClick={this.toggleEdit} style={styles.icon} className="fa fa-check-square" aria-hidden="true"></i>
-                    </span>
-                    :
-                    <span> 
-                        {this.props.field.value || "No value set."}
-                        <span style={{marginLeft:"15px"}}>
-                            <i onClick={this.toggleEdit} style={styles.icon} className="fa fa-pencil-square-o" aria-hidden="true" title="Edit field"></i> 
-                            <i style={styles.icon} className="fa fa-times" aria-hidden="true" title="Delete field"></i>
-                        </span>
-                    </span>
-                } 
-                <br />
-            </span>
+                    </td>
+                </tr>
+                :
+                <tr>
+                    <th width="200px">
+                    {this.props.field.name} 
+                    </th>
+
+                    <td> 
+                        {this.props.field.value || "..."}
+                    </td>
+                    <td width="75px">
+                        <i onClick={this.toggleEdit} style={styles.icon} className="fa fa-pencil-square-o" aria-hidden="true" title="Edit field"></i> 
+                        <span> </span>
+                        <i style={styles.icon} className="fa fa-times" aria-hidden="true" title="Delete field"></i>
+                    </td>
+                </tr>
             
         )
     } 

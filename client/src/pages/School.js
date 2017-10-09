@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Container, Col, Row } from 'reactstrap';
+import {Container, Col, Row, Table} from 'reactstrap';
 import { Nav, NavItem, NavLink } from 'reactstrap';
 import {Card, CardBody} from 'reactstrap';
 import {Header} from "../components/Header";
@@ -111,11 +111,11 @@ export class School extends Component {
         if (this.state[field._id]) {
             if (note) {
                 API.updateNote(queryObj)
-                .then(res => console.log(res))
+                .then( () => this.getUser() )
                 .catch(err => console.log(err))
             } else {
                 API.updateAppReq(queryObj)
-                .then(res => console.log(res))
+                .then( () => this.getUser() )
                 .catch(err => console.log(err))
             }
         } 
@@ -227,22 +227,26 @@ export class School extends Component {
                             {activeTab[1] ?
                             <CardBody>
                                 <h4>My Notes</h4>
-                                <p>
+                                <Table>
+                                    <tbody>
                                     {schoolUserData.notes.map( (note, index) =>
                                         <Field key={note._id} field={note} note={true} handleInput={this.handleInput} handleSubmit={this.handleSubmit} />
                                     )}
-                                </p>
+                                    </tbody>
+                                </Table>
                             </CardBody>
                             : ""
                             }
                             {activeTab[2] ?
                             <CardBody>
                                 <h4>Application Requirements</h4>
-                                <p>
+                                <Table>
+                                    <tbody>
                                     {schoolUserData.appRequirements.map( (appReq, index) =>
                                         <Field key={appReq._id} field={appReq} note={false} handleInput={this.handleInput} handleSubmit={this.handleSubmit} />
                                     )}
-                                </p>
+                                    </tbody>
+                                </Table>
                             </CardBody>
                             : ""
                             }
