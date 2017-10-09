@@ -1,13 +1,9 @@
 import React from "react";
-import {Link} from "react-router-dom"
-import {Card, CardTitle, CardBlock} from "reactstrap";
+import {Link} from "react-router-dom";
+import {Card, CardTitle, CardBody} from "reactstrap";
+import API from "../../utils/API";
 
 const styles= {
-    icon: {
-        position: "absolute",
-        top: "20px",
-        right: "20px"
-    },
     cardTitle: {
         paddingRight: "40px"
     }
@@ -15,16 +11,24 @@ const styles= {
 
 export const SearchResult = props => 
     <Card className="mb-3">
-        <CardBlock>
-            <CardTitle style={styles.cardTitle}>{props.collegeName}</CardTitle>
-            <h3 style={styles.icon}><Link to="/"><i className="fa fa-plus-square" aria-hidden="true"></i></Link></h3>
+        <CardBody>
+            <Link to={"/school/" + props.id} ><CardTitle style={styles.cardTitle}>{props.collegeName}</CardTitle></Link>
+            <span className="iconHolder"
+                onClick={ () => { 
+                    API.addSchool(props.id)
+                    .then( res => console.log(res))
+                    .catch(err=> console.log(err))
+                }}
+            ><i className="fa fa-plus-square" aria-hidden="true"></i></span>
             <p>
-                <a href={props.url} target="_blank">{props.url}</a>
+                <a href={"http://" + props.url} target="_blank">{props.url}</a>
                 <br />
-                Location: {props.location} 
+                State: {props.state} 
                 <br />
-                Average Tuition: {props.avgTuition}
+                In-state Tuition: {props.inStateTuition}
+                <br />
+                Out-of-state Tuition: {props.outOfStateTuition}
             </p>
-        </CardBlock>
+        </CardBody>
     </Card>
 ;

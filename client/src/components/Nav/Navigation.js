@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from "react-router-dom";
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
 import Auth from "../../Auth.js";
 
@@ -15,12 +16,12 @@ export class Navigation extends Component {
   render() {
     return (
       <div>
-        <Navbar color="light" toggleable>
-          <NavbarToggler right onClick={this.toggle} />
-          <NavbarBrand href="/">Apply Yourself</NavbarBrand>
+        <Navbar color="primary dark" expand="md">
+          <Link to="/"><NavbarBrand>Apply Yourself</NavbarBrand></Link>
+          <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
-              {Auth.isUserAuthenticated
+              {Auth.isUserAuthenticated()
                 ?
                   <NavItem>
                     <NavLink href="/logout/">Log out</NavLink>

@@ -1,4 +1,5 @@
 import React, {Component}  from "react";
+import {Redirect} from "react-router-dom";
 import {Container, Row, Col} from "reactstrap"
 import {SearchForm} from "../components/Form"
 import {Header} from "../components/Header"
@@ -12,7 +13,13 @@ export class Search extends Component {
         maxPopulation : "",
         minTuition : "",
         maxTuition : "",
-        minCompletion : ""
+        minCompletion : "",
+        redirect: false
+    }
+
+    componentDidMount() {
+        document.title = "Search"
+        this.setState({redirect:false})
     }
 
     handleInput = event => {
@@ -25,7 +32,7 @@ export class Search extends Component {
     handleSubmit = event => {
         event.preventDefault();
         let authKey = "S9HBrRONDcEoZvlEQkn5ucv5bmWnMoRT5sjaWIJ8";
-        let queryURLBase = "https://api.data.gov/ed/collegescorecard/v1/schools.json?api_key=" + authKey + "&_fields=id,school.name,school.state,2015.cost.tuition.in_state,2015.cost.tuition.out_of_state";
+        let queryURLBase = "https://api.data.gov/ed/collegescorecard/v1/schools.json?api_key=" + authKey + "&_fields=id,school.name,school.school_url,school.state,2015.cost.tuition.in_state,2015.cost.tuition.out_of_state";
         let queryURL;
 
         if (this.state.schoolName){
@@ -56,37 +63,39 @@ export class Search extends Component {
         queryURL = (queryURL || queryURLBase) + "&2015.completion.completion_rate_less_than_4yr_150nt__range=" + this.state.minCompletion + "..";
         };
 
-            // if (this.state.startYear) {
-            //     queryURL = queryURL + "&begin_date=" + this.state.startYear + "0101";
-            // }
-        
-            // if (this.state.endYear) {
-            //     queryURL = queryURL + "&end_date=" + this.state.endYear + "0101";
-            // }
         console.log(queryURL)
         if (queryURL) {
             API.getSchools(queryURL)
                 .then(res => {
-                    console.log(res)  
+                    let that = this;
+                    this.props.setSearchResults(res.data.results, () =>
+                        that.setState({redirect:true})
+                    )
                 }).catch(err => console.log(err))
 
         }
     }
     render() {
-        return (
-            <Container>
-                <Header>Search for a College</Header>
-                <Row>
-                    <Col xs="hidden" sm="2">
-                    </Col>
-                    <Col xs="12" sm="8">
-                        <SearchForm handleInput={this.handleInput} handleSubmit={this.handleSubmit}/>
-                    </Col>
-                    <Col xs="hidden" sm="2">
-                    </Col>
-                </Row>
-            </Container>
-        )
+        if (this.state.redirect) {
+            return (
+                <Redirect to="/searchResults"/>
+            )
+        } else {
+            return (
+                <Container>
+                    <Header>Search for a College</Header>
+                    <Row>
+                        <Col xs="hidden" sm="2">
+                        </Col>
+                        <Col xs="12" sm="8">
+                            <SearchForm handleInput={this.handleInput} handleSubmit={this.handleSubmit}/>
+                        </Col>
+                        <Col xs="hidden" sm="2">
+                        </Col>
+                    </Row>
+                </Container>
+            )
+        }
     }
 }
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './styles/App.css';
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
-import {Dashboard, LearnMore, LoginPage, School, Search, SearchResults, SignUpPage, Start, NoMatch} from "./pages"
+import {Dashboard, LearnMore, LoginPage, School, Search, SearchResults, SetDefaults, SignUpPage, Start, NoMatch} from "./pages"
 import { Navigation } from "./components/Nav"
 import Auth from "./Auth.js"
 
@@ -9,10 +9,14 @@ class App extends Component {
   state = {
     showNav : true,
     searchResults : ""
-  }  
+  }
 
   showHideNav = showOrHide => {
     this.setState({showNav: showOrHide})
+  }
+
+  setSearchResults = (res, redirect) => {
+    this.setState( {searchResults: res}, () => redirect() )
   }
   
   render() {
@@ -31,13 +35,16 @@ class App extends Component {
               Auth.deauthenticateUser();
               return <Redirect to="/"/>
             }}/>
-            <Route exact path="/school" render={(props) => (
-              <School {...props} schoolName="Northwestern University"/>
+            <Route path="/school/:apiId" render={(props) => (
+              <School {...props}/>
             )}/>
-            <Route exact path="/search" render={(props) => (
-              <Search {...props} results={this.state.searchResults} />
+            <Route exact path="/search" render={props => (
+              <Search {...props} setSearchResults={this.setSearchResults} />
             )} />
-            <Route exact path="/searchResults" component={SearchResults}/>
+            <Route exact path="/searchResults" render={props =>(
+              <SearchResults {...props} results={this.state.searchResults} />
+            )}/>
+            <Route exact path="/setDefaults" component={SetDefaults} />
             <Route exact path="/signup" component={SignUpPage}/>
             <Route component={NoMatch}/>
           </Switch>

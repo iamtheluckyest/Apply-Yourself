@@ -1,33 +1,30 @@
 import React from "react";
-import {Link} from "react-router-dom"
-import {Card, CardTitle, CardBlock} from "reactstrap";
+import {Link} from "react-router-dom";
+import {Card, CardTitle, CardBody} from "reactstrap";
 
 const styles= {
-    icon: {
-        position: "absolute",
-        top: "20px",
-        right: "20px"
-    },
     cardTitle: {
         paddingRight: "40px"
     }
 }
 
-export const SchoolListItem = props => 
-    <Card className="mb-3">
-        <CardBlock>
-            <CardTitle style={styles.cardTitle}>{props.collegeName}</CardTitle>
-            <h3 style={styles.icon}><Link to="/"><i className="fa fa-plus-square" aria-hidden="true"></i></Link></h3>
-            <p>
-                <a href={props.url} target="_blank">{props.url}</a>
-                <br />
-                Location: {props.location} 
-                <br />
-                Average Tuition: {props.avgTuition}
-            </p>
-            <p>
-                Admissions Deadline: {props.deadline}
-            </p>
-        </CardBlock>
-    </Card>
-;
+export const SchoolListItem = props => {
+    // Get application deadline
+    let appDeadline = props.schoolUserData.appRequirements.filter( requirement => requirement.name === "Application deadline" )[0]
+
+    return (
+        <Card className="mb-3">
+            <CardBody>
+                <Link to={"/school/" + props.schoolAPIdata.id} ><CardTitle style={styles.cardTitle}>{props.schoolAPIdata.school.name}</CardTitle></Link>
+                <span className="iconHolder" onClick={ ()=> props.deleteSchool(props.schoolUserData._id)}><i className="fa fa-times" aria-hidden="true"></i></span>
+                <p>
+                    <a href={"http://" + props.schoolAPIdata.school.school_url} target="_blank">{props.schoolAPIdata.school.school_url}</a>
+                    <br />
+                    {props.schoolAPIdata.school.city},  {props.schoolAPIdata.school.state} 
+                    <br />
+                    Application Deadline: { appDeadline ? appDeadline.value : "No deadline available"}
+                </p>
+            </CardBody>
+        </Card>
+    )
+}
