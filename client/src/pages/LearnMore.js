@@ -34,7 +34,7 @@ export const LearnMore = props =>
                 source="../images/dashboard4.jpg" 
                 alt="placeholder"
                 sectionTitle="Add colleges to your dashboard">
-                Searching for and comparing colleges can be a daunting task but your dashboard will help you in making the task less daunting. Simply search for colleges that fit your criterion and save the search results in your dashboard.  The results can then be retreived from your dashboard for a comprehensive comparison review at your convenience.
+                Searching for and comparing colleges can be a daunting task but your dashboard will help you in making the task less daunting. Simply search for colleges that match up to what you are looking for in a school and save the search results in your dashboard.  This way you don't feel pressured to complete your search all at the same time. The results can be retreived from your dashboard, reviewed and/or added to when it is convenient for you.
             </TextImage>
         </Col>
     </Row>
