@@ -255,7 +255,7 @@ router.post("/requirement", (req, res) => {
 /*
     Expects body to be:
     {
-        collegeApiId : id of college from api (string)
+        collegeId : id of college from api (string)
         fieldId : id of field to update
         fieldName : name of updated field
         fieldValue : value of updated field (hopefully this is just a string, number, or maybe a date obj. no complex data types)
@@ -265,19 +265,23 @@ router.put("/requirement", (req, res) => {
     console.log("Hit the put route to edit a requirement field. User is:");
     let user = res.locals.user;
     console.log(user);
-    let collegeObj = getCollege(user, req.body.collegeApiId);
-    if(collegeObj.college) {
-        console.log("college found:");
-        console.log(collegeObj);
-        setRequirement(user, req.body.fieldId, collegeObj, req.body.fieldName, req.body.fieldValue).then(function(data){
-            res.json(data);
-        }).catch(function(err){
-            res.json({error : true, message: err.message});
-        });
-    } else {
-        console.log("college not found for api id");
-        res.json({error : true, message: "Error updating application requirement."});
+    let convVal = validateReqValue(req.body.fieldValue);
+    if( convVal === null){
+        console.log("Application requirement in wrong format");
+        return res.json({error : true, message : "Application requirement in wrong format"});
     }
+    user.colleges.id(req.body.collegeId).appRequirements.id(req.body.fieldId).set({
+        name : req.body.fieldName,
+        value : convVal
+    });
+    user.save((err, updatedUser) => {
+        if(err){
+            console.log(err);
+            res.json({error : true, message : "Error updating note. Please try again later"});
+        } else {
+            res.json(updatedUser);
+        }
+    });
 });
 
 //delete an application requirement
