@@ -72,5 +72,21 @@ export default {
             data: queryObj,
             headers: authHeader()
         })
+    },
+    deleteNote: function(queryObj) {
+        return axios({
+            method: "delete",
+            url: "/user/note",
+            data: queryObj,
+            headers: authHeader()
+        })
+    },
+    deleteAppReq: function(queryObj) {
+        return axios({
+            method: "delete",
+            url: "/user/requirement",
+            data: queryObj,
+            headers: authHeader()
+        })
     }
 }

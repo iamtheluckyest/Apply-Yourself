@@ -6,9 +6,8 @@ const styles = {
         position: "static"
     },
     input : {
-        width: "250px",
+        maxWidth: "250px",
         padding: "2px 8px",
-        margin: "4px",
         display: "inline"
     }
 }
@@ -27,8 +26,13 @@ export class Field extends Component {
     toggleEdit = event => {
         event.preventDefault();
         this.setState({edit: !this.state.edit}, () => {
+            // If check is clicked
             if (this.state.edit === false) {
                 this.props.handleSubmit(this.props.field, this.props.note)
+            } 
+            // If edit is clicked
+            else {
+                this.props.setStartText(this.props.field._id, this.props.field.value)
             }
         })
     }
@@ -43,10 +47,13 @@ export class Field extends Component {
                     </th>
                 
                     <td>
-                        <Input style={styles.input} placeholder="Add data" onChange={this.props.handleInput} name={this.props.field._id}/> 
+                        <Input style={styles.input} placeholder="Add data" onChange={this.props.handleInput} name={this.props.field._id} value={this.props.value}
+                        /> 
                     </td>
                     <td>
                         <i onClick={this.toggleEdit} style={styles.icon} className="fa fa-check-square" aria-hidden="true"></i>
+                        <span> </span>
+                        <i onClick={ () => this.props.deleteField(this.props.field._id, this.props.note)} style={styles.icon} className="fa fa-times" aria-hidden="true" title="Delete field"></i>
                     </td>
                 </tr>
                 :
@@ -59,9 +66,9 @@ export class Field extends Component {
                         {this.props.field.value || "..."}
                     </td>
                     <td width="75px">
-                        <i onClick={this.toggleEdit} style={styles.icon} className="fa fa-pencil-square-o" aria-hidden="true" title="Edit field"></i> 
+                        <i onClick={this.toggleEdit} style={styles.icon} className="fa fa-pencil" aria-hidden="true" title="Edit field"></i> 
                         <span> </span>
-                        <i style={styles.icon} className="fa fa-times" aria-hidden="true" title="Delete field"></i>
+                        <i onClick={ () => this.props.deleteField(this.props.field._id, this.props.note)} style={styles.icon} className="fa fa-times" aria-hidden="true" title="Delete field"></i>
                     </td>
                 </tr>
             

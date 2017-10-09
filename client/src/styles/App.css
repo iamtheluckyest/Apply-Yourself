@@ -39,3 +39,21 @@ h4.card-title {
 p {
   font-family: 'Source Sans Pro', sans-serif;
 }
+
+.nav-tabs .nav-link.active {
+  background-color: #FFF;
+  border-bottom: 1px solid #FFF;
+}
+
+.nav-tabs .nav-link:hover {
+  color: #800000;
+}
+
+.nav-tabs .nav-link.active:hover {
+  color: #495057;
+  cursor: default;
+}
+
+.school-sub-header {
+  margin-top:20px;
+}

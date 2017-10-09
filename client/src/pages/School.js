@@ -3,7 +3,7 @@ import {Container, Col, Row, Table} from 'reactstrap';
 import { Nav, NavItem, NavLink } from 'reactstrap';
 import {Card, CardBody} from 'reactstrap';
 import {Header} from "../components/Header";
-import {Field} from "../components/School"
+import {Field, AddField} from "../components/School"
 import API from "../utils/API"
 
 const styles= {
@@ -34,7 +34,9 @@ export class School extends Component {
         API.getSchoolById(queryUrl)
         .then(res => {
             console.log(res.data.results[0])
-            this.setState({schoolApiData: res.data.results[0]});
+            this.setState({schoolApiData: res.data.results[0]}, 
+                () => document.title = this.state.schoolApiData.school.name
+            );
         }).catch(err => console.log(err))
 
         this.getUser();
@@ -94,6 +96,37 @@ export class School extends Component {
      * Functions associated with updating Field component
      */
 
+    setStartText = (name, startText) => {
+        this.setState({
+            [name] : startText
+        })
+    }
+
+    deleteField = (fieldId, note) => {
+        // If it's a note
+        if (note) {
+            let queryObj = {
+                collegeId : this.state.schoolUserData._id,
+                fieldId : fieldId
+            }
+            console.log(queryObj)
+            API.deleteNote(queryObj)
+            .then( () => this.getUser() )
+            .catch(err => console.log(err))
+        } 
+        // If it's an admissions req
+        else {
+            let queryObj = {
+                collegeApiId : this.state.schoolUserData.apiId,
+                fieldId : fieldId
+            }
+
+            API.deleteAppReq(queryObj)
+            .then( () => this.getUser() )
+            .catch(err => console.log(err))
+        }
+    }
+
     handleInput = event => {
         let {name, value} = event.target;
         this.setState({
@@ -109,11 +142,14 @@ export class School extends Component {
             fieldValue : this.state[field._id]
         }
         if (this.state[field._id]) {
+            // If it's a note
             if (note) {
                 API.updateNote(queryObj)
                 .then( () => this.getUser() )
                 .catch(err => console.log(err))
-            } else {
+            } 
+            // If it's an admissions requirement
+            else {
                 API.updateAppReq(queryObj)
                 .then( () => this.getUser() )
                 .catch(err => console.log(err))
@@ -190,7 +226,7 @@ export class School extends Component {
                             : ""
                             }
                         </Nav>
-                        <Card style={{borderTop:"none"}}>
+                        <Card style={{borderTop:"none"}} className="mb-5">
                             {/* If there is no user signed in, clicking this should have you link to log in page;
                                 If there is a user signed in, but this college is already in their list, this should be a link to remove college */}
                             {this.state.schoolFound 
@@ -205,7 +241,7 @@ export class School extends Component {
                             }
                             {activeTab[0] ?
                             <CardBody>
-                                <h4>Overview</h4>
+                                <h4 className="school-sub-header">Overview</h4>
                                 <a href={"http://" + schoolApiData.school.school_url} target="_blank">{schoolApiData.school.school_url}</a>
                                 <p>{schoolApiData.school.name} is&nbsp;
                                     {(schoolApiData.school.carnegie_size_setting 
@@ -226,27 +262,47 @@ export class School extends Component {
                             }
                             {activeTab[1] ?
                             <CardBody>
-                                <h4>My Notes</h4>
-                                <Table>
+                                <h4 className="school-sub-header">My Notes</h4>
+                                <Table className="mb-3">
                                     <tbody>
                                     {schoolUserData.notes.map( (note, index) =>
-                                        <Field key={note._id} field={note} note={true} handleInput={this.handleInput} handleSubmit={this.handleSubmit} />
+                                        <Field 
+                                            key={note._id} 
+                                            field={note} 
+                                            note={true} 
+                                            handleInput={this.handleInput} 
+                                            handleSubmit={this.handleSubmit}
+                                            setStartText={this.setStartText} 
+                                            deleteField={this.deleteField}
+                                            value={this.state[note._id]}
+                                        />
                                     )}
                                     </tbody>
                                 </Table>
+                                <AddField />
                             </CardBody>
                             : ""
                             }
                             {activeTab[2] ?
                             <CardBody>
-                                <h4>Application Requirements</h4>
+                                <h4  className="school-sub-header">Application Requirements</h4>
                                 <Table>
                                     <tbody>
                                     {schoolUserData.appRequirements.map( (appReq, index) =>
-                                        <Field key={appReq._id} field={appReq} note={false} handleInput={this.handleInput} handleSubmit={this.handleSubmit} />
+                                        <Field 
+                                            key={appReq._id} 
+                                            field={appReq} 
+                                            note={false} 
+                                            handleInput={this.handleInput} 
+                                            handleSubmit={this.handleSubmit}
+                                            setStartText={this.setStartText}
+                                            deleteField={this.deleteField}                                            
+                                            value={this.state[appReq._id]}
+                                        />
                                     )}
                                     </tbody>
                                 </Table>
+                                <AddField />
                             </CardBody>
                             : ""
                             }
