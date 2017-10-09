@@ -1,9 +1,7 @@
 import React, {Component} from "react";
 import {Container} from "reactstrap"
 import {Dash} from "../components/Dashboard";
-import Auth from "../Auth.js";
 import API from "../utils/API";
-import axios from "axios";
 
 export class Dashboard extends Component {
     state = {
@@ -18,13 +16,8 @@ export class Dashboard extends Component {
 
     getUser =() => {
         let that = this;
-        axios({
-            url : '/user',
-            method : "get",
-            headers: {
-                'Authorization' : `bearer ${Auth.getToken()}`
-            },
-        }).then(function(res){
+        API.getUser()
+        .then(function(res){
             console.log(res);
             that.setState({
                 user : res.data
@@ -38,7 +31,7 @@ export class Dashboard extends Component {
     }
 
     updateSchoolList = () => {
-        // Stores only the school data
+        // Stores the school data from the API for each school
         this.setState({schools: []}, 
             this.state.user.colleges.forEach( (school, index) => {
                 this.getSchoolInfo(school.apiId, index);
@@ -51,26 +44,18 @@ export class Dashboard extends Component {
         let queryUrl = "https://api.data.gov/ed/collegescorecard/v1/schools.json?api_key=" + authKey + "&id=" + apiId;
         return (
             API.getSchoolById(queryUrl)
-                .then(res => {
-                    let arr = this.state.schools;
-                    arr[index] = res.data.results[0];
-                    this.setState({schools: arr});
-                })
-                .catch(err => console.log(err))
+            .then(res => {
+                let arr = this.state.schools;
+                arr[index] = res.data.results[0];
+                this.setState({schools: arr});
+            })
+            .catch(err => console.log(err))
         )
     }
 
     deleteSchool = collegeId => {
-        API.deleteSchool({
-            method: "delete",
-            url: "/user/college",
-            headers: {
-                'Authorization' : `bearer ${Auth.getToken()}`
-            },
-            data: {
-                collegeId: collegeId
-            }
-        }).then( () => this.getUser() )
+        API.deleteSchool(collegeId)
+        .then( () => this.getUser() )
         .catch(err=> console.log(err));
     }
     

@@ -3,7 +3,6 @@ import {Button, Container, Col, Row} from 'reactstrap';
 import {Header} from "../components/Header";
 import {AddButton, PrefButton} from "../components/SetDefaultComponents";
 import API from "../utils/API";
-import Auth from "../Auth";
 
 const styles = {
     preferenceRow : {
@@ -70,29 +69,11 @@ export class SetDefaults extends Component {
     }
 
     handleSubmit = event => {
-        API.setDefaultCollegeReqs({
-            method: "post",
-            url: "/user/default_notes",
-            headers: {
-                'Authorization' : `bearer ${Auth.getToken()}`
-            },
-            data: {
-                noteFields: this.state.selectedCollegePrefs
-            }
-        }).then( res => {
-            console.log(res)
+        API.setDefaultCollegeReqs(this.state.selectedCollegePrefs)
+        .then( res => {
             if(!res.data.error){
-                API.setDefaultAppPrefs({
-                    method: "post",
-                    url: "/user/default_requirements",
-                    headers: {
-                        'Authorization' : `bearer ${Auth.getToken()}`
-                    },
-                    data: {
-                        appRequirements: this.state.selectedAppPrefs
-                    }    
-                }).then( res2 => {
-                    console.log(res2)
+                API.setDefaultAppPrefs(this.state.selectedAppPrefs)
+                .then( res2 => {
                     if(!res2.data.error){
                         console.log("successfully saved preferences");
                         console.log(res2);

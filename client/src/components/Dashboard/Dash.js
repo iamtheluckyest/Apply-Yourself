@@ -7,8 +7,6 @@ export const Dash = props => {
 
     let noColleges = false;
     let pleaseWait = false;
-    console.log(props.schools.length)
-    console.log(props.user.colleges.length)
     if (!props.user.colleges.length)
         noColleges = true;
     else if ( !props.schools.length || (props.user.colleges.length !== props.schools.length) ) {

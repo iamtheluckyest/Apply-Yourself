@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom";
 import {Card, CardTitle, CardBody} from "reactstrap";
 
 const styles= {
@@ -14,8 +15,7 @@ export const SchoolListItem = props => {
     return (
         <Card className="mb-3">
             <CardBody>
-                {console.log(props.schoolUserData)}
-                <CardTitle style={styles.cardTitle}>{props.schoolAPIdata.school.name}</CardTitle>
+                <Link to={"/school/" + props.schoolAPIdata.id} ><CardTitle style={styles.cardTitle}>{props.schoolAPIdata.school.name}</CardTitle></Link>
                 <span className="iconHolder" onClick={ ()=> props.deleteSchool(props.schoolUserData._id)}><i className="fa fa-times" aria-hidden="true"></i></span>
                 <p>
                     <a href={"http://" + props.schoolAPIdata.school.school_url} target="_blank">{props.schoolAPIdata.school.school_url}</a>

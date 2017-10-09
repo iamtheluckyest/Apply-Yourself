@@ -1,7 +1,7 @@
 import React from "react";
+import {Link} from "react-router-dom";
 import {Card, CardTitle, CardBody} from "reactstrap";
 import API from "../../utils/API";
-import Auth from "../../Auth";
 
 const styles= {
     cardTitle: {
@@ -12,20 +12,11 @@ const styles= {
 export const SearchResult = props => 
     <Card className="mb-3">
         <CardBody>
-            <CardTitle style={styles.cardTitle}>{props.collegeName}</CardTitle>
+            <Link to={"/school/" + props.id} ><CardTitle style={styles.cardTitle}>{props.collegeName}</CardTitle></Link>
             <span className="iconHolder"
                 onClick={ () => { 
-                    API.addSchool({
-                        method: "post",
-                        url: "/user/college",
-                        headers: {
-                            'Authorization' : `bearer ${Auth.getToken()}`
-                        },
-                        data: {
-                            collegeApiId: props.id
-                        }
-                        
-                    }).then( res => console.log(res))
+                    API.addSchool(props.id)
+                    .then( res => console.log(res))
                     .catch(err=> console.log(err))
                 }}
             ><i className="fa fa-plus-square" aria-hidden="true"></i></span>

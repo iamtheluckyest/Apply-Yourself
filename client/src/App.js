@@ -9,10 +9,6 @@ class App extends Component {
   state = {
     showNav : true,
     searchResults : ""
-  }  
-
-  componentDidMount() {
-    // this.setState({searchResults : searchResults});
   }
 
   showHideNav = showOrHide => {
@@ -39,7 +35,7 @@ class App extends Component {
               Auth.deauthenticateUser();
               return <Redirect to="/"/>
             }}/>
-            <Route exact path="/school" render={props => (
+            <Route path="/school/:apiId" render={(props) => (
               <School {...props} schoolName="Northwestern University"/>
             )}/>
             <Route exact path="/search" render={props => (
