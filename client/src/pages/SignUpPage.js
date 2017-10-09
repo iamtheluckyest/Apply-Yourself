@@ -4,7 +4,7 @@ import axios from "axios";
 import {Container, Col, Row} from 'reactstrap';
 import {SignUpForm} from '../components/Form';
 import {Header} from "../components/Header";
-
+import Auth from "../Auth.js";
 
 export class SignUpPage extends Component {
 
@@ -79,10 +79,10 @@ export class SignUpPage extends Component {
                     }
                 });
             } else {
-                localStorage.setItem('successMessage', "Successful sign up. You may now login.");
+                Auth.authenticateUser(res.data.token);//client side
                 that.setState({
                     "errors" : {},
-                    "redirect" : <Redirect to='/login'/>
+                    "redirect" : <Redirect to='/setDefaults'/>
                 });
             }
         }).catch(function(err){

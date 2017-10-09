@@ -1,7 +1,7 @@
 import axios from "axios";
 import Auth from "../Auth.js";
 
-const authHeader = {'Authorization' : `bearer ${Auth.getToken()}`}
+const authHeader = () => ({'Authorization' : `bearer ${Auth.getToken()}`})
 
 export default {
     getSchools: function(query) {
@@ -14,7 +14,7 @@ export default {
         return axios({
             method: "post",
             url: "/user/college",
-            headers: authHeader,
+            headers: authHeader(),
             data: {
                 collegeApiId: id
             }
@@ -24,7 +24,7 @@ export default {
         return axios({
             method: "delete",
             url: "/user/college",
-            headers: authHeader,
+            headers: authHeader(),
             data: {
                 collegeId: collegeId
             }
@@ -34,7 +34,7 @@ export default {
         return axios({
             method: "post",
             url: "/user/default_notes",
-            headers: authHeader,
+            headers: authHeader(),
             data: {
                 noteFields: notePrefs
             }
@@ -44,7 +44,7 @@ export default {
         return axios({
             method: "post",
             url: "/user/default_requirements",
-            headers: authHeader,
+            headers: authHeader(),
             data: {
                 appRequirements: appPrefs
             }    
@@ -54,7 +54,7 @@ export default {
         return axios({
             url : '/user',
             method : "get",
-            headers: authHeader,
+            headers: authHeader(),
         })
     }
 }

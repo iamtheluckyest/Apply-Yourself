@@ -12,19 +12,10 @@ export class LoginPage extends Component {
     constructor(props, context) {
         super(props, context);
 
-        const storedMessage = localStorage.getItem('successMessage');
-        let successMessage = '';
-
-        if (storedMessage) {
-            successMessage = storedMessage;
-            localStorage.removeItem('successMessage');
-        }
-
         // set the initial component state
         this.state = {
             errors: {},
             redirect : undefined,
-            successMessage,
             user: {
                 email: '',
                 password: ''
@@ -116,7 +107,6 @@ export class LoginPage extends Component {
                                 onSubmit={this.processForm}
                                 onChange={this.changeUser}
                                 errors={this.state.errors}
-                                successMessage = {this.state.successMessage}
                                 user={this.state.user}
                             />
                             </Col>
