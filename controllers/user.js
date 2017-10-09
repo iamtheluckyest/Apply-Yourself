@@ -52,51 +52,6 @@ const getCollege = function(user, collegeApiId){
     return myObj;
 }
 
-/**
- * 
- * @param {*} user 
- * @param {*} reqIndex 
- * @param {*} collegeObj 
- * @param {*} myFieldName 
- * @param {*} myFieldValue 
- * 
- * returns a promise. Promise resolves to a user object
- */
-const setRequirement = function(user, id, collegeObj, myFieldName, myFieldValue){
-    const promise = new Promise(function(resolve, reject){
-        let convVal = validateReqValue(myFieldValue);
-        if( convVal === null){
-            console.log("Application requirement in wrong format");
-            return reject(new Error("Application requirement value is in the wrong format"));
-        }
-        let college = collegeObj.college;
-        let i = collegeObj.index;
-        const reqObj = {
-            name : myFieldName,
-            value : convVal
-        }
-        //updating
-        if(id){
-            collegeObj.college.appRequirements.id(id).set(reqObj)
-        }
-        //vs adding 
-        else {
-            college.appRequirements.push(reqObj);
-        }
-        user.colleges.set(i, college);
-        user.save((err, updatedUser) => {
-            if(err){
-                console.log(err);
-                reject(err);
-            } else {
-                console.log("successful requirement field saved");
-                resolve(updatedUser);
-            }
-        });
-    });
-    return promise;
-}
-
 //get back the user
 router.get('/', (req, res) => {
     console.log("hit the get user route. User is:");
@@ -227,7 +182,7 @@ router.delete("/college", (req, res) => {
 /*
     Expects body to be:
     {
-        collegeApiId : id of college from api (string)
+        collegeId : id of college from our database (string)
         fieldName : name of new field
         fieldValue : value of new field (hopefully this is just a string, number, or maybe a date obj. no complex data types)
     }
@@ -236,26 +191,30 @@ router.post("/requirement", (req, res) => {
     console.log("Hit the post route to make a new requirement field. User is:");
     let user = res.locals.user;
     console.log(user);
-    let collegeObj = getCollege(user, req.body.collegeApiId);
-    if(collegeObj.college) {
-        console.log("college found:");
-        console.log(collegeObj);
-        setRequirement(user, null, collegeObj, req.body.fieldName, req.body.fieldValue).then(function(data){
-            res.json(data);
-        }).catch(function(err){
-            res.json({error : true, message: err.message});
-        });
-    } else {
-        console.log("college not found for api id");
-        res.json({error : true, message: "Error adding a new application requirement."});
+    let convVal = validateReqValue(req.body.fieldValue);
+    if( convVal === null){
+        console.log("Application requirement in wrong format");
+        return res.json({error : true, message : "Application requirement is in the wrong format."});
     }
+    user.colleges.id(req.body.collegeId).appRequirements.push({
+        "name" : req.body.fieldName,
+        "value" : convVal,
+    });
+    user.save((err, updatedUser) => {
+        if(err){
+            console.log(err);
+            res.json({error : true, message : "Error adding new application requirement. Please try again later"});
+        } else {
+            res.json(updatedUser);
+        }
+    })
 });
 
 //update an application requirement field
 /*
     Expects body to be:
     {
-        collegeId : id of college from api (string)
+        collegeId : id of college from our database (string)
         fieldId : id of field to update
         fieldName : name of updated field
         fieldValue : value of updated field (hopefully this is just a string, number, or maybe a date obj. no complex data types)
@@ -268,7 +227,7 @@ router.put("/requirement", (req, res) => {
     let convVal = validateReqValue(req.body.fieldValue);
     if( convVal === null){
         console.log("Application requirement in wrong format");
-        return res.json({error : true, message : "Application requirement in wrong format"});
+        return res.json({error : true, message : "Application requirement is in the wrong format."});
     }
     user.colleges.id(req.body.collegeId).appRequirements.id(req.body.fieldId).set({
         name : req.body.fieldName,
@@ -277,7 +236,7 @@ router.put("/requirement", (req, res) => {
     user.save((err, updatedUser) => {
         if(err){
             console.log(err);
-            res.json({error : true, message : "Error updating note. Please try again later"});
+            res.json({error : true, message : "Error updating application requirement. Please try again later."});
         } else {
             res.json(updatedUser);
         }
@@ -303,12 +262,12 @@ router.delete("/requirement", (req, res) => {
         collegeObj.college.appRequirements.id(req.body.fieldId).remove(function(err){
             if(err){
                 console.log(err);
-                res.json({error : true, message: "Error deleting an application requirement"});
+                res.json({error : true, message: "Error deleting an application requirement."});
             } else {
                 user.save(function(saveErr, updatedUser){
                     if(saveErr){
                         console.log(saveErr);
-                        res.json({error : true, message : "Error saving your profile after deleting application requirement"})
+                        res.json({error : true, message : "Error saving your profile after deleting application requirement."})
                     } else {
                         res.json(updatedUser);
                     }
@@ -338,11 +297,11 @@ router.post("/note", (req, res) => {
     user.save((err, updatedUser) => {
         if(err){
             console.log(err);
-            res.json({error : true, message : "Error adding new note. Please try again later"});
+            res.json({error : true, message : "Error adding new note. Please try again later."});
         } else {
             res.json(updatedUser);
         }
-    })
+    });
     
 });
 
@@ -367,7 +326,7 @@ router.put("/note", (req, res) => {
     user.save((err, updatedUser) => {
         if(err){
             console.log(err);
-            res.json({error : true, message : "Error updating note. Please try again later"});
+            res.json({error : true, message : "Error updating note. Please try again later."});
         } else {
             res.json(updatedUser);
         }
@@ -389,12 +348,12 @@ router.delete("/note", (req, res) => {
     user.colleges.id(req.body.collegeId).notes.id(req.body.fieldId).remove(function(err){
         if(err){
             console.log(err);
-            res.json({error : true, message : "Error removing note. Please try again later"});
+            res.json({error : true, message : "Error removing note. Please try again later."});
         } else {
             user.save(function(errSave, updatedUser){
                 if(errSave){
                     console.log(errSave);
-                    res.json({error : true, message : "Error saving profile after deleting note"})
+                    res.json({error : true, message : "Error saving profile after deleting note."})
                 } else {
                     res.json(updatedUser);
                 }
