@@ -5,17 +5,23 @@ body {
   background-color: #e9ecef;
 }
 
-a i {
-  color: #001c39;
+.iconHolder {
+  font-size: 1.5rem;  
 }
 
-a i:hover {
-  color: #000e1c;
+i {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+}
+
+i:hover {
+  color: #000811;
   text-decoration: none;
   cursor: pointer;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, .iconHolder {
   font-family: 'Volkhov', serif; 
   font-weight: 400;
   color: #001c39;
@@ -24,6 +30,10 @@ h1, h2, h3, h4, h5, h6 {
 h2 {
   font-size: 1.7em;
   margin: 00px 0px 20px 0px;
+}
+
+h4.card-title {
+  margin-bottom: 0px;
 }
 
 p {

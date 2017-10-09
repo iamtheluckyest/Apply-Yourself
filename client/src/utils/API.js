@@ -10,6 +10,9 @@ export default {
     addSchool: function(queryObj) {
         return axios(queryObj)
     },
+    deleteSchool: function(queryObj) {
+        return axios(queryObj)
+    },
     setDefaultCollegeReqs: function(queryObj) {
         return axios(queryObj)
     },
