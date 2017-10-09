@@ -19,7 +19,7 @@ export const LearnMore = props =>
     <Row>
         <Col xs="12">
             <TextImage 
-                source="../images/signup3.jpg" 
+                source="../images/signup5.jpg" 
                 alt="placeholder"
                 sectionTitle="Sign up for an account">
                 Signing up for an account anables you to save all of your preferences in one place, in your own personal dashboard. This ensures that all of your information is quickly and easily accessible via the web when you need it.  So, unlike with hardcopy papers or folders, you don't have to carry anything with you but your hopes and dreams made possible with a great education.
