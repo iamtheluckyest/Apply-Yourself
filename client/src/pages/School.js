@@ -24,7 +24,7 @@ export class School extends Component {
     state = {
         activeTab : [],
         user : undefined,
-        school : {},
+        schoolApiData : {},
         schoolFound: false,
         schoolUserData : {}
     }
@@ -40,9 +40,8 @@ export class School extends Component {
         API.getSchoolById(queryUrl)
         .then(res => {
             console.log(res.data.results[0])
-            this.setState({school: res.data.results[0]});
-        })
-        .catch(err => console.log(err))
+            this.setState({schoolApiData: res.data.results[0]});
+        }).catch(err => console.log(err))
 
         this.getUser();
     }
@@ -99,10 +98,10 @@ export class School extends Component {
 
     render() {
         return (
-            this.state.school.school 
+            this.state.schoolApiData.school 
             ? 
             <Container>
-                <Header>{this.state.school.school.name}</Header>
+                <Header>{this.state.schoolApiData.school.name}</Header>
                 <Row>
                     <Col xs="12">
                         <Nav tabs>
@@ -132,7 +131,7 @@ export class School extends Component {
                                 </div>
                                 :
                                 <div>
-                                    <span className="iconHolder" style={styles.icon} onClick={ ()=> this.addSchool(this.state.school.id) } ><i className="fa fa-plus-square" aria-hidden="true"  title="Add school to dashboard"></i></span>
+                                    <span className="iconHolder" style={styles.icon} onClick={ ()=> this.addSchool(this.state.schoolApiData.id) } ><i className="fa fa-plus-square" aria-hidden="true"  title="Add school to dashboard"></i></span>
                                 </div>
                             }
                             {this.state.activeTab[0] ?

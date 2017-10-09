@@ -36,7 +36,7 @@ class App extends Component {
               return <Redirect to="/"/>
             }}/>
             <Route path="/school/:apiId" render={(props) => (
-              <School {...props} schoolName="Northwestern University"/>
+              <School {...props}/>
             )}/>
             <Route exact path="/search" render={props => (
               <Search {...props} setSearchResults={this.setSearchResults} />
