@@ -19,10 +19,10 @@ export const LearnMore = props =>
     <Row>
         <Col xs="12">
             <TextImage 
-                source="http://via.placeholder.com/350x250" 
+                source="../images/signup3.jpg" 
                 alt="placeholder"
                 sectionTitle="Sign up for an account">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam non diam dui. Ut sed tortor mattis, gravida lorem ut, posuere leo. Vestibulum commodo quis orci ut mattis. Maecenas eu neque sagittis, iaculis sem in, tempus odio. Quisque congue interdum elit, eu pharetra nisl luctus eu. Donec suscipit velit sapien, eu efficitur urna scelerisque nec. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel luctus quam. Nulla elementum vitae nisl sit amet maximus. Vivamus semper, ipsum ut tincidunt vehicula, justo dolor aliquet massa, at pellentesque turpis odio consectetur turpis. Nam elit mi, condimentum ut fermentum mollis, tempor ut dolor. Suspendisse in nulla posuere, elementum sem sit amet, vulputate tellus. Duis purus felis, fermentum vel faucibus eu, iaculis at metus. Nulla volutpat quam et interdum semper.
+                Signing up for an account anables you to save all of your preferences in one place, in your own personal dashboard. This ensures that all of your information is quickly and easily accessible via the web when you need it.  So, unlike with hardcopy papers or folders, you don't have to carry anything with you but your hopes and dreams made possible with a great education.
             </TextImage>
         </Col>
     </Row>
@@ -31,10 +31,10 @@ export const LearnMore = props =>
         <Col xs="12">
             <TextImage 
                 imgRight="true" 
-                source="http://via.placeholder.com/250x250" 
+                source="../images/dashboard4.jpg" 
                 alt="placeholder"
                 sectionTitle="Add colleges to your dashboard">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam non diam dui. Ut sed tortor mattis, gravida lorem ut, posuere leo. Vestibulum commodo quis orci ut mattis. Maecenas eu neque sagittis, iaculis sem in, tempus odio. Quisque congue interdum elit, eu pharetra nisl luctus eu. Donec suscipit velit sapien, eu efficitur urna scelerisque nec. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel luctus quam. Nulla elementum vitae nisl sit amet maximus. Vivamus semper, ipsum ut tincidunt vehicula, justo dolor aliquet massa, at pellentesque turpis odio consectetur turpis. Nam elit mi, condimentum ut fermentum mollis, tempor ut dolor. Suspendisse in nulla posuere, elementum sem sit amet, vulputate tellus. Duis purus felis, fermentum vel faucibus eu, iaculis at metus. Nulla volutpat quam et interdum semper.
+                Searching for and comparing colleges can be a daunting task but your dashboard will help you in making the task less daunting. Simply search for colleges that fit your criterion and save the search results in your dashboard.  The results can then be retreived from your dashboard for a comprehensive comparison review at your convenience.
             </TextImage>
         </Col>
     </Row>
@@ -42,10 +42,10 @@ export const LearnMore = props =>
     <Row>
         <Col xs="12">
             <TextImage  
-                source="http://via.placeholder.com/250x250" 
+                source="../images/compare4.jpg" 
                 alt="placeholder"
                 sectionTitle="Add college details">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam non diam dui. Ut sed tortor mattis, gravida lorem ut, posuere leo. Vestibulum commodo quis orci ut mattis. Maecenas eu neque sagittis, iaculis sem in, tempus odio. Quisque congue interdum elit, eu pharetra nisl luctus eu. Donec suscipit velit sapien, eu efficitur urna scelerisque nec. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel luctus quam. Nulla elementum vitae nisl sit amet maximus. Vivamus semper, ipsum ut tincidunt vehicula, justo dolor aliquet massa, at pellentesque turpis odio consectetur turpis. Nam elit mi, condimentum ut fermentum mollis, tempor ut dolor. Suspendisse in nulla posuere, elementum sem sit amet, vulputate tellus. Duis purus felis, fermentum vel faucibus eu, iaculis at metus. Nulla volutpat quam et interdum semper.
+                Keeping details about each college organized can be an an overwhelming experience without a good way to do it. Here you will save all of your college details, where the information will be retained in an organized and easy to review fashion. This will save you time and reduce stress by ensuring that details of each college can be compared quickly and easily, apples to apples. This can also increase your level of confidence that your comparisons are being done without bias, helping to ensure that your top choice is the best choice for you.
             </TextImage>
         </Col>
     </Row>
