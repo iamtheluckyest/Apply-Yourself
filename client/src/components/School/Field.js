@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Button, Form, FormGroup, Input} from "reactstrap"
+import {Input} from "reactstrap"
 
 const styles = {
     icon : {
@@ -25,9 +25,10 @@ export class Field extends Component {
     }
 
     toggleEdit = event => {
+        event.preventDefault();
         this.setState({edit: !this.state.edit}, () => {
             if (this.state.edit === false) {
-                this.props.handleSubmit(this.props.field, event)
+                this.props.handleSubmit(this.props.field, this.props.note)
             }
         })
     }

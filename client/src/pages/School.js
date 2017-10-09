@@ -101,18 +101,24 @@ export class School extends Component {
         })
     }
 
-    handleSubmit = (field, event) => {
-        event.preventDefault();
-        if (this.state[field._id]) {
-            API.updateNote({
-                collegeId : this.state.schoolUserData._id,
-                fieldId : field._id,
-                fieldName : field.name,
-                fieldValue : field.value
-            })
-            .then(res => console.log(res))
-            .catch(err => console.log(err))
+    handleSubmit = (field, note) => {
+        let queryObj = {
+            collegeId : this.state.schoolUserData._id,
+            fieldId : field._id,
+            fieldName : field.name,
+            fieldValue : this.state[field._id]
         }
+        if (this.state[field._id]) {
+            if (note) {
+                API.updateNote(queryObj)
+                .then(res => console.log(res))
+                .catch(err => console.log(err))
+            } else {
+                API.updateAppReq(queryObj)
+                .then(res => console.log(res))
+                .catch(err => console.log(err))
+            }
+        } 
     }
 
     /**
@@ -223,7 +229,7 @@ export class School extends Component {
                                 <h4>My Notes</h4>
                                 <p>
                                     {schoolUserData.notes.map( (note, index) =>
-                                        <Field key={note._id} field={note} handleInput={this.handleInput} handleSubmit={this.handleSubmit} />
+                                        <Field key={note._id} field={note} note={true} handleInput={this.handleInput} handleSubmit={this.handleSubmit} />
                                     )}
                                 </p>
                             </CardBody>
@@ -234,7 +240,7 @@ export class School extends Component {
                                 <h4>Application Requirements</h4>
                                 <p>
                                     {schoolUserData.appRequirements.map( (appReq, index) =>
-                                        <Field key={appReq._id} field={appReq} handleInput={this.handleInput} handleSubmit={this.handleSubmit} />
+                                        <Field key={appReq._id} field={appReq} note={false} handleInput={this.handleInput} handleSubmit={this.handleSubmit} />
                                     )}
                                 </p>
                             </CardBody>

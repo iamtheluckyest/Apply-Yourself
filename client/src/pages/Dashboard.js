@@ -61,8 +61,6 @@ export class Dashboard extends Component {
     
 
     render() {
-        console.log("state is: ");
-        console.log(this.state);
         return (
             <Container>
                 {

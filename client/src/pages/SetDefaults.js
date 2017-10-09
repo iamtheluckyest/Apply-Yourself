@@ -3,6 +3,7 @@ import {Button, Container, Col, Row} from 'reactstrap';
 import {Header} from "../components/Header";
 import {AddButton, PrefButton} from "../components/SetDefaultComponents";
 import API from "../utils/API";
+import  { Redirect } from 'react-router-dom';
 
 const styles = {
     preferenceRow : {
@@ -16,11 +17,26 @@ export class SetDefaults extends Component {
         sampleAppPrefs : ["Application deadline", "Early application deadline", "# of teacher recommendations", "Accepts Common App?", "Application Fee", "Essay Prompt"],
         selectedCollegePrefs : [],
         selectedAppPrefs : [],
-        active: []
+        active: [],
+        user : undefined,
+        redirect : undefined
     }
     
     componentDidMount(){
-        document.title = "Default Preferences"
+        document.title = "Default Preferences";
+        
+        API.getUser()
+        .then((res) => {
+            console.log(res);
+            this.setState({
+                user : res.data
+            });
+        }).catch(err => {
+            console.log(err);
+            this.setState({
+                user : undefined
+            });
+        });
     }
 
     addToSamplePrefs = (sampleArray, newCriterion) => {
@@ -77,6 +93,9 @@ export class SetDefaults extends Component {
                     if(!res2.data.error){
                         console.log("successfully saved preferences");
                         console.log(res2);
+                        this.setState({
+                            "redirect" : <Redirect to='/search'/>
+                        })  
                     } else {
                         alert("Could not save your preferences. " + res2.data.message);
                     }
@@ -92,93 +111,101 @@ export class SetDefaults extends Component {
     }
 
     render () {
-        return (
-            <Container style={{textAlign: "center"}}>
-                <Header>Select your Preferences</Header>
-                <Row style={styles.preferenceRow}>
-                    <Col xs="hidden" sm="2">
-                    </Col>
-                    <Col xs="12" sm="8">
-                        <h3>College preferences</h3>
-                        <p>
-                            While we can provide general information such as tuition or student body population for each college, 
-                            you might have unique criteria that determines whether or not a school is a good fit for you.
-                        </p>
-                        <p>
-                            <em>Choose the criteria that matter to you.</em>
-                        </p>
-                        {this.state.sampleCollegePrefs.map((pref, index) => {
-                            
-                            return (
-                                <PrefButton 
-                                    key={index}
-                                    index={index}
-                                    selectPref = {this.selectPref}
-                                    currentElement = {this.state.active[index]}
-                                    PrefsArr = "CollegePrefs"
-                                >
-                                        {pref}
-                                </PrefButton>
-                            )
-                        })}
-                        <p style={{margin:"20px"}}>
-                            <em>Or add your own!</em>
-                        </p>
-                        <AddButton fieldName="NewCollegeCriterion" sampleArray="sampleCollegePrefs" addToSamplePrefs={this.addToSamplePrefs}/>
-                    </Col>
-                    <Col xs="hidden" sm="2">
-                    </Col>
-                </Row>
+        if((this.state.user) && (this.state.user.defaultNoteFields.length === 0) && (this.state.user.defaultAppRequirements.length === 0)) {
+            return (
+                this.state.redirect
+                ?
+                    this.state.redirect
+                :
+                    <Container style={{textAlign: "center"}}>
+                        <Header>Select your Preferences</Header>
+                        <Row style={styles.preferenceRow}>
+                            <Col xs="hidden" sm="2">
+                            </Col>
+                            <Col xs="12" sm="8">
+                                <h3>College preferences</h3>
+                                <p>
+                                    While we can provide general information such as tuition or student body population for each college, 
+                                    you might have unique criteria that determines whether or not a school is a good fit for you.
+                                </p>
+                                <p>
+                                    <em>Choose the criteria that matter to you.</em>
+                                </p>
+                                {this.state.sampleCollegePrefs.map((pref, index) => {
+                                    
+                                    return (
+                                        <PrefButton 
+                                            key={index}
+                                            index={index}
+                                            selectPref = {this.selectPref}
+                                            currentElement = {this.state.active[index]}
+                                            PrefsArr = "CollegePrefs"
+                                        >
+                                                {pref}
+                                        </PrefButton>
+                                    )
+                                })}
+                                <p style={{margin:"20px"}}>
+                                    <em>Or add your own!</em>
+                                </p>
+                                <AddButton fieldName="NewCollegeCriterion" sampleArray="sampleCollegePrefs" addToSamplePrefs={this.addToSamplePrefs}/>
+                            </Col>
+                            <Col xs="hidden" sm="2">
+                            </Col>
+                        </Row>
 
-                <Row style={styles.preferenceRow}>
-                    <Col xs="hidden" sm="2">
-                    </Col>
-                    <Col xs="12" sm="8">
-                        <h3>Application preferences</h3>
-                        <p>
-                            Are there application fields that you want to make sure you remember for every college?
-                        </p>
-                        <p>
-                            <em>Choose the application information that matters to you.</em>
-                        </p>
-                        {this.state.sampleAppPrefs.map((pref, index) => {
-                            index += this.state.sampleCollegePrefs.length;
-                            return (
-                                <PrefButton
-                                    key={index}
-                                    index={index}
-                                    selectPref = {this.selectPref}
-                                    currentElement = {this.state.active[index]}
-                                    PrefsArr = "AppPrefs"
-                                >
-                                    {pref}
-                                </PrefButton>
-                            )
-                        })}
-                        <p style={{margin:"20px"}}>
-                            <em>Or add your own!</em>
-                        </p>
-                        <AddButton fieldName="NewAppCriterion" sampleArray="sampleAppPrefs" addToSamplePrefs={this.addToSamplePrefs}/>
-                    </Col>
-                    <Col xs="hidden" sm="2">
-                    </Col>
-                </Row>
+                        <Row style={styles.preferenceRow}>
+                            <Col xs="hidden" sm="2">
+                            </Col>
+                            <Col xs="12" sm="8">
+                                <h3>Application preferences</h3>
+                                <p>
+                                    Are there application fields that you want to make sure you remember for every college?
+                                </p>
+                                <p>
+                                    <em>Choose the application information that matters to you.</em>
+                                </p>
+                                {this.state.sampleAppPrefs.map((pref, index) => {
+                                    index += this.state.sampleCollegePrefs.length;
+                                    return (
+                                        <PrefButton
+                                            key={index}
+                                            index={index}
+                                            selectPref = {this.selectPref}
+                                            currentElement = {this.state.active[index]}
+                                            PrefsArr = "AppPrefs"
+                                        >
+                                            {pref}
+                                        </PrefButton>
+                                    )
+                                })}
+                                <p style={{margin:"20px"}}>
+                                    <em>Or add your own!</em>
+                                </p>
+                                <AddButton fieldName="NewAppCriterion" sampleArray="sampleAppPrefs" addToSamplePrefs={this.addToSamplePrefs}/>
+                            </Col>
+                            <Col xs="hidden" sm="2">
+                            </Col>
+                        </Row>
 
-                <Row style={styles.preferenceRow}>
-                    <Col xs="hidden" sm="2">
-                    </Col>
-                    <Col xs="12" sm="8">
-                        <h2>Save Preferences</h2>
-                        <p>You can always change them later.</p>
-                        <Button onClick={this.handleSubmit}>
-                            Save Preferences
-                        </Button>
-                    </Col>
-                    <Col xs="hidden" sm="2">
-                    </Col>
-                </Row>
-                
-            </Container>
-        )
+                        <Row style={styles.preferenceRow}>
+                            <Col xs="hidden" sm="2">
+                            </Col>
+                            <Col xs="12" sm="8">
+                                <h2>Save Preferences</h2>
+                                <p>You can always change them later.</p>
+                                <Button onClick={this.handleSubmit}>
+                                    Save Preferences
+                                </Button>
+                            </Col>
+                            <Col xs="hidden" sm="2">
+                            </Col>
+                        </Row>
+                        
+                    </Container>
+            )
+        } else {
+            return <div></div>
+        }
     }
 }
