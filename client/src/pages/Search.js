@@ -13,7 +13,6 @@ export class Search extends Component {
         maxPopulation : "",
         minTuition : "",
         maxTuition : "",
-        minCompletion : "",
         redirect: false
     }
 
@@ -42,6 +41,14 @@ export class Search extends Component {
         if (this.state.schoolName){
             queryURL = (queryURL || queryURLBase) + "&school.name=" + this.state.schoolName;
         }
+
+        if (this.state.minPopulation && this.state.maxPopulation) {
+            queryURL = (queryURL || queryURLBase) + "&2015.[INSERT POPULATION CALL]__range=" + this.state.minPopulation + ".." + this.state.maxPopulation;
+        } else if (this.state.minPopulation) {
+            queryURL = (queryURL || queryURLBase) + "&2015.[INSERT POPULATION CALL]__range=" + this.state.minPopulation + "..";
+        } else if (this.state.maxPopulation) {
+            queryURL = (queryURL || queryURLBase) + "&2015.[INSERT POPULATION CALL]__range=0.." + this.state.maxPopulation;
+        };
 
         if (this.state.minTuition && this.state.maxTuition) {
             queryURL = (queryURL || queryURLBase) + "&2015.cost.tuition.out_of_state__range=" + this.state.minTuition + ".." + this.state.maxTuition;

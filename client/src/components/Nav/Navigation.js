@@ -21,18 +21,23 @@ export class Navigation extends Component {
           <Link to="/" className="navbar-brand" style={{color:"#FFF"}}>Apply Yourself</Link>
           <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
           <Collapse isOpen={!this.state.collapsed} navbar>
-            <Nav className="ml-auto" navbar>
-              {Auth.isUserAuthenticated()
-                ?
+            {Auth.isUserAuthenticated()
+              ?
+              <Nav className="ml-auto" navbar>
+                  <NavItem>
+                    <NavLink href="/dashboard/">My Colleges</NavLink>
+                  </NavItem>
                   <NavItem>
                     <NavLink href="/logout/">Log out</NavLink>
                   </NavItem>
-                :
+                </Nav>
+              :
+                <Nav className="ml-auto" navbar>
                   <NavItem>
                     <NavLink href="/login/">Log in/Sign up</NavLink>
                   </NavItem>
-              }
-            </Nav>
+                </Nav>
+            }
           </Collapse>
         </Navbar>
       </div>
