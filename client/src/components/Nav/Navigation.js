@@ -23,9 +23,12 @@ export class Navigation extends Component {
           <Collapse isOpen={!this.state.collapsed} navbar>
             {Auth.isUserAuthenticated()
               ?
-              <Nav className="ml-auto" navbar>
+                <Nav className="ml-auto" navbar>
                   <NavItem>
-                    <NavLink href="/dashboard/">My Colleges</NavLink>
+                    <NavLink href="/search"><i className="fa fa-search default-icon" aria-hidden="true"></i></NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink href="/dashboard">My Colleges</NavLink>
                   </NavItem>
                   <NavItem>
                     <NavLink href="/logout/">Log out</NavLink>
@@ -33,6 +36,9 @@ export class Navigation extends Component {
                 </Nav>
               :
                 <Nav className="ml-auto" navbar>
+                  <NavItem>
+                    <NavLink href="/search"><i className="fa fa-search default-icon" aria-hidden="true"></i></NavLink>
+                  </NavItem>
                   <NavItem>
                     <NavLink href="/login/">Log in/Sign up</NavLink>
                   </NavItem>

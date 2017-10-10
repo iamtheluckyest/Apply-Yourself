@@ -21,6 +21,16 @@ i:hover {
   cursor: pointer;
 }
 
+i.default-icon {
+  position: static;
+  color: inherit;
+}
+
+i.default-icon:hover {
+  text-decoration: none;
+  cursor: pointer;
+}
+
 h1, h2, h3, h4, h5, h6, .iconHolder {
   font-family: 'Volkhov', serif; 
   font-weight: 400;

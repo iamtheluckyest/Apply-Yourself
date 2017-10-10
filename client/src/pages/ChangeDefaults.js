@@ -121,13 +121,16 @@ export class ChangeDefaults extends Component {
                     <Container style={{textAlign: "center"}}>
                         <Header>Change your Preferences</Header>
                         <p style={{marginBottom:"20px"}}>
-                            <em>Remove your previous default preferences by clicking on them. Add a new one by providing a new name for your preference and clicking 'Add.' Save your default preferences by clicking 'Save Preferences.' </em>
+                            Remove your previous default preferences by clicking on them. Add a new one by providing a new name for your preference and clicking 'Add.' Save your default preferences by clicking 'Save Preferences.'
                         </p>
                         <Row style={styles.preferenceRow}>
                             <Col xs="hidden" sm="2">
                             </Col>
                             <Col xs="12" sm="8">
                                 <h3>College Preferences</h3>
+                                <p>
+                                    <em>Remove a default preference by clicking on it.</em>
+                                </p>
                                 {this.state.defaultNotes.map((pref, index) => {
                                     
                                     return (
@@ -153,6 +156,9 @@ export class ChangeDefaults extends Component {
                             </Col>
                             <Col xs="12" sm="8">
                                 <h3>Application Preferences</h3>
+                                <p>
+                                    <em>Remove a default preference by clicking on it.</em>
+                                </p>
                                 {this.state.defaultAppRequirements.map((req, index) => {
                                     return (
                                         <DeleteButton
