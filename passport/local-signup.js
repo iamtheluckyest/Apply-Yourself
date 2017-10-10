@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const User = require("../models/User.js");
 const PassportLocalStrategy = require('passport-local').Strategy;
 const config = require('../config');
+const secret = process.env.JWT_SECRET || config.jwtSecret;
 
 /**
  * Return the Passport Local Strategy object.
@@ -29,7 +30,7 @@ module.exports = new PassportLocalStrategy({
         const payload = {
             sub: myUser._id
         };
-        const token = jwt.sign(payload, config.jwtSecret);
+        const token = jwt.sign(payload, secret);
         return done(null, token, myUser);
     });
 });

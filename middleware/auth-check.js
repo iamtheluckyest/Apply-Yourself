@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require("../models/User.js");
 const config = require('../config');
-
+const secret = process.env.JWT_SECRET || config.jwtSecret;
 
 /**
  *  The Auth Checker middleware function.
@@ -18,7 +18,7 @@ module.exports = (req, res, next) => {
     const token = req.headers.authorization.split(' ')[1];
 
     // decode the token using a secret key-phrase
-    return jwt.verify(token, config.jwtSecret, (err, decoded) => {
+    return jwt.verify(token, secret, (err, decoded) => {
         // the 401 code is for unauthorized status
         if (err) { 
             return res.status(401).end();
