@@ -35,6 +35,7 @@ export const SearchResults = props =>
                                         inStateTuition={school["2015.cost.tuition.in_state"]}
                                         outOfStateTuition={school["2015.cost.tuition.out_of_state"]}
                                         url={school["school.school_url"]}
+                                        user={props.user}
                                     />
                                 )
                             }

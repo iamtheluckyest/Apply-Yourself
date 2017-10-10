@@ -1,9 +1,9 @@
 import React, {Component} from "react";
 import {Container, Col, Row, Table} from 'reactstrap';
 import { Nav, NavItem, NavLink } from 'reactstrap';
-import {Card, CardBody} from 'reactstrap';
+import {Card, CardBody, CardFooter} from 'reactstrap';
 import {Header} from "../components/Header";
-import {Field, AddField} from "../components/School"
+import {Field, AddField, GeneralInfo} from "../components/School"
 import API from "../utils/API"
 
 const styles= {
@@ -66,7 +66,6 @@ export class School extends Component {
         let that = this
         API.getUser()
         .then(function(res){
-            console.log(res);
             that.setState({
                 user : res.data
             }, () => {
@@ -177,49 +176,6 @@ export class School extends Component {
             .catch(err => console.log(err))
         }
     }
-    
-
-    /**
-     * Functions that decode College Scorecard Data
-     */
-
-    determineLocale = () => {
-        let locale;
-        switch (this.state.schoolApiData.school.locale) {
-            case 11 || 12 || 13 : locale = "City"; break;
-            case 21 || 22 || 23 : locale = "Suburb"; break;
-            case 31 || 32 || 33 : locale = "Town"; break;
-            case 41 || 42 || 43 : locale = "Rural"; break;
-            default: locale = null;
-        }
-        return locale
-    }
-
-    determineSize = () => {
-        let size;
-        switch(this.state.schoolApiData.school.carnegie_size_setting){
-            case 1 : size = "two-year, very small"; break;
-            case 2 : size = "two-year, small"; break;
-            case 3 : size = "two-year, medium"; break;
-            case 4 : size = "two-year, large"; break;
-            case 5 : size = "two-year, very large"; break;
-            case 6 : size = "four-year, very small, primarily nonresidential"; break;
-            case 7 : size = "four-year, very small, primarily residential"; break;
-            case 8 : size = "four-year, very small, highly residential"; break;
-            case 9 : size = "four-year, small, primarily nonresidential"; break;
-            case 10 : size = "four-year, small, primarily residential"; break;
-            case 11	: size = "four-year, small, highly residential"; break;
-            case 12	: size = "four-year, medium, primarily nonresidential"; break;
-            case 13	: size = "four-year, medium, primarily residential"; break;
-            case 14	: size = "four-year, medium, highly residential"; break;
-            case 15	: size = "four-year, large, primarily nonresidential"; break;
-            case 16	: size = "four-year, large, primarily residential"; break;
-            case 17	: size = "four-year, large, highly residential"; break;
-            case 18	: size = "exclusively graduate/professional"; break;
-            default : size = "";
-        }
-        return size;
-    }
 
     render() {
         let {schoolApiData, schoolUserData, activeTab} = this.state;
@@ -261,26 +217,11 @@ export class School extends Component {
                                     <span className="iconHolder" style={styles.icon} onClick={ ()=> this.addSchool(schoolApiData.id) } ><i className="fa fa-plus-square" aria-hidden="true"  title="Add school to dashboard"></i></span>
                                 </div>
                             }
-                            {activeTab[0] ?
-                            <CardBody>
-                                <h4 className="school-sub-header">Overview</h4>
-                                <a href={"http://" + schoolApiData.school.school_url} target="_blank">{schoolApiData.school.school_url}</a>
-                                <p>{schoolApiData.school.name} is&nbsp;
-                                    {(schoolApiData.school.carnegie_size_setting 
-                                    && schoolApiData.school.carnegie_size_setting > 0 
-                                    && schoolApiData.school.carnegie_size_setting < 19)
-                                    ?
-                                    <span>a {this.determineSize()} school </span>
-                                    : 
-                                    "" }
-                                    located in {schoolApiData.school.city}, {schoolApiData.school.state}.
-                                </p>
-                                <h4>Statistics</h4>
-                                <p>
-                                    {this.determineLocale() ? <span>Locale: {this.determineLocale()} </span> : ""}
-                                </p>
-                            </CardBody>
-                            : ""
+                            {activeTab[0] 
+                            ?
+                                <GeneralInfo data={schoolApiData} />
+                            : 
+                                ""
                             }
                             {activeTab[1] ?
                             <CardBody>
@@ -307,7 +248,7 @@ export class School extends Component {
                             }
                             {activeTab[2] ?
                             <CardBody>
-                                <h4  className="school-sub-header">Application Requirements</h4>
+                                <h4  className="school-sub-header">Admissions Requirements</h4>
                                 <Table>
                                     <tbody>
                                     {schoolUserData.appRequirements.map( (appReq, index) =>
@@ -328,6 +269,17 @@ export class School extends Component {
                             </CardBody>
                             : ""
                             }
+                            {activeTab[0] 
+                            ?
+                                <CardFooter>
+                                    General information provided by <a href="https://collegescorecard.ed.gov/data/" target="_blank" rel="noopener noreferrer">College Scorecard.</a>
+                                    <br />
+                                    Please refer to <a href={"http://" + schoolApiData.school.school_url} target="_blank" rel="noopener noreferrer">school website</a> for more complete and up-to-date information.
+                                </CardFooter>
+                            : 
+                                ""
+                            }
+
                         </Card>
                     </Col>
                 </Row>

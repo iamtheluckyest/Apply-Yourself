@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import {Input} from "reactstrap"
+import moment from "moment";
 
 const styles = {
     icon : {
@@ -63,7 +64,14 @@ export class Field extends Component {
                     </th>
 
                     <td> 
-                        {this.props.field.value || "..."}
+                        {this.props.field.value 
+                            ? 
+                            moment(this.props.field.value).isValid()
+                                ? 
+                                moment(this.props.field.value).format("dddd, MMMM Do YYYY") 
+                                :
+                                this.props.field.value 
+                            : "..." }
                     </td>
                     <td width="75px">
                         <i onClick={this.toggleEdit} style={styles.icon} className="fa fa-pencil" aria-hidden="true" title="Edit field"></i> 

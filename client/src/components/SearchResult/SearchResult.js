@@ -13,13 +13,16 @@ export const SearchResult = props =>
     <Card className="mb-3">
         <CardBody>
             <Link to={"/school/" + props.id} ><CardTitle style={styles.cardTitle}>{props.collegeName}</CardTitle></Link>
-            <span className="iconHolder"
-                onClick={ () => {
-                    API.addSchool(props.id)
-                    .then( res => console.log(res) )
-                    .catch( err=> console.log(err) )
-                }}
-            ><i className="fa fa-plus-square" aria-hidden="true"></i></span>
+            {props.user ? 
+                <span className="iconHolder"
+                    onClick={ () => {
+                        API.addSchool(props.id)
+                        .then( res => console.log(res) )
+                        .catch( err=> console.log(err) )
+                    }}
+                ><i className="fa fa-plus-square" aria-hidden="true"></i></span>
+                : ""
+            }
             <p>
                 <a href={"http://" + props.url} target="_blank">{props.url}</a>
                 <br />
