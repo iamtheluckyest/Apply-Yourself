@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 import {Row, Col} from "reactstrap";
 import {Header} from "../Header";
 import {SchoolListItem} from "../Dashboard";
@@ -16,6 +17,11 @@ export const Dash = props => {
     return (
         <div>
             <Header>My Schools</Header>
+            <Row style={{marginBottom:"20px"}}>
+                <Col xs="12">
+                    <Link style={{float:"right"}} to="/changeDefaults">Change Default Preferences</Link>
+                </Col>
+            </Row>
             <Row>
                 <Col xs="12">
                     { noColleges 
