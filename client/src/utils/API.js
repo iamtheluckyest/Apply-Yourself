@@ -57,6 +57,22 @@ export default {
             headers: authHeader()
         })
     },
+    addNewNote: function(queryObj) {
+        return axios({
+            method: "post",
+            url: "/user/note",
+            data: queryObj,
+            headers: authHeader()
+        })
+    },
+    addNewAppReq: function(queryObj) {
+        return axios({
+            method: "post",
+            url: "/user/requirement",
+            data: queryObj,
+            headers: authHeader()
+        })
+    },
     updateNote: function(queryObj) {
         return axios({
             method: "put",

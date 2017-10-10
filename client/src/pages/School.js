@@ -157,6 +157,28 @@ export class School extends Component {
         } 
     }
 
+    addNewField = (fieldName, fieldValue, note) => {
+        console.log("adding new field")
+        let queryObj = {
+            collegeId : this.state.schoolUserData._id,
+            fieldName : fieldName,
+            fieldValue : fieldValue
+        }
+        // If it's a note
+        if (note) {
+            API.addNewNote(queryObj)
+            .then( () => this.getUser() )
+            .catch(err => console.log(err))
+        } 
+        // If it's an admissions requirement
+        else {
+            API.addNewAppReq(queryObj)
+            .then( () => this.getUser() )
+            .catch(err => console.log(err))
+        }
+    }
+    
+
     /**
      * Functions that decode College Scorecard Data
      */
@@ -279,7 +301,7 @@ export class School extends Component {
                                     )}
                                     </tbody>
                                 </Table>
-                                <AddField />
+                                <AddField addNewField={this.addNewField} note={true} />
                             </CardBody>
                             : ""
                             }
@@ -302,7 +324,7 @@ export class School extends Component {
                                     )}
                                     </tbody>
                                 </Table>
-                                <AddField />
+                                <AddField addNewField={this.addNewField} note={false} />
                             </CardBody>
                             : ""
                             }

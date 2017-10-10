@@ -1,25 +1,26 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+import { Collapse, Navbar, NavbarToggler, Nav, NavItem, NavLink } from 'reactstrap';
 import Auth from "../../Auth.js";
 
 export class Navigation extends Component {
   state = {
-    isOpen: false
+    collapsed: true    
   }
 
-  toggle = () => {
+  toggleNavbar = () => {
     this.setState({
-      isOpen: !this.state.isOpen
+      collapsed: !this.state.collapsed
     });
   }
+
   render() {
     return (
       <div>
-        <Navbar color="primary dark" expand="md">
-          <Link to="/"><NavbarBrand>Apply Yourself</NavbarBrand></Link>
-          <NavbarToggler onClick={this.toggle} />
-          <Collapse isOpen={this.state.isOpen} navbar>
+        <Navbar color="primary" dark expand="md">
+          <Link to="/" className="navbar-brand" style={{color:"#FFF"}}>Apply Yourself</Link>
+          <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
+          <Collapse isOpen={!this.state.collapsed} navbar>
             <Nav className="ml-auto" navbar>
               {Auth.isUserAuthenticated()
                 ?

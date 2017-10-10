@@ -35,7 +35,7 @@ export class AddField extends Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        console.log("addNewField")
+        this.props.addNewField(this.state.fieldName, this.state.fieldValue, this.props.note)
     }
 
     render() {  
