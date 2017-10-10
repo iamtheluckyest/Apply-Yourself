@@ -67,3 +67,7 @@ p {
 .school-sub-header {
   margin-top:20px;
 }
+
+select {
+  vertical-align: top;
+}
