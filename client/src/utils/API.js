@@ -52,9 +52,57 @@ export default {
     },
     getUser: function() {
         return axios({
-            url : '/user',
             method : "get",
-            headers: authHeader(),
+            url : '/user',
+            headers: authHeader()
+        })
+    },
+    addNewNote: function(queryObj) {
+        return axios({
+            method: "post",
+            url: "/user/note",
+            data: queryObj,
+            headers: authHeader()
+        })
+    },
+    addNewAppReq: function(queryObj) {
+        return axios({
+            method: "post",
+            url: "/user/requirement",
+            data: queryObj,
+            headers: authHeader()
+        })
+    },
+    updateNote: function(queryObj) {
+        return axios({
+            method: "put",
+            url: "/user/note",
+            data: queryObj,
+            headers: authHeader()
+        })
+    },
+    updateAppReq: function(queryObj) {
+        return axios({
+            method: "put",
+            url: "/user/requirement",
+            data: queryObj,
+            headers: authHeader()
+        })
+    },
+    deleteNote: function(queryObj) {
+        return axios({
+            method: "delete",
+            url: "/user/note",
+            data: queryObj,
+            headers: authHeader()
+        })
+    },
+    deleteAppReq: function(queryObj) {
+        return axios({
+            method: "delete",
+            url: "/user/requirement",
+            data: queryObj,
+            headers: authHeader()
         })
     }
 }

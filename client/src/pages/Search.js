@@ -8,12 +8,13 @@ import API from "../utils/API"
 export class Search extends Component {
     state = {
         schoolName : "",
-        location : "",
+        state : "",
         minPopulation : "",
         maxPopulation : "",
+        gradPop : "",
         minTuition : "",
         maxTuition : "",
-        minCompletion : "",
+        inState : "",
         redirect: false
     }
 
@@ -23,7 +24,9 @@ export class Search extends Component {
     }
 
     handleInput = event => {
-        const {name, value} = event.target
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
         this.setState(
             {[name]: value}
         )
@@ -32,38 +35,53 @@ export class Search extends Component {
     handleSubmit = event => {
         event.preventDefault();
         let authKey = "S9HBrRONDcEoZvlEQkn5ucv5bmWnMoRT5sjaWIJ8";
-        let queryURLBase = "https://api.data.gov/ed/collegescorecard/v1/schools.json?api_key=" + authKey + "&_fields=id,school.name,school.school_url,school.state,2015.cost.tuition.in_state,2015.cost.tuition.out_of_state";
+        let queryURLBase = "https://api.data.gov/ed/collegescorecard/v1/schools.json?api_key=" + authKey + "&_fields=id,school.name,school.school_url,school.state,school.city,2015.cost.tuition.in_state,2015.cost.tuition.out_of_state";
         let queryURL;
+
+        if (this.state.state){
+            queryURL = queryURLBase + "&school.state=" + this.state.state;
+        };
 
         if (this.state.schoolName){
             queryURL = (queryURL || queryURLBase) + "&school.name=" + this.state.schoolName;
-        }
-
-        if (this.state.location){
-            queryURL = queryURLBase + "&school.state=" + this.state.location;
-        }
-
-        if (this.state.minPopulation && this.state.maxPopulation) {
-            queryURL = (queryURL || queryURLBase) + "&2015.student.size__range=" + this.state.minPopulation + ".." + this.state.maxPopulation;
-        } else if (this.state.minPopulation) {
-            queryURL = (queryURL || queryURLBase) + "&2015.student.size__range=" + this.state.minPopulation + "..";
-        } else if (this.state.maxPopulation) {
-            queryURL = (queryURL || queryURLBase) + "&2015.student.size__range=0.." + this.state.maxPopulation;
-        }
-
-        if (this.state.minTuition && this.state.maxTuition) {
-            queryURL = (queryURL || queryURLBase) + "&2015.cost.tuition.in_state__range=" + this.state.minTuition + ".." + this.state.maxTuition;
-        } else if (this.state.minTuition) {
-            queryURL = (queryURL || queryURLBase) + "&2015.cost.tuition.in_state__range=" + this.state.minTuition + "..";
-        } else if (this.state.maxTuition) {
-            queryURL = (queryURL || queryURLBase) + "&2015.cost.tuition.in_state__range=0.." + this.state.maxTuition;
-        }
-
-        if (this.state.minCompletion) {
-        queryURL = (queryURL || queryURLBase) + "&2015.completion.completion_rate_less_than_4yr_150nt__range=" + this.state.minCompletion + "..";
+        };
+            
+        if (this.state.gradPop) {
+            if (this.state.minPopulation && this.state.maxPopulation) {
+                queryURL = (queryURL || queryURLBase) + "&2015.student.grad_students__range=" + this.state.minPopulation + ".." + this.state.maxPopulation;
+            } else if (this.state.minPopulation) {
+                queryURL = (queryURL || queryURLBase) + "&2015.student.grad_students__range=" + this.state.minPopulation + "..";
+            } else if (this.state.maxPopulation) {
+                queryURL = (queryURL || queryURLBase) + "&2015.student.grad_students__range=0.." + this.state.maxPopulation;
+            };
+        } else {
+            if (this.state.minPopulation && this.state.maxPopulation) {
+                queryURL = (queryURL || queryURLBase) + "&2015.student.size__range=" + this.state.minPopulation + ".." + this.state.maxPopulation;
+            } else if (this.state.minPopulation) {
+                queryURL = (queryURL || queryURLBase) + "&2015.student.size__range=" + this.state.minPopulation + "..";
+            } else if (this.state.maxPopulation) {
+                queryURL = (queryURL || queryURLBase) + "&2015.student.size__range=0.." + this.state.maxPopulation;
+            };
         };
 
-        console.log(queryURL)
+        if (this.state.inState) {
+            if (this.state.minTuition && this.state.maxTuition) {
+                queryURL = (queryURL || queryURLBase) + "&2015.cost.tuition.in_state__range=" + this.state.minTuition + ".." + this.state.maxTuition;
+            } else if (this.state.minTuition) {
+                queryURL = (queryURL || queryURLBase) + "&2015.cost.tuition.in_state__range=" + this.state.minTuition + "..";
+            } else if (this.state.maxTuition) {
+                queryURL = (queryURL || queryURLBase) + "&2015.cost.tuition.in_state__range=0.." + this.state.maxTuition;
+            }; 
+        } else {
+            if (this.state.minTuition && this.state.maxTuition) {
+                queryURL = (queryURL || queryURLBase) + "&2015.cost.tuition.out_of_state__range=" + this.state.minTuition + ".." + this.state.maxTuition;
+            } else if (this.state.minTuition) {
+                queryURL = (queryURL || queryURLBase) + "&2015.cost.tuition.out_of_state__range=" + this.state.minTuition + "..";
+            } else if (this.state.maxTuition) {
+                queryURL = (queryURL || queryURLBase) + "&2015.cost.tuition.out_of_state__range=0.." + this.state.maxTuition;
+            }; 
+        }  
+
         if (queryURL) {
             API.getSchools(queryURL)
                 .then(res => {
@@ -72,7 +90,6 @@ export class Search extends Component {
                         that.setState({redirect:true})
                     )
                 }).catch(err => console.log(err))
-
         }
     }
     render() {
@@ -88,7 +105,12 @@ export class Search extends Component {
                         <Col xs="hidden" sm="2">
                         </Col>
                         <Col xs="12" sm="8">
-                            <SearchForm handleInput={this.handleInput} handleSubmit={this.handleSubmit}/>
+                            <SearchForm 
+                                handleInput={this.handleInput}
+                                handleSubmit={this.handleSubmit}
+                                inState={this.state.inState}
+                                gradPop={this.state.gradPop}
+                            />
                         </Col>
                         <Col xs="hidden" sm="2">
                         </Col>

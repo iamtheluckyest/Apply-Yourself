@@ -3,7 +3,7 @@
 
 
 "@customstyles/bootstrap@file:lib/customstyles":
-  version "1.0.5"
+  version "1.0.8"
   dependencies:
     bootstrap "^4.0.0-beta"
 

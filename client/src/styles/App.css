@@ -21,6 +21,16 @@ i:hover {
   cursor: pointer;
 }
 
+i.default-icon {
+  position: static;
+  color: inherit;
+}
+
+i.default-icon:hover {
+  text-decoration: none;
+  cursor: pointer;
+}
+
 h1, h2, h3, h4, h5, h6, .iconHolder {
   font-family: 'Volkhov', serif; 
   font-weight: 400;
@@ -38,4 +48,26 @@ h4.card-title {
 
 p {
   font-family: 'Source Sans Pro', sans-serif;
+}
+
+.nav-tabs .nav-link.active {
+  background-color: #FFF;
+  border-bottom: 1px solid #FFF;
+}
+
+.nav-tabs .nav-link:hover {
+  color: #800000;
+}
+
+.nav-tabs .nav-link.active:hover {
+  color: #495057;
+  cursor: default;
+}
+
+.school-sub-header {
+  margin-top:20px;
+}
+
+select {
+  vertical-align: top;
 }
