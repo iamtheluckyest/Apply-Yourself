@@ -4,22 +4,11 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-d
 import {Dashboard, LearnMore, LoginPage, School, Search, SearchResults, SetDefaults, SignUpPage, Start, ChangeDefaults, NoMatch} from "./pages"
 import { Navigation } from "./components/Nav"
 import Auth from "./Auth.js"
-import API from "./utils/API"
 
 class App extends Component {
   state = {
     showNav : true,
-    searchResults : "",
-    user: undefined
-  }
-
-  componentDidMount() {
-    API.getUser()
-    .then(res => this.setState({user: res.data}))
-    .catch(err => {
-      console.log(err)
-      this.setState({user: undefined})
-    })
+    searchResults : ""
   }
 
   showHideNav = showOrHide => {
@@ -53,7 +42,7 @@ class App extends Component {
               <Search {...props} setSearchResults={this.setSearchResults} />
             )} />
             <Route exact path="/searchResults" render={props =>(
-              <SearchResults {...props} results={this.state.searchResults} user={this.state.user}/>
+              <SearchResults {...props} results={this.state.searchResults}/>
             )}/>
             <Route exact path="/setDefaults" component={SetDefaults} />
             <Route exact path="/changeDefaults" component={ChangeDefaults} />

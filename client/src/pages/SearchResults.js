@@ -26,23 +26,11 @@ export const SearchResults = props =>
                                     };
                                 }
                                 return (
-                                    <SearchResult 
-                                        key={school.id}
-                                        id={school.id}
-                                        collegeName={school["school.name"]} 
-                                        state={school["school.state"]}
-                                        city={school["school.city"]}
-                                        inStateTuition={school["2015.cost.tuition.in_state"]}
-                                        outOfStateTuition={school["2015.cost.tuition.out_of_state"]}
-                                        url={school["school.school_url"]}
-                                        user={props.user}
-                                    />
+                                    <SearchResult key={school.id} school={school}/>
                                 )
                             }
                         )                    
                     }
-
-                    
                 </Col>
             </Row>
         </Container>;
