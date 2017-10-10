@@ -72,7 +72,7 @@ export const GeneralInfo = props => {
                                 <td>{determineLocale()}</td>
                             </tr>
                         : 
-                            ""
+                            <div></div>
                     }
                     
                     {/* If 2015 data doesn't exist for this field, try 2014, then 2013 */}
@@ -82,7 +82,7 @@ export const GeneralInfo = props => {
                             ? <tr><th>Undergraduate population (2014)</th><td>{data["2014"].student.size}</td></tr>
                             : data["2013"].student.size 
                                 ? <tr><th>Undergraduate population (2013)</th><td>{data["2013"].student.size}</td></tr> 
-                                : ""
+                                : <div></div>
                     }
 
                     {/* If 2015 data doesn't exist for this field, try 2014, then 2013 */}
@@ -92,7 +92,7 @@ export const GeneralInfo = props => {
                             ? <tr><th>Graduate population (2014)</th><td>{data["2014"].student.grad_students } </td></tr>
                             : data["2013"].student.grad_students  
                                 ? <tr><th>Graduate population (2013)</th><td>{data["2013"].student.grad_students} </td></tr> 
-                                : ""
+                                : <div></div>
                     }
 
                     {/* If 2015 data doesn't exist for this field, try 2014, then 2013 */}
@@ -102,7 +102,7 @@ export const GeneralInfo = props => {
                             ? <tr><th>Admissions rate (2014)</th><td>{(data["2014"].admissions.admission_rate.overall*100).toFixed(2)}% </td></tr>
                             : data["2013"].admissions.admission_rate 
                                 ? <tr><th>Admissions rate (2013)</th><td>{(data["2013"].admissions.admission_rate.overall*100).toFixed(2)}% </td></tr> 
-                                : ""
+                                : <div></div>
                     }
 
                 </tbody>

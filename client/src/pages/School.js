@@ -3,8 +3,9 @@ import {Container, Col, Row, Table} from 'reactstrap';
 import { Nav, NavItem, NavLink } from 'reactstrap';
 import {Card, CardBody, CardFooter} from 'reactstrap';
 import {Header} from "../components/Header";
-import {Field, AddField, GeneralInfo} from "../components/School"
-import API from "../utils/API"
+import {LoginPrompt} from "../components/Modals";
+import {Field, AddField, GeneralInfo} from "../components/School";
+import API from "../utils/API";
 
 const styles= {
     icon: {
@@ -20,7 +21,8 @@ export class School extends Component {
         user : undefined,
         schoolApiData : {},
         schoolFound: false,
-        schoolUserData : {}
+        schoolUserData : {},
+        modal : false
     }
 
     componentDidMount() {
@@ -88,6 +90,12 @@ export class School extends Component {
             that.setState({
                 user : undefined
             })
+        });
+    }
+
+    toggle = () => {
+        this.setState({
+          modal: !this.state.modal
         });
     }
 
@@ -205,16 +213,23 @@ export class School extends Component {
                             }
                         </Nav>
                         <Card style={{borderTop:"none"}} className="mb-5">
-                            {/* If there is no user signed in, clicking this should have you link to log in page;
-                                If there is a user signed in, but this college is already in their list, this should be a link to remove college */}
-                            {this.state.schoolFound 
-                                ? 
-                                <div>
-                                    <span className="iconHolder" style={styles.icon} onClick={ ()=> this.deleteSchool(schoolUserData._id) }><i className="fa fa-times" aria-hidden="true" title="Remove school from dashboard"></i></span>
-                                </div>
+                            {/* If there is no user signed in, clicking prompts log in page;
+                                If there is a user signed in, this button adds/deletes college from user's schools */}
+                            {this.state.user 
+                                ?
+                                this.state.schoolFound 
+                                    ? 
+                                    <div>
+                                        <span className="iconHolder" style={styles.icon} onClick={ ()=> this.deleteSchool(schoolUserData._id) }><i className="fa fa-times" aria-hidden="true" title="Remove school from dashboard"></i></span>
+                                    </div>
+                                    :
+                                    <div>
+                                        <span className="iconHolder" style={styles.icon} onClick={ ()=> this.addSchool(schoolApiData.id) } ><i className="fa fa-plus-square" aria-hidden="true"  title="Add school to dashboard"></i></span>
+                                    </div>
                                 :
                                 <div>
-                                    <span className="iconHolder" style={styles.icon} onClick={ ()=> this.addSchool(schoolApiData.id) } ><i className="fa fa-plus-square" aria-hidden="true"  title="Add school to dashboard"></i></span>
+                                    <span className="iconHolder" style={styles.icon} onClick={this.toggle} ><i className="fa fa-plus-square" aria-hidden="true"  title="Add school to dashboard"></i></span>
+                                    <LoginPrompt modal={this.state.modal} toggle={this.toggle}/>
                                 </div>
                             }
                             {activeTab[0] 
