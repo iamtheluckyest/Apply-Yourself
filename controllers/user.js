@@ -233,11 +233,14 @@ router.put("/requirement", (req, res) => {
         name : req.body.fieldName,
         value : convVal
     });
+    user.markModified("colleges");
     user.save((err, updatedUser) => {
         if(err){
             console.log(err);
             res.json({error : true, message : "Error updating application requirement. Please try again later."});
         } else {
+            console.log("New user is: ");
+            console.log(updatedUser);
             res.json(updatedUser);
         }
     });
