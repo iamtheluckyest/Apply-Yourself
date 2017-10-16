@@ -151,12 +151,14 @@ export class School extends Component {
         if (this.state[field._id]) {
             // If it's a note
             if (note) {
+                console.log("it's a note")
                 API.updateNote(queryObj)
                 .then( () => this.getUser() )
                 .catch(err => console.log(err))
             } 
             // If it's an admissions requirement
             else {
+                console.log("it's an app Req")
                 API.updateAppReq(queryObj)
                 .then( () => this.getUser() )
                 .catch(err => console.log(err))
@@ -213,7 +215,7 @@ export class School extends Component {
                             }
                         </Nav>
                         <Card style={{borderTop:"none"}} className="mb-5">
-                            {/* If there is no user signed in, clicking prompts log in page;
+                            {/* If there is no user signed in, clicking opens modal which tells user to log in first;
                                 If there is a user signed in, this button adds/deletes college from user's schools */}
                             {this.state.user 
                                 ?
@@ -287,9 +289,11 @@ export class School extends Component {
                             {activeTab[0] 
                             ?
                                 <CardFooter>
-                                    General information provided by <a href="https://collegescorecard.ed.gov/data/" target="_blank" rel="noopener noreferrer">College Scorecard.</a>
+                                    Information provided by <a href="https://collegescorecard.ed.gov/data/" target="_blank" rel="noopener noreferrer">College Scorecard.</a>
                                     <br />
                                     Please refer to <a href={"http://" + schoolApiData.school.school_url} target="_blank" rel="noopener noreferrer">school website</a> for more complete and up-to-date information.
+                                    <br />
+                                    All information from 2015 unless otherwise noted.
                                 </CardFooter>
                             : 
                                 ""
