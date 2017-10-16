@@ -48,75 +48,81 @@ export const GeneralInfo = props => {
     const determineRegAffiliation = () => {
         let faith;
         switch(data.school.religious_affiliation) {
-            case 22 : faith = "American Evangelical Lutheran Church"; break;
-            case 24 : faith = "African Methodist Episcopal Zion Church"; break;
-            case 27 : faith = "Assemblies of God Church"; break;
-            case 28 : faith = "Brethren Church"; break;
-            case 30 : faith = "Roman Catholic"; break;
-            case 33 : faith = "Wisconsin Evangelical Lutheran Synod"; break;
-            case 34 : faith = "Christ and Missionary Alliance Church"; break;
-            case 35 : faith = "Christian Reformed Church"; break;
-            case 36 : faith = "Evangelical Congregational Church"; break;
-            case 37 : faith = "Evangelical Covenant Church of America"; break;
-            case 38 : faith = "Evangelical Free Church of America"; break;
-            case 39 : faith = "Evangelical Lutheran Church"; break;
-            case 40 : faith = "International United Pentecostal Church"; break;
-            case 41 : faith = "Free Will Baptist Church"; break;
-            case 42 : faith = "Interdenominational"; break;
-            case 43 : faith = "Mennonite Brethren Church"; break;
-            case 44 : faith = "Moravian Church"; break;
-            case 45 : faith = "North American Baptist"; break;
-            case 47 : faith = "Pentecostal Holiness Church"; break;
-            case 48 : faith = "Christian Churches and Churches of Christ"; break;
-            case 49 : faith = "Reformed Church in America"; break;
-            case 50 : faith = "Episcopal Church, Reformed"; break;
-            case 51 : faith = "African Methodist Episcopal"; break;
-            case 52 : faith = "American Baptist"; break;
-            case 53 : faith = "American Lutheran"; break;
-            case 54 : faith = "Baptist"; break;
-            case 55 : faith = "Christian Methodist Episcopal"; break;
-            case 57 : faith = "Church of God"; break;
-            case 58 : faith = "Church of Brethren"; break;
-            case 59 : faith = "Church of the Nazarene"; break;
-            case 60 : faith = "Cumberland Presbyterian"; break;
-            case 61 : faith = "Christian Church (Disciples of Christ)"; break;
-            case 64 : faith = "Free Methodist"; break;
-            case 65 : faith = "Friends"; break;
-            case 66 : faith = "Presbyterian Church (USA)"; break;
-            case 67 : faith = "Lutheran Church in America"; break;
-            case 68 : faith = "Lutheran Church - Missouri Synod"; break;
-            case 69 : faith = "Mennonite Church"; break;
-            case 71 : faith = "United Methodist"; break;
-            case 73 : faith = "Protestant Episcopal"; break;
-            case 74 : faith = "Churches of Christ"; break;
-            case 75 : faith = "Southern Baptist"; break;
-            case 76 : faith = "United Church of Christ"; break;
-            case 77 : faith = "Protestant, not specified"; break;
-            case 78 : faith = "Multiple Protestant Denomination"; break;
-            case 79 : faith = "Protestant"; break;
-            case 80 : faith = "Jewish"; break;
-            case 81 : faith = "Reformed Presbyterian Church"; break;
-            case 84 : faith = "United Brethren Church"; break;
-            case 87 : faith = "Missionary Church Inc"; break;
-            case 88 : faith = "Undenominational"; break;
-            case 89 : faith = "Wesleyan"; break;
-            case 91 : faith = "Greek Orthodox"; break;
-            case 92 : faith = "Russian Orthodox"; break;
-            case 93 : faith = "Unitarian Universalist"; break;
-            case 94 : faith = "Latter Day Saints (Mormon Church)"; break;
-            case 95 : faith = "Seventh Day Adventists"; break;
+            case 22 : faith = "the American Evangelical Lutheran Church"; break;
+            case 24 : faith = "the African Methodist Episcopal Zion Church"; break;
+            case 27 : faith = "the Assemblies of God Church"; break;
+            case 28 : faith = "the Brethren Church"; break;
+            case 30 : faith = "the Roman Catholic"; break;
+            case 33 : faith = "the Wisconsin Evangelical Lutheran Synod"; break;
+            case 34 : faith = "the Christ and Missionary Alliance Church"; break;
+            case 35 : faith = "the Christian Reformed Church"; break;
+            case 36 : faith = "the Evangelical Congregational Church"; break;
+            case 37 : faith = "the Evangelical Covenant Church of America"; break;
+            case 38 : faith = "the Evangelical Free Church of America"; break;
+            case 39 : faith = "the Evangelical Lutheran Church"; break;
+            case 40 : faith = "the International United Pentecostal Church"; break;
+            case 41 : faith = "the Free Will Baptist Church"; break;
+            case 42 : faith = "the Interdenominational"; break;
+            case 43 : faith = "the Mennonite Brethren Church"; break;
+            case 44 : faith = "the Moravian Church"; break;
+            case 45 : faith = "the North American Baptist"; break;
+            case 47 : faith = "the Pentecostal Holiness Church"; break;
+            case 48 : faith = "the Christian Churches and Churches of Christ"; break;
+            case 49 : faith = "the Reformed Church in America"; break;
+            case 50 : faith = "the Episcopal Church, Reformed"; break;
+            case 51 : faith = "the African Methodist Episcopal"; break;
+            case 52 : faith = "the American Baptist"; break;
+            case 53 : faith = "the American Lutheran"; break;
+            case 54 : faith = "the Baptist"; break;
+            case 55 : faith = "the Christian Methodist Episcopal"; break;
+            case 57 : faith = "the Church of God"; break;
+            case 58 : faith = "the Church of Brethren"; break;
+            case 59 : faith = "the Church of the Nazarene"; break;
+            case 60 : faith = "the Cumberland Presbyterian"; break;
+            case 61 : faith = "the Christian Church (Disciples of Christ)"; break;
+            case 64 : faith = "the Free Methodist"; break;
+            case 65 : faith = "the Friends"; break;
+            case 66 : faith = "the Presbyterian Church (USA)"; break;
+            case 67 : faith = "the Lutheran Church in America"; break;
+            case 68 : faith = "the Lutheran Church - Missouri Synod"; break;
+            case 69 : faith = "the Mennonite Church"; break;
+            case 71 : faith = "the United Methodist"; break;
+            case 73 : faith = "the Protestant Episcopal"; break;
+            case 74 : faith = "the Churches of Christ"; break;
+            case 75 : faith = "the Southern Baptist"; break;
+            case 76 : faith = "the United Church of Christ"; break;
+            case 77 : faith = "the Protestant, not specified"; break;
+            case 78 : faith = "the Multiple Protestant Denomination"; break;
+            case 79 : faith = "a Protestant"; break;
+            case 80 : faith = "the Jewish"; break;
+            case 81 : faith = "the Reformed Presbyterian Church"; break;
+            case 84 : faith = "the United Brethren Church"; break;
+            case 87 : faith = "the Missionary Church Inc"; break;
+            case 88 : faith = "an Undenominational"; break;
+            case 89 : faith = "the Wesleyan"; break;
+            case 91 : faith = "the Greek Orthodox"; break;
+            case 92 : faith = "the Russian Orthodox"; break;
+            case 93 : faith = "the Unitarian Universalist"; break;
+            case 94 : faith = "the Latter Day Saints (Mormon Church)"; break;
+            case 95 : faith = "the Seventh Day Adventists"; break;
             case 97 : faith = "The Presbyterian Church in America"; break;
-            case 100 : faith = "Original Free Will Baptist"; break;
-            case 101 : faith = "Ecumenical Christian"; break;
-            case 102 : faith = "Evangelical Christian"; break;
-            case 103 : faith = "Presbyterian"; break;
-            default : faith = null;
+            case 100 : faith = "the Original Free Will Baptist"; break;
+            case 101 : faith = "the Ecumenical Christian"; break;
+            case 102 : faith = "the Evangelical Christian"; break;
+            case 103 : faith = "the Presbyterian"; break;
+            default : faith = "no particular";
         }
         return faith;
     }
 
     const determineSingleGender = () => {
-        
+        let gender = "co-ed";
+        if (data.school.men_only === 1) {
+            gender = "men-only"
+        } else if (data.school.women_only === 1) {
+            gender = "women-only"
+        }
+        return gender;
     }
 
     return ( 
@@ -131,17 +137,7 @@ export const GeneralInfo = props => {
                 <span>a {determineSize()} school </span>
                 : 
                 "" }
-                located in {data.school.city}, {data.school.state}.
-                { (determineRegAffiliation() && determineSingleGender())
-                    ?
-                    <span>&nbsp;It is a {determineSingleGender()} institution, affiliated with the {determineRegAffiliation()} faith.</span>
-                    : determineSingleGender()
-                        ? <span>&nbsp;It is a {determineSingleGender()} institution.</span>
-                        : determineRegAffiliation()
-                            ?
-                            <span>&nbsp;It is affiliated with the {determineRegAffiliation()} faith.</span>
-                            : ""
-                }
+                located in {data.school.city}, {data.school.state}. It is a {determineSingleGender()} institution, affiliated with {determineRegAffiliation()} faith.
             </p>
             <h4>General</h4>
             <Table>
