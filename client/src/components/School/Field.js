@@ -66,7 +66,7 @@ export class Field extends Component {
                     <td> 
                         {this.props.field.value 
                             ? 
-                            moment(this.props.field.value).isValid()
+                            moment(this.props.field.value, moment.ISO_8601).isValid()
                                 ? 
                                 moment(this.props.field.value).format("dddd, MMMM Do YYYY") 
                                 :

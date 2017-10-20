@@ -151,14 +151,12 @@ export class School extends Component {
         if (this.state[field._id]) {
             // If it's a note
             if (note) {
-                console.log("it's a note")
                 API.updateNote(queryObj)
                 .then( () => this.getUser() )
                 .catch(err => console.log(err))
             } 
             // If it's an admissions requirement
             else {
-                console.log("it's an app Req")
                 API.updateAppReq(queryObj)
                 .then( () => this.getUser() )
                 .catch(err => console.log(err))
@@ -167,7 +165,6 @@ export class School extends Component {
     }
 
     addNewField = (fieldName, fieldValue, note) => {
-        console.log("adding new field")
         let queryObj = {
             collegeId : this.state.schoolUserData._id,
             fieldName : fieldName,
