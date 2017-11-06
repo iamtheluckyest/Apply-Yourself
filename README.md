@@ -20,4 +20,5 @@ Make applying for colleges simpler and more organized by collecting information 
 
 ## Contributors
 John Price
+
 David Blight
