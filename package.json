@@ -9,7 +9,9 @@
     "start": "concurrently \"nodemon server.js\" \"npm run client\"",
     "build": "node scripts/build.js",
     "deploy": "yarn build && git add . && git commit -m \"Building for production\" && git push heroku master",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "author": "",
   "license": "ISC",
@@ -18,14 +20,14 @@
     "nodemon": "^1.11.0"
   },
   "dependencies": {
-    "axios": "^0.16.2",
+    "axios": "^0.18.1",
     "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
-    "bootstrap": "4.0.0-alpha.6",
-    "express": "^4.15.4",
+    "bootstrap": "4.0.0",
+    "express": "^4.16.0",
     "jsonwebtoken": "^8.0.1",
-    "moment": "^2.18.1",
-    "mongoose": "^4.11.14",
+    "moment": "^2.19.3",
+    "mongoose": "^4.13.17",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "prop-types": "^15.6.0",
@@ -33,9 +35,11 @@
     "react": "^16.0.0",
     "react-addons-css-transition-group": "^15.6.2",
     "react-addons-transition-group": "^15.6.2",
-    "react-dom": "^16.0.0",
+    "react-dom": "^16.0.1",
     "react-router-dom": "^4.2.2",
     "reactstrap": "^4.8.0",
-    "validator": "^9.0.0"
-  }
+    "validator": "^9.4.1",
+    "snyk": "^1.171.1"
+  },
+  "snyk": true
 }
