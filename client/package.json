@@ -7,18 +7,18 @@
     "@customstyles/bootstrap": "file:lib/customstyles",
     "bootstrap": "^4.0.0",
     "react": "^15.6.1",
-    "react-dom": "^15.6.1",
-    "react-scripts": "3.0.0",
+    "react-dom": "^16.5.0",
+    "react-scripts": "5.0.0",
     "reactstrap": "^5.0.0",
-    "snyk": "^1.171.1"
+    "@snyk/protect": "latest"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "snyk-protect": "snyk protect",
-    "prepublish": "npm run snyk-protect"
+    "snyk-protect": "snyk-protect",
+    "prepublish": "yarn run snyk-protect"
   },
   "snyk": true
 }
