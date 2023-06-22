@@ -39,7 +39,7 @@
     "react-router-dom": "^4.2.2",
     "reactstrap": "^4.8.0",
     "validator": "^13.6.0",
-    "snyk": "^1.518.0"
+    "snyk": "^1.685.0"
   },
   "snyk": true
 }
