@@ -5,7 +5,7 @@
   "proxy": "http://localhost:3001/",
   "dependencies": {
     "@customstyles/bootstrap": "file:lib/customstyles",
-    "bootstrap": "^4.0.0",
+    "bootstrap": "^5.0.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-scripts": "3.0.0",
